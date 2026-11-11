@@ -20,7 +20,7 @@ Engines implement one interface (`src/assess/types.ts`) and are chosen in `src/a
 
 ## Audio
 
-Model clips are decoded with the Web Audio API and played sample-accurately from sprites (no `<audio>` seeking, which is unreliable for short segments in Safari). Every word, key word and sentence has a natural slow recording; texts have a slow version as well. Single words use the English-only Microsoft voices (the multilingual voices sometimes switch phonology on an isolated word). File names carry a content hash.
+Model clips are decoded once with the Web Audio API, cut sample-accurately from the sprites and played as short WAV files through a single `<audio>` element. Nothing is seeked inside MP3 files (unreliable for short segments in Safari), and the output is ordinary media playback, which the iPhone's silent switch does not mute (it mutes Web Audio output, which made sounds disappear in the app opened from the Home Screen). Every word, key word and sentence has a natural slow recording; texts have a slow version as well. Single words use the English-only Microsoft voices (the multilingual voices sometimes switch phonology on an isolated word). File names carry a content hash.
 
 ## Project layout
 
