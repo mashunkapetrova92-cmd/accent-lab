@@ -10,25 +10,32 @@ A mobile-first Progressive Web App for training American English pronunciation.
 
 | Engine | What it measures | Needs |
 |---|---|---|
-| Basic word recognition (default) | Whether each word was understood as the intended word; speaking rate | Safari (iPhone) or Chrome; internet |
+| On-device recognition (default without Azure) | Single words: a forced choice between the word and the words it is confused with ("sheep" or "ship"), normalized by how the model recording scores. Sentences and texts: which words were understood; speaking rate | Any current browser (Safari, Chrome, Edge, Firefox, Home Screen apps). One-time download of Whisper base.en (about 100 MB with the runtime); then works offline |
+| Browser speech recognition | Which words were understood; shows words live while reading | Chrome, Edge or Safari with internet. If it fails, the same recording is checked on the device |
 | Azure AI Speech pronunciation assessment | Phoneme accuracy, the phoneme actually produced, word accuracy, vowel and consonant accuracy, fluency, completeness, prosody | An Azure Speech key behind the token server in `server/token-worker.js` |
 
-Results are labeled **Measured**, **Estimated** or **Not measured**. Basic recognition never claims to score sounds.
+Results are labeled **Measured**, **Estimated** or **Not measured**. Word recognition never claims to score sounds. Words that the on-device recognizer cannot confirm even in the model recording are not scored; the learner compares by ear.
 
-Engines implement one interface (`src/assess/types.ts`) and are registered in `src/assess/index.ts`, so another provider can be added without touching the screens.
+Engines implement one interface (`src/assess/types.ts`) and are chosen in `src/assess/index.ts`. All three share one recorder (`src/assess/pcm.ts`), which keeps the learner's voice for playback in every browser.
+
+## Audio
+
+Model clips are decoded with the Web Audio API and played sample-accurately from sprites (no `<audio>` seeking, which is unreliable for short segments in Safari). Every word, key word and sentence has a natural slow recording; texts have a slow version as well. Single words use the English-only Microsoft voices (the multilingual voices sometimes switch phonology on an isolated word). File names carry a content hash.
 
 ## Project layout
 
 ```
 src/
-  assess/      engines (browser, azure), feedback rules, types
+  assess/      engines (local Whisper, browser, Azure), recorder, feedback rules, types
   components/  UI building blocks, recorder, mouth diagram, results
   data/        content types and loaders
   lib/         text alignment, audio playback, microphone, storage (IndexedDB)
   screens/     Sounds map and stages, Reading library and reader, Progress, Settings
 public/
-  data/        sounds.json, stories/*.json, words.json (generated)
+  data/        sounds.json, stories/*.json, words.json, checks.json, audio.json (generated)
   audio/       recorded audio sprites (generated)
+  models/      Whisper base.en (ONNX, quantized), served with the app
+  ort/         ONNX Runtime WebAssembly
 server/        Azure token server (Cloudflare Worker)
 scripts/       service worker template and post-build step
 ```
@@ -45,4 +52,4 @@ npm run preview    # local test at http://localhost:4173
 
 ## Credits
 
-Model audio: Microsoft neural voices (Ava; Andrew and Emma in listening drills). Transcriptions: CMU Pronouncing Dictionary converted to General American IPA with flapping, syllabic consonants and weak forms, plus hand-checked entries. All texts are original.
+Model audio: Microsoft neural voices (Ava; Andrew and Aria in listening drills). Speech recognition: Whisper base.en (OpenAI, MIT license) via Transformers.js and ONNX Runtime Web. Transcriptions: CMU Pronouncing Dictionary converted to General American IPA with flapping, syllabic consonants and weak forms, plus hand-checked entries. All texts are original.

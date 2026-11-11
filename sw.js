@@ -1,15 +1,33 @@
-/* Accent Lab service worker: offline shell, cached lessons, and range requests for audio. */
-const VERSION = 'afcd9c337d';
+/* Accent Lab service worker: offline shell, saved lessons and recordings, and the speech-model runtime. */
+const VERSION = '121d9072cf';
 const SHELL = 'shell-' + VERSION;
-const DATA = 'data-v1';
-const MEDIA = 'media-v1';
-const PRECACHE = ["./assets/index-BG2gvVPQ.js","./assets/index-CdXZdnqN.css","./assets/microsoft.cognitiveservices.speech.sdk-CnjlNzmd.js","./assets/source-sans-3-cyrillic-ext-wght-normal-DRCEkt1i.woff2","./assets/source-sans-3-cyrillic-wght-normal-CBKVyBaP.woff2","./assets/source-sans-3-greek-ext-wght-normal-xJtVpetf.woff2","./assets/source-sans-3-greek-wght-normal-DMoEshA0.woff2","./assets/source-sans-3-latin-ext-wght-normal-C9MlJypZ.woff2","./assets/source-sans-3-latin-wght-normal-CJ0msDsQ.woff2","./assets/source-sans-3-vietnamese-wght-normal-C54N3Iud.woff2","./data/files.json","./data/sounds.json","./data/stories/index.json","./data/words.json","./icons/apple-touch-icon.png","./icons/favicon-32.png","./icons/icon-192.png","./icons/icon-512.png","./icons/maskable-512.png","./index.html","./manifest.webmanifest","./splash/splash-1125x2436.png","./splash/splash-1170x2532.png","./splash/splash-1179x2556.png","./splash/splash-1206x2622.png","./splash/splash-1242x2688.png","./splash/splash-1284x2778.png","./splash/splash-1290x2796.png","./splash/splash-1320x2868.png","./splash/splash-750x1334.png","./splash/splash-828x1792.png"];
+const DATA = 'data-' + VERSION;
+const MEDIA = 'media-v2';
+const RUNTIME = 'runtime-v1';
+const PRECACHE = ["./assets/asr.worker-HzUXKGOX.js","./assets/index-Dc2IwuyQ.css","./assets/index-LVmKEJav.js","./assets/microsoft.cognitiveservices.speech.sdk-CnjlNzmd.js","./assets/source-sans-3-cyrillic-ext-wght-normal-DRCEkt1i.woff2","./assets/source-sans-3-cyrillic-wght-normal-CBKVyBaP.woff2","./assets/source-sans-3-greek-ext-wght-normal-xJtVpetf.woff2","./assets/source-sans-3-greek-wght-normal-DMoEshA0.woff2","./assets/source-sans-3-latin-ext-wght-normal-C9MlJypZ.woff2","./assets/source-sans-3-latin-wght-normal-CJ0msDsQ.woff2","./assets/source-sans-3-vietnamese-wght-normal-C54N3Iud.woff2","./data/alts.json","./data/audio.json","./data/checks.json","./data/files.json","./data/sounds.json","./data/stories/index.json","./data/words.json","./icons/apple-touch-icon.png","./icons/favicon-32.png","./icons/icon-192.png","./icons/icon-512.png","./icons/maskable-512.png","./index.html","./manifest.webmanifest","./splash/splash-1125x2436.png","./splash/splash-1170x2532.png","./splash/splash-1179x2556.png","./splash/splash-1206x2622.png","./splash/splash-1242x2688.png","./splash/splash-1284x2778.png","./splash/splash-1290x2796.png","./splash/splash-1320x2868.png","./splash/splash-750x1334.png","./splash/splash-828x1792.png"];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(SHELL).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
 });
+
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('shell-') && k !== SHELL).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil((async () => {
+    const keep = new Set([SHELL, DATA, MEDIA, RUNTIME, 'transformers-cache']);
+    const keys = await caches.keys();
+    // older data caches are dropped: they could reference recordings that no longer exist
+    await Promise.all(keys.filter(k => !keep.has(k)).map(k => caches.delete(k)));
+    // recordings are stored under content-hashed names; remove the ones this version no longer uses
+    try {
+      const r = await fetch(new URL('./data/files.json', self.registration.scope).href, { cache: 'no-store' });
+      if (r.ok) {
+        const { files } = await r.json();
+        const live = new Set(files.map(f => new URL('./' + f[0], self.registration.scope).href));
+        const mc = await caches.open(MEDIA);
+        for (const req of await mc.keys()) if (!live.has(req.url)) await mc.delete(req);
+      }
+    } catch { /* offline: prune next time */ }
+    await self.clients.claim();
+  })());
 });
 
 async function rangeResponse(req, full) {
@@ -26,17 +44,16 @@ async function rangeResponse(req, full) {
     'Content-Type': full.headers.get('Content-Type') || 'audio/mpeg', 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': String(end - start + 1), 'Accept-Ranges': 'bytes' } });
 }
 
-async function media(req) {
-  const cache = await caches.open(MEDIA);
-  const key = req.url.split('#')[0];
-  let full = await cache.match(key);
-  if (!full) {
+async function cacheFirst(cacheName, req, key) {
+  const cache = await caches.open(cacheName);
+  let hit = await cache.match(key);
+  if (!hit) {
     const res = await fetch(key);
     if (!res.ok) return res;
     await cache.put(key, res.clone());
-    full = res;
+    hit = res;
   }
-  return rangeResponse(req, full.clone());
+  return hit;
 }
 
 self.addEventListener('fetch', e => {
@@ -44,7 +61,11 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const u = new URL(req.url);
   if (u.origin !== location.origin) return;
-  if (u.pathname.includes('/audio/')) { e.respondWith(media(req)); return; }
+  const key = req.url.split('#')[0];
+  // the speech model is cached by the recognizer itself (Transformers.js): pass through
+  if (u.pathname.includes('/models/')) return;
+  if (u.pathname.includes('/audio/')) { e.respondWith(cacheFirst(MEDIA, req, key).then(r => rangeResponse(req, r.clone()))); return; }
+  if (u.pathname.includes('/ort/')) { e.respondWith(cacheFirst(RUNTIME, req, key)); return; }
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req).catch(() => caches.match(new URL('./index.html', self.registration.scope).href)));
     return;
