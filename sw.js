@@ -1,5 +1,5 @@
 /* Accent Lab service worker: offline shell, saved lessons and recordings, and the speech-model runtime. */
-const VERSION = '304a5a3197';
+const VERSION = '304a5a3197-w1';
 const SHELL = 'shell-' + VERSION;
 const DATA = 'data-' + VERSION;
 const MEDIA = 'media-v2';

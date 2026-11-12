@@ -28,6 +28,94 @@
   </head>
   <body>
     <div id="root"></div>
+    <style id="welcome-style">
+#welcome{position:fixed;inset:0;z-index:9999;overflow:auto;color:#fff;font-family:"Source Sans 3 Variable","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;background:linear-gradient(180deg,#107C86 0%,#0F6377 45%,#14345B 100%);-webkit-font-smoothing:antialiased}
+#welcome *{box-sizing:border-box;margin:0}
+#welcome .w-page{min-height:100%;max-width:440px;margin:0 auto;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) 24px calc(env(safe-area-inset-bottom,0px) + 28px)}
+#welcome .w-top{display:flex;justify-content:flex-end}
+#welcome .w-lang{display:inline-flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(255,255,255,.14)}
+#welcome .w-lang svg{width:18px;height:18px;margin:0 6px 0 8px;opacity:.85}
+#welcome .w-lang button{font:inherit;font-weight:650;font-size:15px;letter-spacing:.04em;color:#fff;background:none;border:0;min-width:48px;min-height:40px;border-radius:999px;cursor:pointer;opacity:.75}
+#welcome .w-lang button[aria-pressed="true"]{background:#fff;color:#14345B;opacity:1}
+#welcome .w-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 0}
+#welcome .w-mark{font-weight:750;font-size:176px;line-height:.8;letter-spacing:-.02em;padding-bottom:18px}
+#welcome .w-bars{display:flex;align-items:center;gap:11px;height:52px;margin-top:22px}
+#welcome .w-bars i{display:block;width:12px;border-radius:6px;background:#FFD27A}
+#welcome .w-bars i:nth-child(1),#welcome .w-bars i:nth-child(5){height:12px}
+#welcome .w-bars i:nth-child(2),#welcome .w-bars i:nth-child(4){height:28px}
+#welcome .w-bars i:nth-child(3){height:46px}
+@media (prefers-reduced-motion:no-preference){
+#welcome .w-bars i{animation:w-pulse 1.8s ease-in-out infinite}
+#welcome .w-bars i:nth-child(2),#welcome .w-bars i:nth-child(4){animation-delay:.15s}
+#welcome .w-bars i:nth-child(3){animation-delay:.3s}
+@keyframes w-pulse{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.62)}}
+}
+#welcome h1{font-size:34px;font-weight:700;letter-spacing:-.01em;margin-top:34px;color:#fff}
+#welcome .w-tag{font-size:18px;line-height:1.4;opacity:.86;margin-top:8px;max-width:19em;text-wrap:balance}
+#welcome .w-actions{display:flex;flex-direction:column;gap:12px}
+#welcome .w-btn{font:inherit;font-size:19px;font-weight:650;min-height:56px;border-radius:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .12s ease}
+#welcome .w-btn:active{transform:scale(.98)}
+#welcome .w-ghost{color:#fff;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.55)}
+#welcome .w-solid{color:#14345B;background:#fff;border:0;box-shadow:0 10px 30px rgba(8,24,48,.28)}
+#welcome :focus-visible{outline:3px solid #FFD27A;outline-offset:3px}
+#welcome .w-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 172px);transform:translate(-50%,8px);background:#fff;color:#14345B;font-weight:600;font-size:16px;padding:12px 18px;border-radius:14px;box-shadow:0 10px 30px rgba(8,24,48,.3);opacity:0;pointer-events:none;transition:.25s;width:max-content;max-width:calc(100% - 48px);text-align:center}
+#welcome .w-toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-height:640px){#welcome .w-mark{font-size:128px}#welcome h1{margin-top:22px}}
+    </style>
+    <div id="welcome">
+      <main class="w-page">
+        <div class="w-top">
+          <div class="w-lang" role="group" aria-label="Language">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/></svg>
+            <button type="button" data-lang="en" aria-pressed="true" aria-label="English">EN</button>
+            <button type="button" data-lang="ru" aria-pressed="false" aria-label="Русский">RU</button>
+          </div>
+        </div>
+        <section class="w-hero">
+          <div class="w-mark" aria-hidden="true">æ</div>
+          <div class="w-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <h1>Accent Lab</h1>
+          <p class="w-tag" data-i18n="tag"></p>
+        </section>
+        <div class="w-actions">
+          <button type="button" class="w-btn w-ghost" id="w-register" data-i18n="register"></button>
+          <button type="button" class="w-btn w-solid" id="w-start" data-i18n="start"></button>
+        </div>
+      </main>
+      <div class="w-toast" id="w-toast" role="status" aria-live="polite"></div>
+    </div>
+    <script>
+(function(){
+  var el=document.getElementById("welcome"),theme=document.querySelector('meta[name="theme-color"]');
+  function close(){el.remove();if(theme)theme.content="#F3F5F8"}
+  try{if(sessionStorage.getItem("accentlab.started")){close();return}}catch(e){}
+  if(theme)theme.content="#107C86";
+  var T={
+    en:{tag:"Build your pronunciation, sound by sound.",register:"Registration",start:"Start",soon:"Registration opens soon."},
+    ru:{tag:"Постройте своё произношение: звук за звуком.",register:"Регистрация",start:"Старт",soon:"Регистрация скоро откроется."}
+  };
+  var KEY="accentlab.lang",lang;
+  try{lang=localStorage.getItem(KEY)}catch(e){}
+  if(!T[lang])lang=/^ru/i.test(navigator.language||"")?"ru":"en";
+  function apply(l){
+    lang=l;
+    el.querySelectorAll("[data-i18n]").forEach(function(n){n.textContent=T[l][n.dataset.i18n]});
+    el.querySelectorAll("[data-lang]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===l))});
+    try{localStorage.setItem(KEY,l)}catch(e){}
+  }
+  el.querySelectorAll("[data-lang]").forEach(function(b){b.addEventListener("click",function(){apply(b.dataset.lang)})});
+  var toast=document.getElementById("w-toast"),timer;
+  document.getElementById("w-register").addEventListener("click",function(){
+    toast.textContent=T[lang].soon;toast.classList.add("on");
+    clearTimeout(timer);timer=setTimeout(function(){toast.classList.remove("on")},2400);
+  });
+  document.getElementById("w-start").addEventListener("click",function(){
+    try{sessionStorage.setItem("accentlab.started","1")}catch(e){}
+    location.hash="#/sounds";close();
+  });
+  apply(lang);
+})();
+    </script>
     <noscript>Accent Lab needs JavaScript.</noscript>
   </body>
 </html>
