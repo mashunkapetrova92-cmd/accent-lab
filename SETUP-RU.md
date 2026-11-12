@@ -28,14 +28,15 @@
 
 ### 2.1. Ключ Azure Speech (portal.azure.com)
 
-1. Зайдите на https://portal.azure.com и создайте учётную запись Microsoft. Azure попросит телефон и банковскую карту для проверки личности. Бесплатный тариф ничего не списывает.
-2. Вверху в поиске наберите **Speech** и выберите сервис **Speech** (иногда он называется «Azure AI Speech» или «Speech service»).
+1. Зайдите на https://portal.azure.com и создайте учётную запись Microsoft и бесплатную подписку Azure. Azure попросит телефон и банковскую карту для проверки личности. Бесплатный тариф ничего не списывает.
+   Пробный период бесплатной учётной записи длится 30 дней. Чтобы Azure работал и после него, переведите подписку на оплату по факту (**Upgrade** → pay-as-you-go). Тариф **Free F0** остаётся бесплатным и после этого.
+2. Откройте https://portal.azure.com/#create/Microsoft.CognitiveServicesSpeechServices или наберите вверху в поиске **Speech** и выберите отдельный сервис **Speech** (он может называться «Speech service», «Azure Speech» или «Azure AI Speech»). Не берите ресурс **Foundry** или **AI Services**: у них нет бесплатного тарифа F0.
 3. Нажмите **Create** и заполните форму:
    * **Subscription**: ваша подписка (например, Azure subscription 1);
    * **Resource group**: **Create new** → `accent-lab`;
    * **Region**: **East US**;
    * **Name**: любое уникальное имя, например `accent-lab-speech-123`;
-   * **Pricing tier**: **Free F0** (5 часов распознавания в месяц бесплатно). Если F0 нельзя выбрать (он уже есть в этой подписке), выберите **Standard S0** с оплатой только за использованные минуты.
+   * **Pricing tier**: **Free F0** (5 часов распознавания в месяц бесплатно, оценка произношения считается как обычное распознавание). Когда 5 часов закончатся, F0 просто перестанет отвечать до следующего месяца, деньги не списываются, а приложение покажет ошибку Azure. Если F0 нельзя выбрать (он уже есть в этой подписке), выберите **Standard S0** с оплатой только за использованные минуты.
 4. **Review + create** → **Create**. Через минуту нажмите **Go to resource**.
 5. Слева откройте **Resource Management → Keys and Endpoint**. Скопируйте **KEY 1** и **Location/Region** (для East US это `eastus`).
 
@@ -45,16 +46,23 @@
 
 1. Зарегистрируйтесь на https://dash.cloudflare.com (карта не нужна).
 2. Слева **Workers & Pages** → **Create application** → **Start with Hello World!** (или **Create Worker**) → придумайте имя, например `accent-lab-token` → **Deploy**.
-3. На странице воркера нажмите **Edit code**. Удалите весь код в редакторе, вставьте содержимое файла `server/token-worker.js` из этого репозитория и нажмите **Deploy**.
+3. На странице воркера нажмите **Edit code**. Удалите весь код в редакторе, вставьте содержимое файла `server/token-worker.js` из этого репозитория (весь текст по ссылке https://raw.githubusercontent.com/mashunkapetrova92-cmd/accent-lab/main/server/token-worker.js) и нажмите **Deploy**.
 4. Вернитесь к воркеру: **Settings → Variables and Secrets → Add**. Добавьте три переменные и затем нажмите **Deploy**:
    * `AZURE_SPEECH_KEY`, тип **Secret**, значение: KEY 1 из Azure;
    * `AZURE_REGION`, тип **Text**: `eastus`;
-   * `ALLOWED_ORIGINS`, тип **Text**: адрес вашего сайта без пути, например `https://имя-пользователя.github.io`.
+   * `ALLOWED_ORIGINS`, тип **Text**: адрес сайта без пути и без косой черты в конце: `https://mashunkapetrova92-cmd.github.io`.
 5. Скопируйте адрес воркера вида `https://accent-lab-token.<ваше-имя>.workers.dev`. Он есть на странице воркера.
+   Если открыть этот адрес прямо в браузере, будет написано «Origin not allowed». Так и должно быть: сервер отвечает только приложению.
 
 ### 2.3. В приложении
 
-Settings → Speech checking → **Automatic** (или **Azure pronunciation assessment**) → вставьте адрес воркера в поле «Azure token server address» → **Save and test**. Должно появиться «Connected. Region: eastus.» После этого все записи проверяет Azure, в любом браузере.
+Settings → Speech checking → **Automatic** (или **Azure pronunciation assessment**) → вставьте адрес воркера в поле «Azure token server address» → **Save and test**. Должно появиться «Connected. Region: eastus.» После этого все записи проверяет Azure, в любом браузере. Без интернета записи по-прежнему проверяются на телефоне.
+
+Если вместо «Connected» появилась ошибка:
+
+* «Could not reach your token server…» — проверьте адрес воркера и значение `ALLOWED_ORIGINS` (ровно `https://mashunkapetrova92-cmd.github.io`).
+* «…(502: Azure refused the key or region)» — в `AZURE_SPEECH_KEY` не тот ключ или `AZURE_REGION` не совпадает с регионом ресурса.
+* «…(500: Server is missing…)» — переменная не добавлена или после добавления не нажали **Deploy**.
 
 ## Что и чем измеряется
 
