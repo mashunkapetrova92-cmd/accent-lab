@@ -1,0 +1,158 @@
+unanswered-letters                 Short Fiction   868
+    missing: clasps refolded tidier
+last-lighthouse-keeper             Short Fiction   405
+    missing: foghorn
+translators-mistake                Short Fiction   410
+piano-in-the-station               Short Fiction   396
+map-in-the-attic                   Short Fiction   408
+room-with-no-clocks                Short Fiction   398
+night-baker                        Short Fiction   399
+inventory-of-lost-things           Short Fiction   399
+bridge-inspector                   Short Fiction   387
+beekeepers-inheritance             Short Fiction   401
+    missing: beehives vibrated
+unfinished-tasks                   Psychology      415
+    missing: bluma zeigarnik
+remembering-embarrassment          Psychology      397
+power-of-boredom                   Psychology      406
+decision-fatigue                   Psychology      411
+stories-about-ourselves            Psychology      391
+nostalgia                          Psychology      392
+spotlight-effect                   Psychology      392
+    missing: gilovich
+tolerating-uncertainty             Psychology      392
+    missing: mindfulness unsettles
+holding-doors                      Human Behavior  410
+waiting-in-line                    Human Behavior  402
+small-talk                         Human Behavior  389
+apologizing-well                   Human Behavior  395
+    missing: weightier
+crowds-find-their-way              Human Behavior  398
+    missing: counterintuitive
+procrastinating-on-what-we-love    Human Behavior  396
+gossip                             Human Behavior  377  <-- LENGTH
+octopus-problem                    Science         421
+    missing: octopuses
+sleep-and-memory                   Science         392
+slime-mold                         Science         405
+    missing: physarum polycephalum
+deep-ocean-sounds                  Science         404
+    missing: soundscape strandings
+dark-matter                        Science         401
+birds-and-magnetism                Science         402
+    missing: cryptochrome wintering
+microbes-and-mood                  Science         401
+    missing: brainstem microbiome neurotransmitters probiotic vagus
+atomic-clocks                      Science         411
+    missing: sundials timekeepers
+afterlife-of-old-phones            Technology      419
+    missing: disassembly unwraps
+algorithms-choose-music            Technology      406
+forgotten-engineers                Technology      418
+    BRITISH?: Programmers programmers
+smart-home                         Technology      410
+    BRITISH?: programmed
+self-driving-ethics                Technology      420
+    missing: intuitions
+    BRITISH?: programmed
+passwords                          Technology      399
+    missing: cryptographic passkeys
+return-of-repair                   Technology      408
+    missing: resoled
+translating-poetry                 Technology      413
+    missing: phrasings
+library-of-alexandria              History         417
+    missing: papyrus triumphing
+railway-time                       History         411
+ice-trade                          History         396
+    missing: iceboxes
+harvard-computers                  History         402
+    missing: uncredited williamina
+great-stink                        History         406
+    missing: bazalgette
+afterlife-of-latin                 History         401
+    missing: vocabularies
+phantom-islands                    History         392
+    missing: cartographers
+invention-of-the-weekend           History         407
+free-shipping                      Business        411
+restaurants-fail                   Business        402
+charm-pricing                      Business        405
+family-bakery                      Business        406
+    missing: marisol
+shopping-malls                     Business        392
+four-day-week                      Business        402
+negotiating-with-friends           Business        412
+language-of-kitchens               Culture         431
+    missing: escoffier mise
+museums-rethinking                 Culture         404
+global-jazz                        Culture         399
+    missing: bossa django
+art-of-translation                 Culture         406
+fairy-tales-travel                 Culture         406
+    missing: folklorists grimms reshapes retells
+vinyl                              Culture         403
+street-food                        Culture         410
+loneliness-of-cities               Society         421
+libraries                          Society         391
+who-is-an-expert                   Society         389
+public-parks                       Society         407
+    missing: intuitions olmsted
+generations-at-table               Society         410
+    missing: multigenerational
+return-to-small-towns              Society         403
+    missing: bustled
+volunteering-belonging             Society         391
+urban-trees                        Environment     420
+rewilding-valley                   Environment     412
+    missing: herbivores rewilding
+glaciers-remember                  Environment     407
+    missing: windier
+return-of-wolves                   Environment     404
+    missing: trophic
+lost-night-sky                     Environment     416
+    missing: skyglow
+coral-reefs-hope                   Environment     391
+river-ran-dry                      Environment     399
+    missing: riverbanks
+composting-a-city                  Environment     405
+    missing: compostable crumbly
+night-train-alps                   Travel          425
+    missing: reappearing
+art-of-getting-lost                Travel          419
+    missing: baudelaire flaneur neuroscientists
+lisbon-in-the-rain                 Travel          407
+    missing: fado streetlights
+    IMPERIAL: ['feet']
+walking-a-country                  Travel          424
+island-without-cars                Travel          440
+    missing: rebalance
+what-tourists-dont-see             Travel          402
+slow-ferry-north                   Travel          399
+    missing: disembarked
+ship-of-theseus                    Philosophy      416
+    missing: plutarch
+lying-to-be-kind                   Philosophy      418
+    missing: consequentialist
+owe-future-generations             Philosophy      411
+    missing: influentially parfit
+happiness-resists-pursuit          Philosophy      407
+    missing: eudaimonia
+other-minds                        Philosophy      405
+moral-luck                         Philosophy      391
+good-life                          Philosophy      390
+    missing: epicurus joyless
+free-will-neuroscience             Philosophy      408
+    missing: compatibilists libet
+tyranny-of-the-inbox               Modern Life     419
+lost-hallway                       Modern Life     407
+digital-detox                      Modern Life     418
+    missing: detoxes
+culture-of-busyness                Modern Life     414
+    missing: busyness veblen
+photographing-food                 Modern Life     406
+rebellion-of-hobbies               Modern Life     387
+    missing: immersive uselessness
+living-alone                       Modern Life     403
+    missing: klinenberg lodgers widowhood
+stories: 100

@@ -1,0 +1,121 @@
+=== afterlife-of-old-phones | The Afterlife of Old Phones | Technology
+Somewhere in most households, there is a drawer full of retired technology. It contains old phones with cracked screens, tangled chargers for devices that no longer exist, and perhaps a music player that once seemed revolutionary. We rarely think about these objects once we have replaced them. Yet their afterlife raises serious questions about waste, resources, and the hidden costs of constant upgrades.
+
+A modern smartphone is a remarkably complex object. Inside its slim case are dozens of different elements, including copper, gold, silver, cobalt, lithium, and a group of metals known as rare earth elements. Many of these materials are mined in difficult conditions, sometimes in regions affected by conflict, environmental damage, or exploitative labor. Every new device carries this history with it, even though it remains invisible to the person who unwraps it.
+
+When phones are discarded, they become part of what is called electronic waste, one of the fastest growing waste streams in the world. Only a minority of this material is formally collected and recycled. The rest ends up in landfills, sits forgotten in drawers, or is shipped to informal recycling sites where workers may burn cables and soak circuit boards in acid to recover valuable metals, often without adequate protection.
+
+Recycling a phone properly is more complicated than it sounds. The components are tightly packed and frequently glued together, which makes disassembly slow and expensive. Some materials can be recovered efficiently, while others are lost because separating them is not economically worthwhile. A device designed for maximum thinness is rarely designed for easy recycling.
+
+For this reason, many experts argue that the most effective strategy is simply to keep devices in use for longer. Extending the life of a phone by a year or two can significantly reduce its overall environmental impact, because much of that impact occurs during manufacturing rather than use. Repairing a battery or replacing a screen is usually far less damaging than producing an entirely new device.
+
+Some governments have begun to respond. Regulations in several places now require manufacturers to make spare parts available or to design batteries that users can replace more easily. Secondhand markets for refurbished phones have also grown rapidly, offering a cheaper and more sustainable alternative.
+
+So what should we do with that drawer of forgotten devices? Ideally, any phone that still works should find a second owner, and the rest should go to a certified recycler. The real challenge, however, begins before the drawer: resisting the temptation to upgrade before we truly need to.
+
+=== algorithms-choose-music | When Algorithms Choose Our Music | Technology
+Not long ago, discovering new music required a certain amount of effort. People listened to the radio, browsed record stores, read magazine reviews, or relied on friends with adventurous taste. Today, for millions of listeners, discovery happens automatically. Streaming platforms analyze our listening habits and generate personalized playlists that seem to anticipate our preferences with uncanny accuracy.
+
+These recommendation systems combine several techniques. Some compare your listening history with that of other users who have similar tastes, assuming that if they enjoyed a particular song, you might enjoy it too. Others analyze the music itself, examining features such as tempo, rhythm, and instrumentation. Many systems also process text from reviews, blogs, and social media to understand how people describe different artists and genres.
+
+The results can be impressive. Many listeners report discovering artists they would never have encountered otherwise, and smaller musicians can sometimes reach global audiences without the support of a major record label. Algorithms do not care whether a song comes from a famous studio or a bedroom, at least in principle.
+
+Yet critics have raised several concerns. One worry is that recommendation systems may narrow rather than broaden our tastes. If an algorithm continually suggests music similar to what we already like, we may become trapped in a comfortable loop, rarely exposed to anything genuinely challenging or unfamiliar. Some researchers describe this risk as a kind of filter bubble for culture.
+
+Another concern involves fairness. Algorithms are designed by companies with commercial interests, and their decisions are not always transparent. Musicians often struggle to understand why some songs are promoted while others disappear. Because a large share of streams comes from algorithmic playlists, small changes in their design can have enormous consequences for artists' incomes.
+
+There are also subtler effects on music itself. Some producers report writing songs specifically to perform well on streaming platforms, with shorter introductions and catchy hooks placed early, because listeners who skip a song within the first few seconds may signal to the algorithm that it is unappealing. The technology does not merely distribute music. It may be gradually shaping how music is made.
+
+None of this means that algorithms are inherently harmful. They are tools, and like all tools, their effects depend on how they are designed and used. Perhaps the best approach is to treat recommendations as a starting point rather than a destination, and to occasionally search for something the algorithm would never have suggested.
+
+=== forgotten-engineers | The Forgotten Engineers of the Internet | Technology
+When people think about the history of the internet, they often imagine a few famous inventors and entrepreneurs: visionary founders, brilliant programmers, and companies that became household names. The real story is much more collective. The internet was built by thousands of engineers, researchers, and technicians whose names are rarely mentioned, yet whose decisions continue to shape our daily lives.
+
+In the late nineteen sixties, a research network funded by the United States Department of Defense connected computers at a handful of universities. The first message sent across this network was meant to be the word login. The system crashed after only two letters had been transmitted, so the first word ever sent between those distant computers was, appropriately enough, lo.
+
+Over the following years, engineers faced a fundamental problem. Different networks used different technical languages, and they could not easily communicate with one another. The solution came in the form of shared rules, known as protocols, that allowed any network to exchange information with any other. These protocols were designed to be simple, flexible, and resistant to failure, so that messages could find alternative routes if part of the network went down.
+
+Much of this work was coordinated through an unusual system of documents called Requests for Comments. Despite the modest name, these documents defined many of the standards that still govern the internet. Engineers proposed ideas, invited criticism, and refined their designs through open discussion. The culture valued rough consensus and working code over formal authority.
+
+Many crucial contributions came from people outside the spotlight. Programmers wrote the software that translated human-readable addresses into numerical ones. Network operators kept systems running through the night. Technicians laid cables beneath oceans and across continents. Women played significant roles in early computing as well, although their work was frequently overlooked in popular histories.
+
+This collaborative origin explains some of the internet's strengths and weaknesses. Its openness allowed it to grow rapidly and to support innovations that its designers never imagined, from online encyclopedias to video calls. At the same time, the early engineers assumed that users would generally trust one another. Security was not a central design priority, which helps explain why problems such as spam and hacking became so persistent.
+
+Today, the internet seems almost like a natural feature of the world, as invisible and essential as electricity. Remembering its forgotten engineers reminds us that it was built by human beings, making human choices, and that it can still be reshaped by the choices we make now.
+
+=== smart-home | Living with a Smart Home | Technology
+The promise of the smart home is seductive. Lights switch on as you enter a room, the heating adjusts itself to your schedule, and a voice assistant reads the news while the coffee machine starts brewing. Advertisements present a vision of effortless comfort, in which technology quietly anticipates every need. The reality, as many owners discover, is somewhat more complicated.
+
+The basic idea is straightforward. Ordinary household devices, such as thermostats, light bulbs, locks, and cameras, are connected to the internet and to one another. They can be controlled remotely through a phone, programmed to follow routines, or triggered by sensors. In principle, a well-designed system can save energy, improve security, and make daily life easier, particularly for elderly people or those with disabilities.
+
+In practice, many households experience a frustrating gap between promise and performance. Devices from different manufacturers do not always cooperate, and setting them up can require considerable patience. A software update may suddenly change how a familiar feature works. When the internet connection fails, some supposedly intelligent devices become less useful than the simple switches they replaced.
+
+Privacy is a more serious concern. Smart devices collect large amounts of information about their users: when they wake up, when they leave the house, which rooms they occupy, and even what they say near a microphone. This data is often stored on company servers, where it may be analyzed for advertising, shared with partners, or exposed in a security breach. Many users accept these risks without fully understanding them.
+
+Security problems are also common. Inexpensive connected devices sometimes ship with weak passwords or outdated software, making them easy targets for hackers. In several well-known incidents, large numbers of compromised cameras and routers were used to launch attacks that disrupted major websites. A device that seems harmless in a living room can become part of a global problem.
+
+There are subtler social effects as well. Some researchers have noted that smart home systems can create new forms of control within households. One person may manage the settings while others simply live with the results. In extreme cases, connected devices have been used to monitor or harass partners.
+
+None of this means that smart homes are a mistake. Many people find genuine value in them. The key is to approach the technology deliberately, asking not only what a device can do, but also what it collects, who controls it, and whether its convenience is truly worth the trade.
+
+=== self-driving-ethics | The Ethics of Self-Driving Cars | Technology
+Imagine an autonomous car traveling along a narrow road when a group of pedestrians suddenly steps into its path. The car cannot stop in time. It can either continue forward, harming the pedestrians, or swerve into a wall, endangering its own passenger. What should it be programmed to do? Questions like this have dominated popular discussions about the ethics of self-driving vehicles.
+
+The scenario is a modern version of the trolley problem, a thought experiment that philosophers have debated for decades. In its classic form, a runaway trolley is heading toward five people, and you can divert it onto a side track where it will kill only one. The problem is designed to test our intuitions about whether it is acceptable to sacrifice one life to save several.
+
+Researchers at the Massachusetts Institute of Technology turned these dilemmas into an online experiment called the Moral Machine, which collected millions of responses from people in many countries. Participants generally preferred saving more lives rather than fewer, and human lives rather than animal lives. However, the study also revealed significant cultural differences in other preferences, raising difficult questions about whose values should be built into global technology.
+
+Many engineers argue that these dramatic dilemmas are largely a distraction. Real accidents rarely present clean choices between clearly defined outcomes. A vehicle's sensors may be uncertain about what an object is, how it will move, or whether a collision can be avoided at all. In practice, the most important ethical decisions concern far more ordinary matters: how cautiously the car should drive, how much risk is acceptable, and how thoroughly the system should be tested before reaching public roads.
+
+Responsibility is another major issue. When a human driver causes an accident, legal systems have well-established ways of assigning blame. When an automated system fails, the question becomes more complicated. Should responsibility fall on the manufacturer, the software developer, the owner, or the person sitting behind the wheel who failed to intervene?
+
+There is also the question of fairness. Systems trained on limited data may perform less reliably in certain conditions or with certain groups of people. Ensuring that safety benefits are distributed equally requires careful attention during development.
+
+Supporters of autonomous vehicles point out that human drivers cause enormous numbers of accidents through fatigue, distraction, and impairment. If machines can reduce that toll, the ethical case for them may be strong. The challenge is to make sure that the transition is transparent, accountable, and guided by values that society has openly discussed.
+
+=== passwords | Why Passwords Refuse to Die | Technology
+For years, technology experts have predicted the death of the password. They have described it as outdated, insecure, and frustrating, a relic of early computing that should have been replaced long ago. Yet passwords remain everywhere. Most people still manage dozens of them, forget many of them, and reuse far too many of them. Why has such an unpopular technology proved so difficult to abandon?
+
+The basic weakness of passwords is that they rely on human memory, and human memory is not designed to store long strings of random characters. As a result, people choose passwords that are easy to remember and therefore easy to guess. Lists of the most common passwords, compiled from security breaches, are depressingly predictable. Simple sequences of numbers and the word password itself regularly appear near the top.
+
+Reuse makes the situation worse. When people use the same password for many accounts, a breach at one website can expose all the others. Criminals routinely test stolen combinations of usernames and passwords on other services, a technique known as credential stuffing. A careless decision made years ago on a forgotten forum can eventually compromise an important email account.
+
+Security professionals have proposed many improvements. Password managers generate and store strong, unique passwords, so users need to remember only one master password. Two-factor authentication requires a second piece of evidence, such as a code sent to a phone, making stolen passwords far less useful. More recently, technology companies have promoted passkeys, which rely on cryptographic keys stored on a device and unlocked with a fingerprint, a face scan, or a short code.
+
+These solutions are genuinely more secure, but adoption has been slow. Many people find new systems confusing or worry about losing access if their phone is lost or broken. Older websites may not support modern methods at all. Organizations must balance security against convenience, and convenience often wins.
+
+There is also a deeper reason for the password's persistence: simplicity. A password works on any device, requires no special hardware, and can be shared, written down, or changed instantly. It is a universal key that almost everyone understands, even if they use it badly.
+
+The password may eventually fade away, replaced by systems that are both safer and easier. Until then, the most practical advice remains unglamorous: use a password manager, enable two-factor authentication, and never reuse the same password for important accounts.
+
+=== return-of-repair | The Return of Repair | Technology
+There was a time when repairing things was an ordinary part of life. People darned socks, resoled shoes, and took broken radios to a local technician who could replace a faulty component in minutes. Over the past few decades, however, repair has become increasingly difficult. Many modern products are sealed, glued, or designed with specialized screws, and replacement parts can be expensive or impossible to obtain.
+
+The consequences are significant. When repairing a device costs nearly as much as buying a new one, most people choose replacement. Washing machines, printers, laptops, and phones end up in landfills long before their useful life should have ended. This cycle generates enormous amounts of waste and consumes resources that took considerable energy to extract and process.
+
+Critics argue that some manufacturers deliberately discourage repair. They may restrict access to manuals and diagnostic tools, limit the sale of spare parts to authorized service centers, or use software that prevents independent technicians from installing replacement components. Companies typically defend these practices by citing safety, security, and the protection of intellectual property.
+
+In response, a growing movement has emerged around what is often called the right to repair. Its supporters include environmental groups, independent repair shops, farmers frustrated by expensive tractor repairs, and ordinary consumers tired of throwing away nearly functional devices. They argue that people who buy a product should be able to fix it themselves or choose who fixes it for them.
+
+This movement has achieved notable successes. Several states and the European Union have passed laws requiring manufacturers to provide parts, tools, and information for certain products. Some companies, partly in response to public pressure, have started selling repair kits and publishing guides that were previously unavailable.
+
+At the same time, a cultural shift is taking place. Volunteer events known as repair cafes invite people to bring broken items and work alongside skilled volunteers to fix them. These gatherings are not only practical but social, creating spaces where neighbors exchange knowledge and where a broken lamp becomes the start of a conversation.
+
+Repair also changes our relationship with objects. A device that can be opened, understood, and mended feels less like a disposable product and more like a possession worth caring for. Learning to repair something, even something small, can be surprisingly satisfying.
+
+The return of repair suggests a different vision of technology: not as a stream of products to be consumed and discarded, but as tools that deserve to last.
+
+=== translating-poetry | Machines That Translate Poetry | Technology
+Machine translation has improved dramatically in recent years. Tools that once produced clumsy and often comical sentences can now translate news articles, business emails, and technical documents with impressive fluency. For many everyday purposes, they are fast, convenient, and good enough. Yet one area continues to expose the limits of these systems with particular clarity: poetry.
+
+Poetry is difficult to translate even for skilled human translators. A poem's meaning is closely tied to its sound, rhythm, and form. Rhymes rarely survive the journey between languages, and a word that carries several meanings at once may have no single equivalent elsewhere. Translators must constantly choose what to preserve and what to sacrifice: the literal sense, the music, the imagery, or the emotional effect.
+
+Modern translation systems rely on large neural networks trained on enormous collections of text. They learn statistical patterns that connect words and phrases across languages, allowing them to generate translations that sound natural. However, their training data contains relatively little poetry, and the patterns they learn tend to favor the most common, predictable expressions. Poetry, by contrast, often depends on surprising choices.
+
+When researchers and writers have tested machine translation on poems, the results are frequently fluent but flat. The systems may convey the general meaning accurately while losing the rhythm entirely, or they may smooth away deliberate ambiguities and turn a striking metaphor into a conventional phrase. In some cases, the translation reads like a competent paraphrase rather than a poem.
+
+Some recent systems perform better when they are given specific instructions, such as asking them to preserve a particular meter or rhyme scheme. Human translators have also begun to use these tools as assistants, generating rough drafts or exploring alternative phrasings before applying their own judgment. Used in this way, the technology can support creativity rather than replace it.
+
+There are deeper questions here as well. Translation is not simply the transfer of meaning from one container to another. It is an act of interpretation that reflects the translator's sensitivity, cultural knowledge, and personal voice. Many celebrated translations are admired precisely because they reveal something about both the original poet and the person who translated them.
+
+Perhaps machine translation will one day produce poems that move readers as deeply as the originals. For now, the difficulty of the task serves as a useful reminder that language is not only a system for exchanging information. It is also a way of making beauty, and beauty remains stubbornly hard to automate.
