@@ -81,6 +81,10 @@ class Sprite:
             if len(c) == 6: c[3] = rel
         return rel
 
+# real American speaker for single words (Wikimedia Commons; prepared and checked by prep_real.py)
+REAL_DIR = f"{AUD}/real"
+REAL = json.load(open(f"{REAL_DIR}/accepted.json")) if os.path.exists(f"{REAL_DIR}/accepted.json") else {}
+
 MAN = {}
 for k in ("clips", "words", "stories"):
     p = f"{AUD}/manifest-{k}.json"
@@ -195,10 +199,16 @@ def build_sounds(alt_override=None):
                     if ps: sl = trim(decode(ps))
                     else: MISSING.append((nid, voice, text, "slow"))
                 return sp.clip(trim(decode(p)), sl)
+            def real(text):
+                w = text.lower()
+                if w not in REAL: return None
+                return sp.clip(decode(f"{REAL_DIR}/{w}.wav"))
             words = []
             for w in nd["words"]:
                 t = G.plain(w)
                 item = {"text": t, "parts": parts_of(w), "ipa": ipa_of(t), "clip": model(t)}
+                rc = real(t) if " " not in t else None
+                if rc: item["real"] = rc
                 if " " not in t and nid in NODE_PH:
                     alts = (alt_override or {}).get(t.lower())
                     if alts is None:
@@ -214,6 +224,8 @@ def build_sounds(alt_override=None):
             def voices_for(text):
                 if text not in cache:
                     cache[text] = [c for c in (model(text, v, slow=False) for v in HVPT) if c]
+                    rc = real(text)
+                    if rc: cache[text].append(rc)
                 return cache[text]
             for st in nd.get("sets", []):
                 opt_ipa = {w: word_ipa(w) for w in st}
@@ -245,7 +257,7 @@ def build_sounds(alt_override=None):
                 "words": words, "drills": drills, "sentences": sents, "labels": nd.get("labels"), "marks": marks, "idq": idq, "color": color,
             })
             print("node", nid, "drills", len(drills), "idq", len(idq), flush=True)
-    data = {"sections": [{"id": s[0], "title": s[1], "blurb": s[2], "color": s[3], "nodes": s[4]} for s in SECTIONS], "nodes": nodes, "voices": ["Ava", "Andrew", "Aria"]}
+    data = {"sections": [{"id": s[0], "title": s[1], "blurb": s[2], "color": s[3], "nodes": s[4]} for s in SECTIONS], "nodes": nodes, "voices": ["Ava", "Andrew", "Aria", "Real speaker"]}
     json.dump(data, open(f"{PUB}/data/sounds.json", "w"), ensure_ascii=False, separators=(",", ":"))
     if MISSING: print("MISSING", len(MISSING), MISSING[:10])
 

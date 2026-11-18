@@ -51,6 +51,7 @@ export default function SayStage({ node, onDone }: { node: SoundNode; onDone: ()
           </div>
           <PlayButton clip={w.clip} label={`Play ${w.text}`} />
           <PlayButton clip={w.clip} slow label={`Play ${w.text} slowly`} />
+          {w.real && <PlayButton clip={w.real} real label={`Play ${w.text} by a real speaker`} />}
         </div>
         <RecordButton mode={w.text.includes(' ') ? 'sentence' : 'word'} rec={rec} onStart={() => rec.start(w.text, refKeys, w.text.includes(' ') ? 'sentence' : 'word', w)} labelIdle={`Tap and say “${w.text}”`} />
         {rec.state === 'done' && rec.result && <WordResultView r={rec.result} refIpa={w.ipa} marks={node.marks} model={w.clip} knownIpa={known} word={w.text} />}

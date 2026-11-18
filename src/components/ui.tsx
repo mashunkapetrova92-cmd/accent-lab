@@ -6,16 +6,16 @@ import { playClip, stop as stopAudio, usePlaying } from '../lib/audio';
 import type { Clip, WordItem } from '../data/types';
 import type { Metric } from '../assess/types';
 
-export function PlayButton({ clip, slow, label, onPlay }: { clip: Clip | null; slow?: boolean; label?: string; onPlay?: () => void }) {
+export function PlayButton({ clip, slow, real, label, onPlay }: { clip: Clip | null; slow?: boolean; real?: boolean; label?: string; onPlay?: () => void }) {
   const hasSlow = !!clip && clip.length >= 6;
   const id = clip ? `${clip[0]}:${clip[1]}:${slow && hasSlow ? 's' : 'n'}` : 'none';
   const on = usePlaying(id);
   const off = !clip || (!!slow && !hasSlow);
   return (
-    <button className={`play${slow ? ' slow' : ''}${on ? ' playing' : ''}`} disabled={off}
+    <button className={`play${slow ? ' slow' : ''}${real ? ' real' : ''}${on ? ' playing' : ''}`} disabled={off}
       aria-label={label || (slow ? 'Play slowly' : 'Play')}
       onClick={() => { onPlay?.(); if (on) { stopAudio(); return; } playClip(clip, !!slow, id).catch(() => {}); }}>
-      <Icon name={on ? 'pause' : slow ? 'slow' : 'play'} />
+      <Icon name={on ? 'pause' : slow ? 'slow' : real ? 'wave' : 'play'} />
     </button>
   );
 }

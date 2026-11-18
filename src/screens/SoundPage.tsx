@@ -129,6 +129,7 @@ function WordsStage({ node, onDone }: { node: SoundNode; onDone: () => void }) {
             <div className="grow"><HlWord w={w} /><div className="i"><IpaMark ipa={w.ipa} marks={node.marks} /></div></div>
             <PlayButton clip={w.clip} label={`Play ${w.text}`} />
             <PlayButton clip={w.clip} slow label={`Play ${w.text} slowly`} />
+            {w.real && <PlayButton clip={w.real} real label={`Play ${w.text} by a real speaker`} />}
           </div>
         ))}
       </div>

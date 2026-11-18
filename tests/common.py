@@ -19,6 +19,7 @@ def serve(dist=os.environ.get("TEST_DIST", "/home/claude/accent-lab/dist"), port
 
 # Records every clip the app's <audio> player starts (its WAV length and loudness) and whether it ended.
 AUDIO_PROBE = r"""
+try { sessionStorage.setItem("accentlab.started", "1"); } catch (e) {}  // skip the welcome screen
 window.__plays = [];
 (() => {
   const P = HTMLMediaElement.prototype; const op = P.play;
@@ -60,6 +61,7 @@ STRICT_AUTOPLAY = r"""
 """
 # A fake microphone: plays a sound file into getUserMedia (works in every browser).
 FAKE_MIC = r"""
+try { sessionStorage.setItem("accentlab.started", "1"); } catch (e) {}
 window.__mic = { url: null, delay: 0.4, gain: 1 }; window.__fakeLog = [];
 const md = navigator.mediaDevices; window.__md = md; // keep the wrapper alive (WebKit would otherwise drop the override)
 if (md) md.getUserMedia = async (c) => {

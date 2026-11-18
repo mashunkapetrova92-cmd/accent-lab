@@ -107,6 +107,7 @@ p { margin: 0; }
 .play:active { transform: scale(.92); }
 .play svg { width: 20px; height: 20px; }
 .play.slow { background: var(--surface-2); color: var(--ink-2); box-shadow: inset 0 0 0 1.5px var(--line); }
+.play.real { background: var(--surface-2); color: var(--accent-ink); box-shadow: inset 0 0 0 1.5px var(--accent-soft); }
 .play.playing { background: var(--accent); color: #fff; }
 .play.mine { background: var(--bad-soft); color: var(--bad); }
 .play.mine.playing { background: var(--bad); color: #fff; }

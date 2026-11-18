@@ -144,12 +144,22 @@ function player(): HTMLAudioElement {
   p.preload = 'auto';
   p.setAttribute('playsinline', '');
   (p as HTMLAudioElement & { disableRemotePlayback?: boolean }).disableRemotePlayback = true;
-  p.addEventListener('playing', () => { const c = current; if (c && p.src === c.src) { c.started = true; armTimer(c); } });
+  p.addEventListener('playing', () => {
+    const c = current; if (!c || p.src !== c.src) return;
+    c.started = true; armTimer(c);
+    // "playing" but the clock has not moved for 4 s: the source stalled; start it again (some media stacks need ~2 s to start a long clip)
+    const t0 = p.currentTime, src = c.src;
+    window.setTimeout(() => {
+      if (current !== c || c.src !== src || p.paused || p.ended || p.currentTime > t0 + 0.05) return;
+      c.started = false; if (!retry(c)) { finish(c); fail('Tap the play button again to hear the recording.'); }
+    }, 4000);
+  });
   p.addEventListener('ended', () => { const c = current; if (c && p.src === c.src) finish(c); });
   // paused by the system (a call, Siri, another app): the button must not keep showing "playing"
   p.addEventListener('pause', () => { const c = current; if (c && c.started && p.src === c.src && !p.ended) finish(c); });
-  p.addEventListener('error', () => { const c = current; if (c && p.src === c.src) { finish(c); fail('The recording could not be played in this browser.'); } });
+  p.addEventListener('error', () => { const c = current; if (c && p.src === c.src) { if (retry(c)) return; finish(c); fail('The recording could not be played in this browser.'); } });
   el = p;
+  (window as unknown as { __player?: HTMLAudioElement }).__player = p; // for automated checks
   return p;
 }
 function setSrc(p: HTMLAudioElement, src: string, own: boolean) {
@@ -205,7 +215,7 @@ export function clearAudioError() { if (lastError) { lastError = ''; emit(); } }
 function fail(msg: string) { lastError = msg; emit(); }
 
 interface Current {
-  id: string; src: string; from: number; offset: number; len: number; raf: number; timer: number; started: boolean;
+  id: string; src: string; from: number; offset: number; len: number; raf: number; timer: number; started: boolean; tries: number; blob?: Blob;
   onEnd?: () => void; onTime?: (t: number) => void;
 }
 let current: Current | null = null;
@@ -220,7 +230,7 @@ function armTimer(c: Current) {
   const wait = !c.started ? 6 : isNaN(len) ? 2 : Math.max(0, len - (p.currentTime || 0)) + 1.5;
   c.timer = window.setTimeout(() => {
     if (current !== c) return;
-    if (!c.started) { finish(c); fail('Tap the play button again to hear the recording.'); return; }
+    if (!c.started) { if (retry(c)) return; finish(c); fail('Tap the play button again to hear the recording.'); return; }
     if (p.ended || p.paused || (!isNaN(len) && p.currentTime >= len - 0.05)) finish(c); else armTimer(c);
   }, wait * 1000);
 }
@@ -249,11 +259,10 @@ export function pause() { halt(false); }
 
 export interface PlayOpts { id: string; onTime?: (t: number) => void; onEnd?: () => void }
 
-function start(blob: Blob, from: number, len: number, o: PlayOpts) {
+/** Start (or restart) the current clip. Some media stacks occasionally refuse a fresh source with
+ *  NotSupportedError or never start it; one or two retries with a new address fix that. */
+function attempt(c: Current) {
   const p = player();
-  setSrc(p, URL.createObjectURL(blob), true);
-  const c: Current = { id: o.id, src: p.src, from, offset: from - PAD, len, raf: 0, timer: 0, started: false, onEnd: o.onEnd, onTime: o.onTime };
-  current = c;
   armTimer(c);
   let r: Promise<void> | undefined;
   try { r = p.play(); } catch (e) { r = Promise.reject(e); }
@@ -262,11 +271,31 @@ function start(blob: Blob, from: number, len: number, o: PlayOpts) {
       if (current !== c) return;
       const name = (e as { name?: string })?.name;
       if (name === 'AbortError') return;
+      if (name !== 'NotAllowedError' && retry(c)) return;
       current = null; clear(c);
       if (playingId === c.id) { playingId = ''; emit(); }
       fail(name === 'NotAllowedError' ? 'Tap the play button again to hear the recording.' : 'The recording could not be played in this browser.');
     });
   }
+}
+function retry(c: Current): boolean {
+  if (c.started || c.tries >= 2 || !c.blob) return false;
+  c.tries++; clearTimeout(c.timer);
+  c.timer = window.setTimeout(() => {
+    if (current !== c) return;
+    const p = player();
+    setSrc(p, URL.createObjectURL(c.blob!), true); c.src = p.src;
+    attempt(c);
+  }, 200 * c.tries);
+  return true;
+}
+
+function start(blob: Blob, from: number, len: number, o: PlayOpts) {
+  const p = player();
+  setSrc(p, URL.createObjectURL(blob), true);
+  const c: Current = { id: o.id, src: p.src, from, offset: from - PAD, len, raf: 0, timer: 0, started: false, tries: 0, blob, onEnd: o.onEnd, onTime: o.onTime };
+  current = c;
+  attempt(c);
   if (o.onTime) {
     const tick = () => {
       if (current !== c) return;

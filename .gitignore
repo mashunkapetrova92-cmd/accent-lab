@@ -22,9 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# large binaries: the recordings are on the main branch, the rest is downloaded (see SOURCE-RU.md)
-public/audio
-public/models
-public/ort
-__pycache__

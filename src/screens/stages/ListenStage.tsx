@@ -67,7 +67,7 @@ export default function ListenStage({ node, onDone }: { node: SoundNode; data: S
     <div className="card stack">
       <h2 style={{ fontSize: 22 }}>Listening discrimination</h2>
       <p className="lead">You will hear {N} recordings. Choose the word or phrase you heard. Train your ear before your mouth: hearing the difference makes it much easier to produce.</p>
-      {getState().settings.hvpt && <p className="small muted">Recordings use three different American voices. Hearing several voices helps you recognize the sound in real life.</p>}
+      {getState().settings.hvpt && <p className="small muted">Recordings use several American voices, including a real speaker where one is available. Hearing several voices helps you recognize the sound in real life.</p>}
       <p className="small muted"><b>Contrast:</b> {node.contrast}</p>
       {best !== undefined && <p className="small">Your best result: <b>{best}%</b></p>}
       <button className="btn primary block" onClick={() => { touch(); setRes(Array(N).fill(null)); setI(0); setAnswered(false); }}>Start <Icon name="play" /></button>

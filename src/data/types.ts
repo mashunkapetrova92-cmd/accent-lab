@@ -16,7 +16,7 @@ export interface Diagram {
 /** How a single word is checked: p = against its confusable words, o = also against what the recognizer hears freely,
  *  n = the recognizer cannot confirm even the model recording, so the learner compares by ear. ref = the model recording's result (0–100). */
 export type WordCheck = 'p' | 'o' | 'n';
-export interface WordItem { text: string; parts: { t: string; hl?: boolean }[]; ipa: string; clip: Clip | null; alt?: string[]; check?: WordCheck; ref?: number }
+export interface WordItem { text: string; parts: { t: string; hl?: boolean }[]; ipa: string; clip: Clip | null; real?: Clip; alt?: string[]; check?: WordCheck; ref?: number }
 export interface Drill { say: string; options: string[]; answer: string; clips: Clip[]; optIpa?: Record<string, string>; optClips?: Record<string, Clip> }
 export interface IdQuestion { options: string[]; answer: string }
 export interface SentenceItem { text: string; ipa: string; clip: Clip | null; hl: number[]; tokens: string[]; tokIpa: string[] }

@@ -75,6 +75,7 @@ async def run(p, name, base):
     await tap(pg.locator(".player button.main")); await pg.wait_for_timeout(1500)
     lp = await pg.evaluate("window.__lastPlay")
     out.append(("reader", t1, x and x["started"], x and x["err"], "highlight kept on pause:", now, "resumed from", round(lp["from"], 2)))
+    if os.environ.get("DBG"): print("DBG plays", await pg.evaluate("window.__plays"), "last", lp, "errs", errs)
     await tap(pg.locator(".player button.main"))
     blocked = await pg.evaluate("window.__blocked")
     for o in out: print(name, *o)

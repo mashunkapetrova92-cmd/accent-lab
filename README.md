@@ -53,3 +53,5 @@ npm run preview    # local test at http://localhost:4173
 ## Credits
 
 Model audio: Microsoft neural voices (Ava; Andrew and Aria in listening drills). Speech recognition: Whisper base.en (OpenAI, MIT license) via Transformers.js and ONNX Runtime Web. Transcriptions: CMU Pronouncing Dictionary converted to General American IPA with flapping, syllabic consonants and weak forms, plus hand-checked entries. All texts are original.
+
+Many single words also have a recording by a real American speaker from Wikimedia Commons (CC BY-SA; trimmed and volume-matched, credits in `credits.html`). These recordings are chosen by `content/prep_real.py`, which keeps one speaker and checks each recording with the app's word recognizer.

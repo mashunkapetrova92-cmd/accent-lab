@@ -96,7 +96,7 @@ export default function Settings() {
       <h2 className="section-title">Listening</h2>
       <div className="card stack">
         <label className="row" style={{ cursor: 'pointer' }}>
-          <span className="grow"><b>Several voices in listening drills</b><br /><span className="small muted">High-variability training: drills use three American voices so you learn the sound, not one speaker.</span></span>
+          <span className="grow"><b>Several voices in listening drills</b><br /><span className="small muted">High-variability training: drills use several American voices, including a real speaker, so you learn the sound, not one speaker.</span></span>
           <input type="checkbox" checked={s.hvpt} onChange={e => setSettings({ hvpt: e.target.checked })} style={{ width: 24, height: 24, accentColor: 'var(--accent)' }} />
         </label>
         <label className="row" style={{ cursor: 'pointer' }}>
@@ -137,7 +137,7 @@ export default function Settings() {
 
       <h2 className="section-title">About</h2>
       <div className="card small muted stack">
-        <p>Target accent: General American. Model audio is synthesized with Microsoft neural voices: Ava for texts and sentences, the English-only Ava voice for single words, with Andrew and Aria in listening drills. Every model word was checked automatically for clarity. Transcriptions come from the CMU Pronouncing Dictionary with flapping and weak forms applied, and were checked by hand where the dictionary is missing or ambiguous.</p>
+        <p>Target accent: General American. Model audio is synthesized with Microsoft neural voices: Ava for texts and sentences, the English-only Ava voice for single words, with Andrew and Aria in listening drills. Recordings of a real American speaker (Wikimedia Commons, CC BY-SA; trimmed and volume-matched) are added for many single words: <a href="credits.html" target="_blank" rel="noopener">credits</a>. Every model word was checked automatically for clarity. Transcriptions come from the CMU Pronouncing Dictionary with flapping and weak forms applied, and were checked by hand where the dictionary is missing or ambiguous.</p>
         <p>The on-device checker is Whisper base.en (OpenAI, MIT license), run with Transformers.js and ONNX Runtime.</p>
         <p>Scores labeled “Measured” come directly from the checker. “Estimated” values are derived from other measurements. “Not measured” means the current checker cannot assess that feature reliably.</p>
         <p>Version {__BUILD__}</p>
