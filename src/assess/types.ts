@@ -52,6 +52,8 @@ export interface StartOptions {
   /** single words: how the word can be checked and the model recording's own result (see WordCheck) */
   check?: 'p' | 'o' | 'n';
   ref?: number;
+  /** sentences: expected sounds per word (recognizer symbols, "!" = unreliable), for the free sound check */
+  phones?: string[];
   onPartial?: (text: string) => void;
   onLevel?: (level: number) => void;
   /** called when the engine stops listening on its own (end of a single word) */

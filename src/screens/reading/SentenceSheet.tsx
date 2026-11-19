@@ -57,7 +57,7 @@ export default function SentenceSheet({ story, si, sent }: { story: Story; si: n
           {notes.map(n => <div key={n.k} className="list-row" style={{ display: 'block' }}><b>{n.title}. </b><span className="small">{n.text}</span></div>)}
         </div>
       )}
-      <RecordButton mode="sentence" rec={rec} onStart={() => rec.start(item.text, story.keys.slice(sent.a, sent.b), 'sentence')} labelIdle="Tap and read the sentence" />
+      <RecordButton mode="sentence" rec={rec} onStart={() => rec.start(item.text, story.keys.slice(sent.a, sent.b), 'sentence', { phones: sent.ph?.length === sent.b - sent.a ? sent.ph : undefined })} labelIdle="Tap and read the sentence" />
       {rec.state === 'done' && rec.result && <SentenceResultView s={item} r={rec.result} marks={[]} />}
     </div>
   );

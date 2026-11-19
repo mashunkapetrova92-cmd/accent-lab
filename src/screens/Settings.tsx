@@ -4,6 +4,7 @@ import { resetAll, setSettings, useStore, type EnginePref } from '../lib/store';
 import { testAzure } from '../assess/azure';
 import { browserSupported, IOS_STANDALONE } from '../assess/browser';
 import { loadModel, MODEL_MB, useModel } from '../assess/asr';
+import { loadPhon, PHON_MB, usePhonModel } from '../assess/phon';
 import { engineLabel } from '../assess';
 import { url } from '../data/load';
 import { back } from '../router';
@@ -13,7 +14,7 @@ type Dl = { done: number; total: number; bytes: number; err?: string; group?: st
 
 const ENGINES: { id: EnginePref; title: string; tag: string; text: string }[] = [
   { id: 'auto', title: 'Automatic', tag: 'Recommended', text: 'Uses Azure when it is connected. Otherwise single words are checked on this device against the words they are confused with (“sheep” or “ship”), and sentences by the browser’s recognizer where it works well, or on this device.' },
-  { id: 'local', title: 'On-device recognition', tag: 'Works in every browser', text: `A speech model runs inside the app, also offline and in apps opened from the Home Screen. Downloads once (about ${MODEL_MB} MB). Checks which words were understood; it cannot score individual sounds.` },
+  { id: 'local', title: 'On-device recognition', tag: 'Works in every browser', text: `A speech model runs inside the app, also offline and in apps opened from the Home Screen. Downloads once (about ${MODEL_MB} MB). Checks which words were understood and, in sentences, which sounds differed (with the free sound check below).` },
   { id: 'browser', title: 'Browser speech recognition', tag: 'Shows words live', text: 'The recognizer built into Chrome, Edge or Safari. Needs the internet. Some browsers (Firefox, Brave, Opera, apps opened from the iPhone Home Screen) do not provide it.' },
   { id: 'azure', title: 'Azure pronunciation assessment', tag: 'Sound by sound', text: 'Microsoft Azure AI Speech scores every sound, says which sound you produced instead, and measures fluency and prosody. Needs your own free Azure key behind a small token server (see the setup guide).' },
 ];
@@ -27,6 +28,7 @@ export default function Settings() {
   const [dl, setDl] = useState<Dl | null>(null);
   const [files, setFiles] = useState<Files | null>(null);
   const model = useModel();
+  const ph = usePhonModel();
   const standalone = matchMedia('(display-mode: standalone)').matches || (navigator as unknown as { standalone?: boolean }).standalone;
 
   useEffect(() => { fetch(url('data/files.json')).then(r => r.json()).then(setFiles).catch(() => {}); }, []);
@@ -69,6 +71,19 @@ export default function Settings() {
             {model.status === 'error' && <div className="notice bad">{model.error.includes('fetch') || !navigator.onLine ? 'The download needs an internet connection. Connect and try again.' : model.error}</div>}
             <p className="small muted">It downloads automatically the first time you record. Download it now to practise offline or on a slow connection later.</p>
             <button className="btn" disabled={model.status === 'loading' || model.status === 'ready'} onClick={() => { loadModel().catch(() => {}); }}><Icon name="download" /> {model.status === 'ready' ? 'Downloaded' : 'Download now'}</button>
+          </div>
+        )}
+        {s.engine !== 'azure' && (
+          <div className="card stack">
+            <label className="row" style={{ cursor: 'pointer' }}>
+              <span className="grow"><b>Sound-by-sound check on this device</b> <span className="pill accent">Free</span><br /><span className="small muted">For sentences: shows which sound in which word differed (“/θ/ sounded like /s/”), without Azure and also offline. Downloads once (about {PHON_MB} MB). New and less precise than Azure; when Azure is connected, Azure is used.</span></span>
+              <input type="checkbox" checked={s.soundCheck !== false} onChange={e => setSettings({ soundCheck: e.target.checked })} style={{ width: 24, height: 24, accentColor: 'var(--accent)' }} />
+            </label>
+            {s.soundCheck !== false && <>
+              {ph.status === 'loading' && <div className="bar"><i style={{ width: `${Math.round(ph.progress * 100)}%` }} /></div>}
+              {ph.status === 'error' && <div className="notice bad">{!navigator.onLine ? 'The download needs an internet connection. Connect and try again.' : ph.error}</div>}
+              <button className="btn" disabled={ph.status === 'loading' || ph.status === 'ready'} onClick={() => { loadPhon().catch(() => {}); }}><Icon name="download" /> {ph.status === 'ready' ? 'Downloaded' : ph.status === 'loading' ? `${Math.round(ph.progress * 100)}%` : 'Download now'}</button>
+            </>}
           </div>
         )}
         {(s.engine === 'azure' || s.engine === 'auto') && (
@@ -138,7 +153,7 @@ export default function Settings() {
       <h2 className="section-title">About</h2>
       <div className="card small muted stack">
         <p>Target accent: General American. Model audio is synthesized with Microsoft neural voices: Ava for texts and sentences, the English-only Ava voice for single words, with Andrew and Aria in listening drills. Recordings of a real American speaker (Wikimedia Commons, CC BY-SA; trimmed and volume-matched) are added for many single words: <a href="credits.html" target="_blank" rel="noopener">credits</a>. Every model word was checked automatically for clarity. Transcriptions come from the CMU Pronouncing Dictionary with flapping and weak forms applied, and were checked by hand where the dictionary is missing or ambiguous.</p>
-        <p>The on-device checker is Whisper base.en (OpenAI, MIT license), run with Transformers.js and ONNX Runtime.</p>
+        <p>The on-device checker is Whisper base.en (OpenAI, MIT license), run with Transformers.js and ONNX Runtime. The sound-by-sound check uses wav2vec2-ljspeech-gruut (Bookbot, Apache 2.0).</p>
         <p>Scores labeled “Measured” come directly from the checker. “Estimated” values are derived from other measurements. “Not measured” means the current checker cannot assess that feature reliably.</p>
         <p>Version {__BUILD__}</p>
       </div>

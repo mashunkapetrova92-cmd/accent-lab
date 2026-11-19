@@ -19,7 +19,7 @@ export type WordCheck = 'p' | 'o' | 'n';
 export interface WordItem { text: string; parts: { t: string; hl?: boolean }[]; ipa: string; clip: Clip | null; real?: Clip; alt?: string[]; check?: WordCheck; ref?: number }
 export interface Drill { say: string; options: string[]; answer: string; clips: Clip[]; optIpa?: Record<string, string>; optClips?: Record<string, Clip> }
 export interface IdQuestion { options: string[]; answer: string }
-export interface SentenceItem { text: string; ipa: string; clip: Clip | null; hl: number[]; tokens: string[]; tokIpa: string[] }
+export interface SentenceItem { text: string; ipa: string; clip: Clip | null; hl: number[]; tokens: string[]; tokIpa: string[]; ph?: string[] }
 
 export interface SoundNode {
   id: string; symbol: string; name: string; key: string; keyIpa: string; keyClip: Clip | null;
@@ -36,7 +36,7 @@ export interface SoundsData { sections: Section[]; nodes: SoundNode[]; voices: s
 export const F = { FLAP: 1, LINK: 2, WEAK: 4, CONTENT: 8, RHOTIC: 16, HOMOGRAPH: 32, SCHWA: 64 } as const;
 
 export interface Tok { d: string; pre?: string; post?: string; n: string[]; i: number; f?: number }
-export interface Sent { toks: Tok[]; tune: 'fall' | 'rise' | 'none'; a: number; b: number; ipa: string }
+export interface Sent { toks: Tok[]; tune: 'fall' | 'rise' | 'none'; a: number; b: number; ipa: string; ph?: string[] }
 export interface Para { sents: Sent[] }
 export interface Story {
   id: string; title: string; topic: string; words: number; minutes: number;

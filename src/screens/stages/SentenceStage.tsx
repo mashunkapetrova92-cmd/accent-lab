@@ -82,7 +82,7 @@ export default function SentenceStage({ node, onDone }: { node: SoundNode; onDon
           <PlayButton clip={s.clip} label="Play at natural speed" /><span className="small">Natural</span>
           <PlayButton clip={s.clip} slow label="Play slowly" /><span className="small">Slow</span>
         </div>
-        <RecordButton mode="sentence" rec={rec} onStart={() => rec.start(s.text, normTokens(s.text).map(key), 'sentence')} labelIdle="Tap and read the sentence" />
+        <RecordButton mode="sentence" rec={rec} onStart={() => { const k = normTokens(s.text).map(key); rec.start(s.text, k, 'sentence', { phones: s.ph?.length === k.length ? s.ph : undefined }); }} labelIdle="Tap and read the sentence" />
         {rec.state === 'done' && rec.result && <SentenceResultView s={s} r={rec.result} marks={node.marks} />}
       </div>
       <div className="row">

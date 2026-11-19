@@ -25,7 +25,7 @@ export interface ReadingAttempt {
 export interface PhonemeStat { n: number; sum: number; conf: Record<string, number> }
 /** 'auto' picks the best checker available: Azure when connected, otherwise the browser's recognizer or the on-device model */
 export type EnginePref = 'auto' | EngineId;
-export interface Settings { engine: EnginePref; azureEndpoint: string; slowReading: boolean; hvpt: boolean; v?: number }
+export interface Settings { engine: EnginePref; azureEndpoint: string; slowReading: boolean; hvpt: boolean; soundCheck?: boolean; v?: number }
 
 interface State {
   ready: boolean;

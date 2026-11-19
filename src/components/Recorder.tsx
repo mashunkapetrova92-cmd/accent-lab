@@ -4,6 +4,7 @@ import { Level } from './ui';
 import { canRecord, engineLabel, markNativeBroken, pickEngine, type Assessment, type Session, type StartOptions } from '../assess';
 import { BROKEN_CODES } from '../assess/browser';
 import { MODEL_MB, useModel } from '../assess/asr';
+import { PHON_MB, usePhonModel } from '../assess/phon';
 import { stop as stopAudio } from '../lib/audio';
 import { learnFrom, touch } from '../lib/store';
 
@@ -45,7 +46,7 @@ export function useRecorder() {
     } finally { session.current = null; stopping.current = false; }
   }, []);
 
-  const start = useCallback(async (reference: string, refKeys: string[], mode: Mode, word?: { alt?: string[]; check?: 'p' | 'o' | 'n'; ref?: number }) => {
+  const start = useCallback(async (reference: string, refKeys: string[], mode: Mode, word?: { alt?: string[]; check?: 'p' | 'o' | 'n'; ref?: number; phones?: string[] }) => {
     touch(); stopAudio();
     const can = canRecord(mode);
     if (!can.ok) { setError(can.reason!); setErrorCode('unsupported'); setState('error'); return; }
@@ -55,7 +56,7 @@ export function useRecorder() {
     setEngineId(engine.id);
     try {
       session.current = await engine.start({
-        reference, refKeys, mode, alternatives: word?.alt, check: mode === 'word' ? word?.check : undefined, ref: word?.ref,
+        reference, refKeys, mode, alternatives: word?.alt, check: mode === 'word' ? word?.check : undefined, ref: word?.ref, phones: word?.phones,
         onPartial: t => setPartial(t),
         onLevel: v => setLevel(v),
         onEnded: () => { stop(); },
@@ -79,7 +80,9 @@ export function RecordButton({ rec, onStart, big, labelIdle = 'Tap to record', m
   const busy = rec.state === 'analyzing';
   const model = useModel();
   const usesModel = rec.engineId === 'local' || (rec.state === 'idle' && pickEngine(mode).id === 'local');
-  const downloading = usesModel && model.status === 'loading' && (on || busy);
+  const ph = usePhonModel();
+  const phDl = mode === 'sentence' && ph.status === 'loading' && busy && !(usesModel && model.status === 'loading');
+  const downloading = (usesModel && model.status === 'loading' && (on || busy)) || phDl;
   return (
     <div className="rec-wrap">
       <button className={`rec${on ? ' on' : ''}${big ? ' big' : ''}`} disabled={busy} aria-label={on ? 'Stop recording' : 'Start recording'}
@@ -92,8 +95,8 @@ export function RecordButton({ rec, onStart, big, labelIdle = 'Tap to record', m
       {on && rec.engineId !== 'browser' && mode === 'passage' && rec.partial && <div className="live-text">“{rec.partial.split(' ').slice(-10).join(' ')}”</div>}
       {downloading && (
         <div className="model-dl" role="status">
-          <div className="bar"><i style={{ width: `${Math.round(model.progress * 100)}%` }} /></div>
-          <span className="small muted">One-time download of the speech checker (about {MODEL_MB} MB): {Math.round(model.progress * 100)}%</span>
+          <div className="bar"><i style={{ width: `${Math.round((phDl ? ph.progress : model.progress) * 100)}%` }} /></div>
+          <span className="small muted">{phDl ? `One-time download of the sound checker (about ${PHON_MB} MB)` : `One-time download of the speech checker (about ${MODEL_MB} MB)`}: {Math.round((phDl ? ph.progress : model.progress) * 100)}%</span>
         </div>
       )}
       {rec.state === 'error' && <div className="notice bad" role="alert" style={{ maxWidth: 440 }}>{rec.error}</div>}

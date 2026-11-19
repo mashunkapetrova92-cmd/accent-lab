@@ -1,6 +1,7 @@
 // The browser's own speech recognizer (Google in Chrome, Microsoft in Edge, Apple in Safari).
 // It reports which words were understood as the intended words and shows them live while the learner reads.
 import { transcriptAssessment } from './basic';
+import { addSoundCheck } from './phoncheck';
 import { hasSpeech, PcmRecorder } from './pcm';
 import { localSupported, transcribe } from './asr';
 import { AssessError, type Assessment, type Engine, type Session, type StartOptions } from './types';
@@ -132,7 +133,7 @@ export const browserEngine: Engine = {
       if (brokenNow) markNativeBroken();
       if ((brokenNow || !transcript) && rest && hasSpeech(rest.all) && localSupported() && o.mode !== 'word') {
         const text = await transcribe(rest.all);
-        if (text) return transcriptAssessment('local', o, text, dur, rest.wav);
+        if (text) return o.mode === 'sentence' ? addSoundCheck(transcriptAssessment('local', o, text, dur, rest.wav), o, rest.all) : transcriptAssessment('local', o, text, dur, rest.wav);
       }
       if (fatal) throw fatal;
       // single words: accept the intended word if it is among the recognizer's alternatives
@@ -143,7 +144,8 @@ export const browserEngine: Engine = {
       }
       if (!transcript && !started) throw new AssessError('nostart', 'This browser’s speech recognition did not start. The app will use on-device checking instead — tap the button and speak again.');
       if (!transcript) throw new AssessError('nothing', 'Nothing was heard. Check the microphone, speak a little louder, and try again.');
-      return transcriptAssessment('browser', o, transcript, dur, rest?.wav);
+      const r = transcriptAssessment('browser', o, transcript, dur, rest?.wav);
+      return o.mode === 'sentence' && rest ? addSoundCheck(r, o, rest.all) : r;
     };
     return {
       stop: finish,

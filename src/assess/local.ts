@@ -4,6 +4,8 @@
 import { choose, loadModel, transcribe } from './asr';
 import { choiceAssessment, transcriptAssessment, uncheckedAssessment } from './basic';
 import { hasSpeech, PcmRecorder, SR } from './pcm';
+import { addSoundCheck, soundCheckOn, startSoundCheck } from './phoncheck';
+import { loadPhon } from './phon';
 import { AssessError, type Assessment, type Engine, type Session, type StartOptions } from './types';
 
 function speechBounds(x: Float32Array): [number, number] {
@@ -28,6 +30,7 @@ export const localEngine: Engine = {
   async start(o: StartOptions): Promise<Session> {
     const rec = PcmRecorder.prepare(); // must happen before any await (user gesture)
     const ready = loadModel().catch(e => { throw modelError(e); });
+    if (o.mode === 'sentence' && o.phones && soundCheckOn()) loadPhon().catch(() => {});
     ready.catch(() => {});
     const segs: Promise<string>[] = [];
     const partial: string[] = [];
@@ -60,11 +63,14 @@ export const localEngine: Engine = {
           const { scores, heard } = await choose(all.subarray(a, b), cands, o.check !== 'p');
           return choiceAssessment(o, scores, heard.toLowerCase().replace(/[^a-z' ]/g, '').trim(), dur, wav);
         }
+        const [sa, sb] = speechBounds(all);
+        const sounds = o.mode === 'sentence' ? startSoundCheck(o, all.subarray(sa, sb)) : null;
         if (tail && hasSpeech(tail)) segs.push(transcribe(tail));
         const texts = await Promise.all(segs);
         const transcript = texts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
         if (!transcript) throw new AssessError('nothing', 'No words were recognized. Speak a little closer to the microphone and try again.');
-        return transcriptAssessment('local', o, transcript, dur, wav);
+        const r = transcriptAssessment('local', o, transcript, dur, wav);
+        return o.mode === 'sentence' ? addSoundCheck(r, o, sounds) : r;
       } catch (e) {
         if (e instanceof AssessError) throw e;
         throw modelError(e);

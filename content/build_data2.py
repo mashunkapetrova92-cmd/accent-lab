@@ -85,6 +85,8 @@ class Sprite:
 REAL_DIR = f"{AUD}/real"
 REAL = json.load(open(f"{REAL_DIR}/accepted.json")) if os.path.exists(f"{REAL_DIR}/accepted.json") else {}
 
+# recordings that still sound like another word after repair (fix_clips.py): left out
+BAD = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bad_clips.json'))) if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bad_clips.json')) else {}
 MAN = {}
 for k in ("clips", "words", "stories"):
     p = f"{AUD}/manifest-{k}.json"
@@ -194,14 +196,14 @@ def build_sounds(alt_override=None):
                 p = clip_file(text, voice)
                 if not p: MISSING.append((nid, voice, text)); return None
                 sl = None
-                if slow:
+                if slow and f"{voice}|{text.lower()}|slow" not in BAD:
                     ps = clip_file(text, voice, G.SLOW_SENT if (sentence or " " in text) else G.SLOW_WORD)
                     if ps: sl = trim(decode(ps))
                     else: MISSING.append((nid, voice, text, "slow"))
                 return sp.clip(trim(decode(p)), sl)
             def real(text):
                 w = text.lower()
-                if w not in REAL: return None
+                if w not in REAL or f"real|{w}" in BAD: return None
                 return sp.clip(decode(f"{REAL_DIR}/{w}.wav"))
             words = []
             for w in nd["words"]:
@@ -223,7 +225,8 @@ def build_sounds(alt_override=None):
             drills = []; cache = {}
             def voices_for(text):
                 if text not in cache:
-                    cache[text] = [c for c in (model(text, v, slow=False) for v in HVPT) if c]
+                    ok = [v for v in HVPT if f"{v}|{text.lower()}|normal" not in BAD] or HVPT[:1]
+                    cache[text] = [c for c in (model(text, v, slow=False) for v in ok) if c]
                     rc = real(text)
                     if rc: cache[text].append(rc)
                 return cache[text]
