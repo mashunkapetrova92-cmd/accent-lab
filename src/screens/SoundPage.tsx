@@ -34,17 +34,12 @@ export default function SoundPage({ id }: { id: string }) {
 
   return (
     <div className="screen" style={{ ['--hl' as string]: node.color }}>
-      <div className="topbar">
+      <div className="lesson-head">
         <button className="icon-btn" onClick={() => back('/sounds')} aria-label="Back to the sound map"><Icon name="back" /></button>
-        <div className="grow" />
-        {p?.mastered && <span className="pill good"><Icon name="check" size={14} /> Mastered</span>}
-      </div>
-      <div className="sound-head">
         <div className="sound-sym ipa" style={{ background: node.color }}>{node.symbol}</div>
-        <div className="grow">
-          <div className="eyebrow">{node.category}</div>
-          <h1>{node.name}</h1>
-          <div className="muted">as in <b style={{ color: 'var(--ink)' }}>{node.key}</b> <span className="ipa">{node.keyIpa}</span></div>
+        <div className="grow" style={{ minWidth: 0 }}>
+          <h1>{node.name}{p?.mastered && <span className="mastered" aria-label="Mastered"><Icon name="check" size={14} /></span>}</h1>
+          <div className="muted small">as in <b style={{ color: 'var(--ink)' }}>{node.key}</b> <span className="ipa">{node.keyIpa}</span></div>
         </div>
       </div>
       <nav className="stages" aria-label="Lesson stages">
@@ -114,7 +109,7 @@ function LearnStage({ node, onDone }: { node: SoundNode; onDone: () => void }) {
         </div>
       </div>
       <div className="notice info"><b>Phonology note. </b>{node.note}</div>
-      <button className="btn primary block" onClick={onDone}>I understand this sound — continue <Icon name="next" /></button>
+      <button className="btn primary block stage-next" onClick={onDone}>I understand this sound — continue <Icon name="next" /></button>
     </div>
   );
 }
@@ -133,7 +128,7 @@ function WordsStage({ node, onDone }: { node: SoundNode; onDone: () => void }) {
           </div>
         ))}
       </div>
-      <button className="btn primary block" onClick={onDone}>Continue to listening practice <Icon name="next" /></button>
+      <button className="btn primary block stage-next" onClick={onDone}>Continue to listening practice <Icon name="next" /></button>
     </div>
   );
 }

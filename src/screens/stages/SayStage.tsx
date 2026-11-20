@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import Icon from '../../components/Icon';
+import StepBar from '../../components/StepBar';
 import { HlWord, IpaMark, PlayButton } from '../../components/ui';
 import { RecordButton, useRecorder } from '../../components/Recorder';
 import { WordResultView } from '../../components/Results';
@@ -56,13 +56,11 @@ export default function SayStage({ node, onDone }: { node: SoundNode; onDone: ()
         <RecordButton mode={w.text.includes(' ') ? 'sentence' : 'word'} rec={rec} onStart={() => rec.start(w.text, refKeys, w.text.includes(' ') ? 'sentence' : 'word', w)} labelIdle={`Tap and say “${w.text}”`} />
         {rec.state === 'done' && rec.result && <WordResultView r={rec.result} refIpa={w.ipa} marks={node.marks} model={w.clip} knownIpa={known} word={w.text} />}
       </div>
-      <div className="row">
-        <button className="btn grow" disabled={i === 0} onClick={() => setI(i - 1)}><Icon name="back" /> Previous</button>
-        <button className="btn grow" disabled={i === node.words.length - 1} onClick={() => setI(i + 1)}>Next word <Icon name="next" /></button>
-      </div>
-      <button className="btn primary block" disabled={tried.size < need && Object.keys(scores).length < need} onClick={onDone}>
-        {tried.size < need && Object.keys(scores).length < need ? `Try ${need - Math.max(tried.size, Object.keys(scores).length)} more word${need - Math.max(tried.size, Object.keys(scores).length) === 1 ? '' : 's'}` : 'Continue to sentences'} <Icon name="next" />
-      </button>
+      <StepBar
+        prev={i > 0 ? () => setI(i - 1) : undefined}
+        next={i < node.words.length - 1 ? () => setI(i + 1) : undefined} nextLabel="Next word"
+        left={Math.max(0, need - Math.max(tried.size, Object.keys(scores).length))} unit="word"
+        onDone={onDone} doneLabel="Continue" />
     </div>
   );
 }

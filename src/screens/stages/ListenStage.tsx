@@ -70,7 +70,7 @@ export default function ListenStage({ node, onDone }: { node: SoundNode; data: S
       {getState().settings.hvpt && <p className="small muted">Recordings use several American voices, including a real speaker where one is available. Hearing several voices helps you recognize the sound in real life.</p>}
       <p className="small muted"><b>Contrast:</b> {node.contrast}</p>
       {best !== undefined && <p className="small">Your best result: <b>{best}%</b></p>}
-      <button className="btn primary block" onClick={() => { touch(); setRes(Array(N).fill(null)); setI(0); setAnswered(false); }}>Start <Icon name="play" /></button>
+      <button className="btn primary block stage-next" onClick={() => { touch(); setRes(Array(N).fill(null)); setI(0); setAnswered(false); }}>Start <Icon name="play" /></button>
     </div>
   );
   if (i >= N) {
@@ -83,7 +83,7 @@ export default function ListenStage({ node, onDone }: { node: SoundNode; data: S
         <p className="lead">{pass ? 'You reached the 80% needed for this stage.' : 'You need 80% to complete this stage. Replay the pairs you missed and try again.'}</p>
         <div className="row" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
           <button className="btn" onClick={() => { setRound(r => r + 1); setRes(Array(N).fill(null)); setI(0); setAnswered(false); }}><Icon name="replay" /> Try again</button>
-          {pass && <button className="btn primary" onClick={() => onDone(true)}>Continue <Icon name="next" /></button>}
+          {pass && <button className="btn primary stage-next" onClick={() => onDone(true)}>Continue <Icon name="next" /></button>}
         </div>
       </div>
     );
@@ -92,7 +92,7 @@ export default function ListenStage({ node, onDone }: { node: SoundNode; data: S
     <div className="stack">
       <QuestionCard q={qs[i]} index={i} total={N} results={res} explain={node.contrast}
         onAnswer={ok => { setRes(r => { const c = r.slice(); c[i] = ok; return c; }); setAnswered(true); }} />
-      <button className="btn primary block" disabled={!answered} onClick={() => {
+      <button className="btn primary block stage-next" disabled={!answered} onClick={() => {
         if (i + 1 >= N) { const sc = Math.round([...res].filter(Boolean).length / N * 100); recordListen(node.id, sc); }
         setI(i + 1); setAnswered(false);
       }}>{i + 1 >= N ? 'See result' : 'Next'} <Icon name="next" /></button>

@@ -53,7 +53,7 @@ export default function TestStage({ node, onNext }: { node: SoundNode; data: Sou
       </div>
       {(prog.testBest !== undefined) && <p className="small">Best score: <b>{prog.testBest}</b> · Most recent: <b>{prog.testLast}</b></p>}
       {missing.length > 0 && <div className="notice">Complete these stages first: {missing.map(m => m.label).join(', ')}.</div>}
-      <button className="btn primary block" disabled={missing.length > 0} onClick={() => { touch(); setScores({}); setFinal(null); setStep(0); }}>Start the test <Icon name="play" /></button>
+      <button className="btn primary block stage-next" disabled={missing.length > 0} onClick={() => { touch(); setScores({}); setFinal(null); setStep(0); }}>Start the test <Icon name="play" /></button>
     </div>
   );
 
@@ -108,7 +108,7 @@ function IdPart({ node, qs, onDone }: { node: SoundNode; qs: SoundNode['idq']; o
       <div className="options">
         {q.options.map(o => <button key={o} className={`opt${picked ? (o === q.answer ? ' right' : o === picked ? ' wrong' : '') : ''}`} disabled={!!picked} onClick={() => { setPicked(o); if (o === q.answer) setOk(k => k + 1); }}>{o}</button>)}
       </div>
-      {picked && <button className="btn primary block" style={{ marginTop: 14 }} onClick={() => { if (i + 1 >= qs.length) onDone(Math.round(ok / qs.length * 100)); else { setI(i + 1); setPicked(null); } }}>Next <Icon name="next" /></button>}
+      {picked && <button className="btn primary block stage-next" style={{ marginTop: 14 }} onClick={() => { if (i + 1 >= qs.length) onDone(Math.round(ok / qs.length * 100)); else { setI(i + 1); setPicked(null); } }}>Next <Icon name="next" /></button>}
     </div>
   );
 }
@@ -118,7 +118,7 @@ function DiscPart({ node, qs, onDone }: { node: SoundNode; qs: ReturnType<typeof
   return (
     <div className="stack">
       <QuestionCard q={qs[i]} index={i} total={qs.length} results={res} explain={node.contrast} onAnswer={ok => { setRes(r => { const c = r.slice(); c[i] = ok; return c; }); setAns(true); }} />
-      <button className="btn primary block" disabled={!ans} onClick={() => { if (i + 1 >= qs.length) onDone(Math.round(res.filter(Boolean).length / qs.length * 100)); else { setI(i + 1); setAns(false); } }}>Next <Icon name="next" /></button>
+      <button className="btn primary block stage-next" disabled={!ans} onClick={() => { if (i + 1 >= qs.length) onDone(Math.round(res.filter(Boolean).length / qs.length * 100)); else { setI(i + 1); setAns(false); } }}>Next <Icon name="next" /></button>
     </div>
   );
 }
@@ -136,7 +136,7 @@ function WordPart({ node, words, onDone }: { node: SoundNode; words: SoundNode['
       <div className="row" style={{ justifyContent: 'center' }}><PlayButton clip={w.clip} /><PlayButton clip={w.clip} slow /></div>
       <RecordButton mode={w.text.includes(' ') ? 'sentence' : 'word'} rec={rec} onStart={() => rec.start(w.text, normTokens(w.text).map(key), w.text.includes(' ') ? 'sentence' : 'word', w)} labelIdle={`Say “${w.text}”`} />
       {score !== null && <div className="row" style={{ justifyContent: 'center' }}><ScoreRing value={score} size="sm" /><span className="small muted">Recorded. You can record again before continuing.</span></div>}
-      {score !== null && <button className="btn primary block" onClick={() => { const g = [...got, score]; setGot(g); if (i + 1 >= words.length) onDone(Math.round(g.reduce((a, b) => a + b, 0) / g.length)); else setI(i + 1); }}>{i + 1 >= words.length ? 'Continue' : 'Next word'} <Icon name="next" /></button>}
+      {score !== null && <button className="btn primary block stage-next" onClick={() => { const g = [...got, score]; setGot(g); if (i + 1 >= words.length) onDone(Math.round(g.reduce((a, b) => a + b, 0) / g.length)); else setI(i + 1); }}>{i + 1 >= words.length ? 'Continue' : 'Next word'} <Icon name="next" /></button>}
     </div>
   );
 }
@@ -151,7 +151,7 @@ function SentPart({ node, s, onDone }: { node: SoundNode; s: SoundNode['sentence
       <div className="row"><PlayButton clip={s.clip} /><PlayButton clip={s.clip} slow /></div>
       <RecordButton mode="sentence" rec={rec} onStart={() => rec.start(s.text, normTokens(s.text).map(key), 'sentence')} labelIdle="Read the sentence" />
       {score !== null && <div className="row" style={{ justifyContent: 'center' }}><ScoreRing value={score} size="sm" /><span className="small muted">You can record again before finishing.</span></div>}
-      {score !== null && <button className="btn primary block" onClick={() => onDone(score)}>Finish the test <Icon name="check" /></button>}
+      {score !== null && <button className="btn primary block stage-next" onClick={() => onDone(score)}>Finish the test <Icon name="check" /></button>}
     </div>
   );
 }

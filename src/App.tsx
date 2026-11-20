@@ -30,7 +30,7 @@ export default function App() {
   else screen = <SoundMap />;
   const tab = top === 'reading' ? 'reading' : top === 'progress' ? 'progress' : 'sounds';
   return (
-    <div className="app">
+    <div className={`app${top === 'sounds' && id ? ' lesson' : ''}`}>
       <main><ErrorBoundary resetKey={route.join('/')}>{screen}</ErrorBoundary></main>
       <AudioToast />
       <nav className="nav" aria-label="Main">

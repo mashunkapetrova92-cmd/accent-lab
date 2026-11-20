@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Icon from '../../components/Icon';
+import StepBar from '../../components/StepBar';
 import { IpaMark, MetricGrid, PlayButton, ScoreRing } from '../../components/ui';
 import { RecordButton, useRecorder } from '../../components/Recorder';
 import { Compare, PhonemeStrip, wordProblem } from '../../components/Results';
@@ -85,11 +85,11 @@ export default function SentenceStage({ node, onDone }: { node: SoundNode; onDon
         <RecordButton mode="sentence" rec={rec} onStart={() => { const k = normTokens(s.text).map(key); rec.start(s.text, k, 'sentence', { phones: s.ph?.length === k.length ? s.ph : undefined }); }} labelIdle="Tap and read the sentence" />
         {rec.state === 'done' && rec.result && <SentenceResultView s={s} r={rec.result} marks={node.marks} />}
       </div>
-      <div className="row">
-        <button className="btn grow" disabled={i === 0} onClick={() => setI(i - 1)}><Icon name="back" /> Previous</button>
-        <button className="btn grow" disabled={i === node.sentences.length - 1} onClick={() => setI(i + 1)}>Next <Icon name="next" /></button>
-      </div>
-      <button className="btn primary block" disabled={done < need} onClick={onDone}>{done < need ? `Record ${need - done} more sentence${need - done === 1 ? '' : 's'}` : 'Continue to the final test'} <Icon name="next" /></button>
+      <StepBar
+        prev={i > 0 ? () => setI(i - 1) : undefined}
+        next={i < node.sentences.length - 1 ? () => setI(i + 1) : undefined} nextLabel="Next sentence"
+        left={Math.max(0, need - done)} unit="sentence"
+        onDone={onDone} doneLabel="Final test" />
     </div>
   );
 }
