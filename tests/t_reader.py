@@ -16,23 +16,22 @@ async def run(p, name, base):
     n = await pg.locator(".lib-card").count()
     await pg.locator(".lib-card").nth(3).click(); await pg.wait_for_timeout(1500)
     out = {"cards": n}
-    # play, check highlight moves
-    await pg.locator(".player button.main").click(); await pg.wait_for_timeout(2500)
-    t1 = await pg.inner_text(".player .time"); now1 = await pg.locator(".tok.now").count()
-    await pg.wait_for_timeout(1500); t2 = await pg.inner_text(".player .time")
-    out["playing"] = (t1, t2, now1)
-    await pg.locator(".player button.main").click()
-    # next sentence while paused, then play: starts at that sentence
-    await pg.locator("button[aria-label='Next sentence']").click(); await pg.wait_for_timeout(300)
-    await pg.locator(".player button.main").click(); await pg.wait_for_timeout(1200)
-    pl = await pg.evaluate("[window.__plays.slice(-1)[0], window.__lastPlay]"); out["jump"] = pl
-    await pg.locator(".player button.main").click()
+    # play the paragraph, check highlight moves
+    await pg.locator(".dock-play").click(); await pg.wait_for_timeout(2500)
+    now1 = await pg.locator(".tok.now").count(); t1 = await pg.evaluate("window.__player && window.__player.currentTime")
+    await pg.wait_for_timeout(1500); t2 = await pg.evaluate("window.__player && window.__player.currentTime")
+    out["playing"] = (round(t1 or 0, 1), round(t2 or 0, 1), now1)
+    await pg.locator(".dock-play").click()
     # slow
-    await pg.locator(".player button.spd").click(); await pg.wait_for_timeout(300)
-    await pg.locator(".player button.main").click(); await pg.wait_for_timeout(1500)
-    out["slow"] = (await pg.inner_text(".player button.spd"), await pg.inner_text(".player .time"), await pg.evaluate("window.__lastPlay.file"))
-    await pg.locator(".player button.main").click()
-    await pg.locator(".player button.spd").click()
+    await pg.locator(".dock-spd").click(); await pg.wait_for_timeout(300)
+    await pg.locator(".dock-play").click(); await pg.wait_for_timeout(1500)
+    out["slow"] = (await pg.inner_text(".dock-spd"), await pg.evaluate("window.__lastPlay.file"))
+    await pg.locator(".dock-play").click()
+    await pg.locator(".dock-spd").click()
+    # next paragraph plays its own audio range
+    await pg.locator(".dock-next").click(); await pg.wait_for_timeout(400)
+    await pg.locator(".dock-play").click(); await pg.wait_for_timeout(1200)
+    out["para2"] = await pg.evaluate("window.__lastPlay"); await pg.locator(".dock-play").click()
     # word sheet: word, slow word, in context
     await pg.locator(".tok").nth(12).click(); await pg.wait_for_timeout(700)
     res = []
@@ -47,8 +46,8 @@ async def run(p, name, base):
     out["sheet"] = res
     await pg.locator(".sheet button[aria-label='Close']").click()
     # sentence sheet in Study mode: normal and slow
-    await pg.locator(".seg button", has_text="Study").click(); await pg.wait_for_timeout(300)
-    await pg.locator("button[aria-label='Notes for sentence 1']").click(); await pg.wait_for_timeout(500)
+    await pg.locator(".para-head .chip", has_text="Study marks").click(); await pg.wait_for_timeout(300)
+    await pg.locator("button[aria-label^='Notes for sentence']").first.click(); await pg.wait_for_timeout(500)
     res = []
     for lab in ["Play the sentence", "Play the sentence slowly"]:
         await pg.evaluate("window.__plays = []")

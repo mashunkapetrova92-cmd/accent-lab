@@ -75,7 +75,7 @@ export function useRecorder() {
   return { state, level, partial, result, error, errorCode, engineId, start, stop, reset };
 }
 
-export function RecordButton({ rec, onStart, big, labelIdle = 'Tap to record', mode = 'sentence' }: { rec: ReturnType<typeof useRecorder>; onStart: () => void; big?: boolean; labelIdle?: string; mode?: Mode }) {
+export function RecordButton({ rec, onStart, big, labelIdle = 'Tap to record', mode = 'sentence', part }: { rec: ReturnType<typeof useRecorder>; onStart: () => void; big?: boolean; labelIdle?: string; mode?: Mode; part?: 'button' | 'status' }) {
   const on = rec.state === 'listening' || rec.state === 'starting';
   const busy = rec.state === 'analyzing';
   const model = useModel();
@@ -83,14 +83,29 @@ export function RecordButton({ rec, onStart, big, labelIdle = 'Tap to record', m
   const ph = usePhonModel();
   const phDl = mode === 'sentence' && ph.status === 'loading' && busy && !(usesModel && model.status === 'loading');
   const downloading = (usesModel && model.status === 'loading' && (on || busy)) || phDl;
-  return (
-    <div className="rec-wrap">
-      <button className={`rec${on ? ' on' : ''}${big ? ' big' : ''}`} disabled={busy} aria-label={on ? 'Stop recording' : 'Start recording'}
+  const btn = (
+      <button className={`rec${on ? ' on' : ''}${big ? ' big' : ''}${part ? ' small' : ''}`} disabled={busy} aria-label={on ? 'Stop recording' : 'Start recording'}
         onClick={() => (on ? rec.stop() : onStart())}>
         {busy ? <svg className="spin" viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" strokeWidth="2.5" strokeDasharray="40 20" /></svg> : <Icon name={on ? 'stop' : 'mic'} />}
-      </button>
+      </button>);
+  if (part === 'button') return btn;
+  const label = <div className="rec-label">{busy ? (downloading ? 'Preparing the speech checker…' : 'Checking…') : rec.state === 'starting' ? 'Starting the microphone…' : on ? (mode === 'word' ? 'Listening — say the word' : 'Listening — tap to finish') : labelIdle}</div>;
+  if (part === 'status') return (
+    <div className="rec-status">
+      <div className="row" style={{ gap: 8, justifyContent: 'center' }}>{on ? <Level v={rec.level} /> : null}{label}</div>
+      {downloading && (
+        <div className="model-dl" role="status">
+          <div className="bar"><i style={{ width: `${Math.round((phDl ? ph.progress : model.progress) * 100)}%` }} /></div>
+          <span className="small muted">One-time download of the speech checker (about {phDl ? PHON_MB : MODEL_MB} MB): {Math.round((phDl ? ph.progress : model.progress) * 100)}%</span>
+        </div>
+      )}
+      {rec.state === 'error' && <div className="notice bad small" role="alert">{rec.error}</div>}
+    </div>);
+  return (
+    <div className="rec-wrap">
+      {btn}
       {on ? <Level v={rec.level} /> : null}
-      <div className="rec-label">{busy ? (downloading ? 'Preparing the speech checker…' : 'Checking…') : rec.state === 'starting' ? 'Starting the microphone…' : on ? (mode === 'word' ? 'Listening — say the word' : 'Listening — tap to finish') : labelIdle}</div>
+      {label}
       {on && rec.engineId === 'browser' && <div className="live-text">{rec.partial ? `“${rec.partial.split(' ').slice(-10).join(' ')}”` : 'Start speaking'}</div>}
       {on && rec.engineId !== 'browser' && mode === 'passage' && rec.partial && <div className="live-text">“{rec.partial.split(' ').slice(-10).join(' ')}”</div>}
       {downloading && (

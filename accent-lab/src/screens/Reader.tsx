@@ -1,19 +1,18 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import Icon from '../components/Icon';
-import { ErrorBox, Loading, Sheet } from '../components/ui';
+import { ErrorBox, Loading, ScoreRing, Sheet } from '../components/ui';
 import { RecordButton, useRecorder } from '../components/Recorder';
 import { loadStory } from '../data/load';
 import { F, type Story, type Tok } from '../data/types';
 import { playRange, preload, pause as pauseAudio, stop as stopAudio, usePlayingAny } from '../lib/audio';
 import { setSettings, touch, useAsync, useStore } from '../lib/store';
-import { align, fmtTime, heardTokens } from '../lib/text';
+import { align, heardTokens } from '../lib/text';
 import { back } from '../router';
 import WordSheet from './reading/WordSheet';
 import SentenceSheet from './reading/SentenceSheet';
 import ReadingResults from './reading/ReadingResults';
 import type { Assessment } from '../assess/types';
 
-type Mode = 'listen' | 'study' | 'record';
 const FEATURES = [
   { k: 'stress', label: 'Sentence stress', c: '#14213D' }, { k: 'weak', label: 'Weak forms', c: '#8790A6' },
   { k: 'link', label: 'Linking', c: '#0E7C86' }, { k: 'flap', label: 'Flap T', c: '#5B5BD6' },
@@ -22,25 +21,32 @@ const FEATURES = [
 
 export default function Reader({ id }: { id: string }) {
   const { data: story, error } = useAsync(() => loadStory(id), [id]);
-  const [mode, setMode] = useState<Mode>('listen');
   if (error) return <div className="screen"><ErrorBox text={error} onRetry={() => location.reload()} /></div>;
   if (!story) return <div className="screen"><Loading lines={5} /></div>;
-  return <ReaderInner story={story} mode={mode} setMode={setMode} />;
+  return <ReaderInner key={story.id} story={story} />;
 }
 
-function ReaderInner({ story, mode, setMode }: { story: Story; mode: Mode; setMode: (m: Mode) => void }) {
+type Res = { r: Assessment; scope: string; first: number; saved?: boolean };
+const PI_KEY = (id: string) => 'accentlab.para.' + id;
+const loadPi = (id: string, n: number) => { try { const v = Number(localStorage.getItem(PI_KEY(id))); return Number.isFinite(v) && v >= 0 && v <= n ? v : 0; } catch { return 0; } };
+
+function ReaderInner({ story }: { story: Story }) {
   const slowPref = useStore(s => s.settings.slowReading);
+  const reading = useStore(s => s.reading);
   const slow = slowPref && !!story.slowAudio && !!story.slowTimes;
   const playingId = usePlayingAny();
   const playing = playingId.startsWith('story:');
+  const nP = story.paragraphs.length;
+  // current paragraph; nP means the summary after the last one
+  const [pi, setPiRaw] = useState(() => loadPi(story.id, nP));
+  const setPi = (v: number) => { setPiRaw(v); try { localStorage.setItem(PI_KEY(story.id), String(v)); } catch { /* ignore */ } window.scrollTo({ top: 0 }); };
   const [cur, setCur] = useState(-1);
   const [pos, setPos] = useState(0);
-  const [bySentence, setBySentence] = useState(false);
+  const [study, setStudy] = useState(false);
   const [wordSheet, setWordSheet] = useState<number | null>(null);
   const [sentSheet, setSentSheet] = useState<number | null>(null);
   const [feat, setFeat] = useState<Record<string, boolean>>({ stress: true, weak: true, link: true, flap: true, r: false, tune: true });
-  const [scope, setScope] = useState<string>('all');
-  const [result, setResult] = useState<{ r: Assessment; scope: string; first: number } | null>(null);
+  const [results, setResults] = useState<Record<number, Res>>({});
   const rec = useRecorder();
   const [live, setLive] = useState<Set<number>>(new Set());
 
@@ -48,78 +54,78 @@ function ReaderInner({ story, mode, setMode }: { story: Story; mode: Mode; setMo
   const toks = useMemo(() => story.paragraphs.flatMap(p => p.sents.flatMap(s => s.toks)), [story]);
   const T = slow ? story.slowTimes! : story.times;
   const file = slow ? story.slowAudio! : story.audio;
-  const total = T.length ? T[T.length - 1][1] : 0;
   useEffect(() => { preload([file]); }, [file]);
 
-  // token index at time t
-  const tokAt = useCallback((t: number) => {
-    let lo = 0, hi = T.length - 1, best = -1;
-    while (lo <= hi) { const m = (lo + hi) >> 1; if (T[m][0] <= t + 0.05) { best = m; lo = m + 1; } else hi = m - 1; }
-    return best;
+  // best saved score of every paragraph (from attempt history), for the dots and the summary
+  const best = useMemo(() => {
+    const m: Record<number, number> = {};
+    for (const a of reading) if (a.story === story.id && a.scope.startsWith('p')) { const k = Number(a.scope.slice(1)); m[k] = Math.max(m[k] ?? 0, a.overall); }
+    return m;
+  }, [reading, story.id]);
+
+  const para = pi < nP ? story.paragraphs[pi] : null;
+  const range = useMemo(() => {
+    if (!para) return [0, 0] as const;
+    return [para.sents[0].a, para.sents[para.sents.length - 1].b] as const;
+  }, [para]);
+  const pStart = para ? T[range[0]][0] : 0;
+  const pEnd = para ? T[range[1] - 1][1] + 0.2 : 0;
+  const result = results[pi] || null;
+
+  const tokAt = useCallback((t: number, TT = T) => {
+    let lo = 0, hi = TT.length - 1, b = -1;
+    while (lo <= hi) { const m = (lo + hi) >> 1; if (TT[m][0] <= t + 0.05) { b = m; lo = m + 1; } else hi = m - 1; }
+    return b;
   }, [T]);
   const sentOf = useCallback((i: number) => sents.findIndex(s => i >= s.a && i < s.b), [sents]);
+  const paraSents = useMemo(() => para ? para.sents.map(s => sents.indexOf(s)) : [], [para, sents]);
 
-  const play = useCallback((from: number, to?: number) => {
+  const playIn = useCallback((f: string, TT: [number, number][], from: number, to: number) => {
     touch();
-    playRange(file, Math.max(0, from - 0.05), to, {
+    playRange(f, Math.max(0, from - 0.05), to, {
       id: 'story:' + story.id,
-      onTime: t => { setPos(t); setCur(tokAt(t)); },
-      onEnd: () => { setCur(-1); },
+      onTime: t => { setPos(t); setCur(tokAt(t, TT)); },
+      onEnd: () => { setCur(-1); setPos(TT[range[0]] ? TT[range[0]][0] : 0); },
     }).catch(() => {});
-  }, [file, story.id, tokAt]);
-
-  const playSentence = (si: number) => { const s = sents[si]; if (!s) return; play(T[s.a][0], T[s.b - 1][1] + 0.2); };
+  }, [story.id, tokAt, range]);
+  const play = (from: number, to: number) => playIn(file, T, from, to);
+  const curSi = () => { const si = cur >= 0 ? sentOf(cur) : sentOf(Math.max(range[0], tokAt(pos))); return paraSents.includes(si) ? si : paraSents[0]; };
   const toggle = () => {
     if (playing) { pauseAudio(); return; }
-    const si = Math.max(0, sentOf(Math.max(cur, 0)));
-    if (bySentence) playSentence(cur >= 0 ? si : 0); else play(pos >= total - 0.2 ? 0 : pos);
-  };
-  const step = (d: number) => {
-    const si = Math.max(0, sentOf(Math.max(cur, 0)));
-    const n = Math.min(sents.length - 1, Math.max(0, si + d));
-    setCur(sents[n].a); setPos(T[sents[n].a][0]);
-    if (playing || bySentence) { if (bySentence) playSentence(n); else play(T[sents[n].a][0]); }
+    play(pos >= pStart && pos < pEnd - 0.3 ? pos : pStart, pEnd);
   };
   const switchSpeed = () => {
     if (!story.slowAudio) return;
     const was = playing;
-    const tokNow = cur >= 0 ? cur : tokAt(pos);
+    const si = curSi();
     stopAudio();
     setSettings({ slowReading: !slowPref });
     const NT = !slowPref ? story.slowTimes! : story.times;
-    const p = tokNow >= 0 ? NT[Math.max(0, sents[Math.max(0, sentOf(tokNow))].a)][0] : 0;
+    const NF = !slowPref ? story.slowAudio! : story.audio;
+    const p = NT[sents[si].a][0];
     setPos(p);
-    if (was) setTimeout(() => playRange(!slowPref ? story.slowAudio! : story.audio, Math.max(0, p - 0.05), undefined, {
-      id: 'story:' + story.id,
-      onTime: t => { setPos(t); let lo = 0, hi = NT.length - 1, best = -1; while (lo <= hi) { const m = (lo + hi) >> 1; if (NT[m][0] <= t + 0.05) { best = m; lo = m + 1; } else hi = m - 1; } setCur(best); },
-      onEnd: () => setCur(-1),
-    }).catch(() => {}), 30);
+    if (was) setTimeout(() => playIn(NF, NT, p, NT[range[1] - 1][1] + 0.2), 30);
   };
   useEffect(() => () => stopAudio(), []);
-  useEffect(() => { stopAudio(); setCur(-1); }, [mode]);
+  useEffect(() => { stopAudio(); setCur(-1); setPos(pStart); setLive(new Set()); rec.reset(); }, [pi]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (!playing && cur < 0) setPos(pStart); }, [slow]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // live highlighting while recording with basic recognition
-  const scopeRange = useMemo(() => {
-    if (scope === 'all') return [0, toks.length] as const;
-    const pi = Number(scope.slice(1));
-    const ss = story.paragraphs[pi].sents; return [ss[0].a, ss[ss.length - 1].b] as const;
-  }, [scope, story, toks.length]);
-  const scopeKeys = useMemo(() => story.keys.slice(scopeRange[0], scopeRange[1]), [story, scopeRange]);
-  const scopeText = useMemo(() => toks.slice(scopeRange[0], scopeRange[1]).map(t => (t.pre || '') + t.d + (t.post || '')).join(' '), [toks, scopeRange]);
+  const keys = useMemo(() => story.keys.slice(range[0], range[1]), [story, range]);
+  const text = useMemo(() => toks.slice(range[0], range[1]).map(t => (t.pre || '') + t.d + (t.post || '')).join(' '), [toks, range]);
   useEffect(() => {
     if (rec.state !== 'listening' || !rec.partial) return;
-    const H = heardTokens(rec.partial, scopeKeys);
-    const a = align(scopeKeys.slice(0, Math.min(scopeKeys.length, H.length + 8)), H.map(h => h.k));
-    setLive(new Set(a.map((x, i) => x.st === 'ok' ? i + scopeRange[0] : -1).filter(i => i >= 0)));
-  }, [rec.partial, rec.state, scopeKeys, scopeRange]);
+    const H = heardTokens(rec.partial, keys);
+    const a = align(keys.slice(0, Math.min(keys.length, H.length + 8)), H.map(h => h.k));
+    setLive(new Set(a.map((x, i) => x.st === 'ok' ? i + range[0] : -1).filter(i => i >= 0)));
+  }, [rec.partial, rec.state, keys, range]);
   useEffect(() => {
-    if (rec.state === 'done' && rec.result) { setResult({ r: rec.result, scope, first: scopeRange[0] }); setLive(new Set()); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    if (rec.state === 'done' && rec.result) { const r = rec.result; setResults(o => ({ ...o, [pi]: { r, scope: 'p' + pi, first: range[0] } })); setLive(new Set()); }
     if (rec.state === 'error') setLive(new Set());
   }, [rec.state]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const curSent = cur >= 0 ? sentOf(cur) : -1;
   const resultFor = (i: number) => {
-    if (!result || mode !== 'record') return null;
+    if (!result || study) return null;
     const k = i - result.first;
     return k >= 0 && k < result.r.words.length ? result.r.words[k] : null;
   };
@@ -127,89 +133,110 @@ function ReaderInner({ story, mode, setMode }: { story: Story; mode: Mode; setMo
   const renderTok = (t: Tok, s: { a: number; b: number; tune: string }, last: boolean) => {
     const f = t.f || 0;
     const cls = ['tok'];
-    if (mode === 'listen' || mode === 'study') { if (t.i === cur) cls.push('now'); else if (curSent >= 0 && t.i >= sents[curSent].a && t.i < sents[curSent].b) cls.push('sent'); }
-    if (mode === 'study') {
+    if (t.i === cur) cls.push('now'); else if (curSent >= 0 && t.i >= sents[curSent].a && t.i < sents[curSent].b) cls.push('sent');
+    if (study) {
       if (feat.stress && f & F.CONTENT) cls.push('content');
       if (feat.weak && f & F.WEAK) cls.push('weak');
       if (feat.flap && f & F.FLAP) cls.push('f-flap');
       if (feat.r && f & F.RHOTIC) cls.push('f-r');
-    }
-    if (mode === 'record') {
+    } else if (cur < 0) {
       const w = resultFor(t.i);
       if (w) cls.push(w.status === 'good' ? 'g' : w.status === 'fair' ? 'y' : 'r');
       else if (live.has(t.i)) cls.push('heard');
     }
     return (
       <Fragment key={t.i}>
-        {t.pre}<span className={cls.join(' ')} onClick={() => { touch(); if (mode === 'listen' && !playing) { setCur(t.i); setPos(T[t.i][0]); } setWordSheet(t.i); }}>{t.d}</span>{t.post}
-        {mode === 'study' && feat.tune && last && s.tune !== 'none' && <span className="into" aria-label={s.tune === 'rise' ? 'rising intonation' : 'falling intonation'}>{s.tune === 'rise' ? '↗' : '↘'}</span>}
-        {mode === 'study' && feat.link && f & F.LINK ? <span className="lk" aria-hidden="true">‿</span> : ' '}
+        {t.pre}<span className={cls.join(' ')} onClick={() => { touch(); setWordSheet(t.i); }}>{t.d}</span>{t.post}
+        {study && feat.tune && last && s.tune !== 'none' && <span className="into" aria-label={s.tune === 'rise' ? 'rising intonation' : 'falling intonation'}>{s.tune === 'rise' ? '↗' : '↘'}</span>}
+        {study && feat.link && f & F.LINK ? <span className="lk" aria-hidden="true">‿</span> : ' '}
       </Fragment>
     );
   };
 
+  const done = Object.keys(best).length;
+  const textScore = done === nP ? Math.round(story.paragraphs.reduce((a, p, k) => a + best[k] * p.sents.reduce((n, x) => n + x.toks.length, 0), 0) / toks.length) : null;
+  const recorded = !!result;
+  const startRec = () => { stopAudio(); setCur(-1); if (result) setResults(o => { const n = { ...o }; delete n[pi]; return n; }); rec.start(text, keys, 'passage'); };
+  const last = pi === nP - 1;
+
   return (
-    <div className="screen">
+    <div className="screen reader">
       <div className="topbar">
         <button className="icon-btn" onClick={() => back('/reading')} aria-label="Back to the library"><Icon name="back" /></button>
         <div className="title-sm">{story.title}</div>
       </div>
-      <div className="eyebrow" style={{ marginBottom: 10 }}>{story.topic} · {story.minutes} min · {story.words} words</div>
-      <div className="seg" role="group" aria-label="Mode">
-        {(['listen', 'study', 'record'] as Mode[]).map(m => <button key={m} aria-pressed={mode === m} onClick={() => { setMode(m); if (m !== 'record') rec.reset(); }}>{m === 'listen' ? 'Listen' : m === 'study' ? 'Study' : 'Read aloud'}</button>)}
+      <div className="eyebrow" style={{ marginBottom: 8 }}>{story.topic} · {story.minutes} min · {story.words} words</div>
+
+      <div className="para-dots" role="group" aria-label="Paragraphs">
+        {story.paragraphs.map((_, k) => (
+          <button key={k} aria-current={k === pi ? 'step' : undefined} aria-label={`Paragraph ${k + 1}${best[k] !== undefined ? `, best score ${best[k]}` : ''}`} onClick={() => setPi(k)}
+            className={best[k] === undefined ? '' : best[k] >= 90 ? 'good' : best[k] >= 70 ? 'warn' : 'bad'}>{k + 1}</button>
+        ))}
+        <button aria-current={pi === nP ? 'step' : undefined} aria-label="Summary" onClick={() => setPi(nP)} className="sum"><Icon name="check" /></button>
       </div>
 
-      {mode === 'study' && (
-        <>
+      {para ? (<>
+        <div className="row para-head">
+          <div className="grow"><b>Paragraph {pi + 1}</b> <span className="muted">of {nP}</span></div>
+          <button className="chip" aria-pressed={study} onClick={() => setStudy(v => !v)}>Study marks</button>
+        </div>
+        {study && (
           <div className="feature-toggles">
             {FEATURES.map(x => <button key={x.k} className="ft" aria-pressed={!!feat[x.k]} onClick={() => setFeat(o => ({ ...o, [x.k]: !o[x.k] }))}><i style={{ background: x.c }} />{x.label}</button>)}
           </div>
-          <p className="small muted" style={{ marginBottom: 12 }}>Bold words carry sentence stress; gray words are weak forms. Tap any word for its transcription, or the ¶ button for notes on a sentence.</p>
-        </>
-      )}
+        )}
 
-      {mode === 'record' && (
-        <div className="card stack" style={{ marginBottom: 14 }}>
-          {result
-            ? <ReadingResults story={story} toks={toks} result={result} onWord={i => setWordSheet(i)} onSentence={si => setSentSheet(si)} onAgain={() => { setResult(null); rec.reset(); }} />
-            : <>
-                <div className="chips">
-                  <button className="chip" aria-pressed={scope === 'all'} onClick={() => setScope('all')}>Whole text</button>
-                  {story.paragraphs.map((_, pi) => <button key={pi} className="chip" aria-pressed={scope === 'p' + pi} onClick={() => setScope('p' + pi)}>Paragraph {pi + 1}</button>)}
-                </div>
-                <RecordButton big mode="passage" rec={rec} onStart={() => rec.start(scopeText, scopeKeys, 'passage')} labelIdle={scope === 'all' ? 'Tap and read the whole text aloud' : `Tap and read paragraph ${Number(scope.slice(1)) + 1}`} />
-                <p className="small muted center">Read at a natural pace and tap the button again when you finish. Recognized words turn green as you go.</p>
-              </>}
+        <article className={`passage${study ? ' study' : ''}`} lang="en-US">
+          <p>
+            {para.sents.map(s => {
+              const si = sents.indexOf(s);
+              return (
+                <Fragment key={si}>
+                  {study && <button className="pill accent" style={{ marginRight: 4, verticalAlign: 2 }} onClick={() => setSentSheet(si)} aria-label={`Notes for sentence ${si + 1}`}>¶</button>}
+                  {s.toks.map((t, k) => renderTok(t, s, k === s.toks.length - 1))}
+                </Fragment>
+              );
+            })}
+          </p>
+        </article>
+
+        {result && (
+          <div className="card stack" style={{ marginBottom: 10 }}>
+            <ReadingResults key={pi} story={story} toks={toks} result={result} onWord={i => setWordSheet(i)} onSentence={si => setSentSheet(si)} onAgain={() => { setResults(o => { const n = { ...o }; delete n[pi]; return n; }); rec.reset(); }} />
+          </div>
+        )}
+
+        <div className="read-dock" role="group" aria-label="Listen and record">
+          <RecordButton part="status" mode="passage" rec={rec} onStart={startRec}
+            labelIdle={result ? `Saved · score ${result.r.overall}. Details below the text` : playing ? 'Listening to the model…' : 'Listen first, then tap the mic and read'} />
+          <div className="row dock-row">
+            <button className="icon-btn" disabled={pi === 0} onClick={() => setPi(pi - 1)} aria-label="Previous paragraph"><Icon name="back" /></button>
+            <button className="dock-play" onClick={toggle} aria-label={playing ? 'Pause' : 'Play the model'}><Icon name={playing ? 'pause' : 'play'} /></button>
+            <button className="dock-spd" disabled={!story.slowAudio} onClick={switchSpeed} aria-label={slow ? 'Switch to natural speed' : 'Switch to the slow recording'}>{slow ? 'Slow' : '1×'}</button>
+            <RecordButton part="button" mode="passage" rec={rec} onStart={startRec} />
+            <button className={`btn grow dock-next${recorded ? ' primary' : ''}`} onClick={() => setPi(pi + 1)} aria-label={last ? 'Finish the text' : 'Next paragraph'}>{last ? 'Finish' : 'Next'} <Icon name="next" /></button>
+          </div>
         </div>
-      )}
-
-      <article className={`passage${mode === 'study' ? ' study' : ''}`} lang="en-US">
-        {story.paragraphs.map((p, pi) => {
-          const dim = mode === 'record' && scope !== 'all' && scope !== 'p' + pi && !result;
-          return (
-            <p key={pi} style={dim ? { opacity: 0.35 } : undefined}>
-              {p.sents.map((s) => {
-                const si = sents.indexOf(s);
-                return (
-                  <Fragment key={si}>
-                    {mode === 'study' && <button className="pill accent" style={{ marginRight: 4, verticalAlign: 2 }} onClick={() => setSentSheet(si)} aria-label={`Notes for sentence ${si + 1}`}>¶</button>}
-                    {s.toks.map((t, k) => renderTok(t, s, k === s.toks.length - 1))}
-                  </Fragment>
-                );
-              })}
-            </p>
-          );
-        })}
-      </article>
-
-      {(mode === 'listen' || mode === 'study') && (
-        <div className="player" role="group" aria-label="Audio player">
-          <button onClick={() => step(-1)} aria-label="Previous sentence"><Icon name="prev" /></button>
-          <button className="main" onClick={toggle} aria-label={playing ? 'Pause' : 'Play'}><Icon name={playing ? 'pause' : 'play'} /></button>
-          <button onClick={() => step(1)} aria-label="Next sentence"><Icon name="next" /></button>
-          <button className="spd" disabled={!story.slowAudio} onClick={switchSpeed} aria-label={slow ? 'Switch to natural speed' : 'Switch to the slow recording'}>{slow ? 'Slow' : '1×'}</button>
-          <button className="tgl" aria-pressed={bySentence} onClick={() => setBySentence(b => !b)} title="Stop after each sentence">1 sentence</button>
-          <span className="time">{fmtTime(pos)} / {fmtTime(total)}</span>
+      </>) : (
+        <div className="card stack">
+          <div className="row">
+            <ScoreRing value={textScore} label="text" />
+            <div className="grow">
+              <div style={{ fontWeight: 800, fontSize: 19 }}>{textScore === null ? `${done} of ${nP} paragraphs read` : 'Whole text read.'}</div>
+              <div className="small muted">{textScore === null ? 'Read every paragraph to get a score for the whole text.' : 'Your best score of each paragraph, weighted by length.'}</div>
+            </div>
+          </div>
+          {story.paragraphs.map((_, k) => (
+            <button key={k} className="list-row" style={{ width: '100%', textAlign: 'left' }} onClick={() => setPi(k)}>
+              <span className={`pill ${best[k] === undefined ? '' : best[k] >= 90 ? 'good' : best[k] >= 70 ? 'warn' : 'bad'}`}>{best[k] ?? '–'}</span>
+              <span className="grow">Paragraph {k + 1}<br /><span className="small muted">{story.paragraphs[k].sents[0].toks.slice(0, 7).map(t => (t.pre || '') + t.d + (t.post || '')).join(' ').replace(/[,;:]$/, '')}…</span></span>
+              <Icon name="next" size={18} />
+            </button>
+          ))}
+          <div className="row">
+            <button className="btn grow" onClick={() => setPi(0)}>Start again</button>
+            <button className="btn primary grow" onClick={() => back('/reading')}>Library</button>
+          </div>
         </div>
       )}
 

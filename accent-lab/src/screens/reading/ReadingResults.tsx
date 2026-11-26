@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import Icon from '../../components/Icon';
 import { MetricGrid, ScoreRing } from '../../components/ui';
 import { wordProblem } from '../../components/Results';
@@ -8,11 +8,10 @@ import type { Assessment } from '../../assess/types';
 import { tokenAt } from './WordSheet';
 
 export default function ReadingResults({ story, result, onWord, onSentence, onAgain }: {
-  story: Story; toks: Tok[]; result: { r: Assessment; scope: string; first: number };
+  story: Story; toks: Tok[]; result: { r: Assessment; scope: string; first: number; saved?: boolean };
   onWord: (i: number) => void; onSentence: (si: number) => void; onAgain: () => void;
 }) {
   const { r, scope, first } = result;
-  const saved = useRef(false);
   const reading = useStore(s => s.reading);
   const history = useMemo(() => reading.filter(a => a.story === story.id && a.scope === scope), [reading, story.id, scope]);
   const problems = useMemo(() => r.words
@@ -24,7 +23,7 @@ export default function ReadingResults({ story, result, onWord, onSentence, onAg
     .slice(0, 8), [r, story, first]);
 
   useEffect(() => {
-    if (saved.current) return; saved.current = true;
+    if (result.saved) return; result.saved = true;
     const m: Record<string, number | null> = {}; r.metrics.forEach(x => { m[x.key] = x.value; });
     recordReading({ story: story.id, t: Date.now(), scope, engine: r.engine, overall: r.overall, metrics: m, durationSec: Math.round(r.durationSec), words: r.words.length, problems: problems.map(p => p.tok!.d) });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

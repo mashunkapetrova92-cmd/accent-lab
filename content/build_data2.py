@@ -390,7 +390,7 @@ def build_stories():
         json.dump(d, open(f"{PUB}/data/stories/{s['id']}.json", "w"), ensure_ascii=False, separators=(",", ":"))
         first = s["paragraphs"][0]
         excerpt = first[:150].rsplit(" ", 1)[0] + "…" if len(first) > 150 else first
-        index.append({"id": s["id"], "title": s["title"], "topic": s["topic"], "words": d["words"], "minutes": d["minutes"], "excerpt": excerpt})
+        index.append({"id": s["id"], "title": s["title"], "topic": s["topic"], "words": d["words"], "minutes": d["minutes"], "paras": len(paras), "excerpt": excerpt})
         print("story", s["id"], d["words"], "words", round(times[-1][1]), "s", "slow" if "slowAudio" in d else "", flush=True)
     json.dump(index, open(f"{PUB}/data/stories/index.json", "w"), ensure_ascii=False, separators=(",", ":"))
 

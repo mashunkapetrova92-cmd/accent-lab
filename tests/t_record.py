@@ -54,8 +54,7 @@ async def run(p, name, base):
     # 4) paragraph of the first text
     idx = await pg.evaluate("fetch('data/stories/index.json').then(r => r.json())")
     await pg.goto(base + f"#/reading/{idx[0]['id']}"); await pg.wait_for_timeout(1500)
-    await pg.locator(".seg button", has_text="Read aloud").click(); await pg.wait_for_timeout(300)
-    await pg.get_by_role("button", name="Paragraph 1", exact=True).click()
+    await pg.wait_for_timeout(300)
     r4 = await record(pg, T + "story0_p0.wav"); out.append(("paragraph 1", r4))
     for k, v in out: print(f"{name:9s} {k:22s} {v}")
     print(f"{name:9s} errors:", [e for e in errs if 'Warning' not in e][:4])

@@ -44,6 +44,6 @@ export interface Story {
   /** the same text recorded at a slower, natural pace */
   slowAudio?: string; slowTimes?: [number, number][];
 }
-export interface StoryMeta { id: string; title: string; topic: string; words: number; minutes: number; excerpt: string }
+export interface StoryMeta { id: string; title: string; topic: string; words: number; minutes: number; paras?: number; excerpt: string }
 /** word -> [sprite file, start, end] */
 export type WordMap = Record<string, Clip>;
