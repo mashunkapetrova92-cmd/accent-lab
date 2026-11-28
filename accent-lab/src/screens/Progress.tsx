@@ -5,7 +5,7 @@ import { loadLibrary, loadSounds } from '../data/load';
 import { PH_NODE } from '../assess/feedback';
 import { dayKey, useAsync, useStore } from '../lib/store';
 import { go } from '../router';
-import type { SoundNode } from '../data/types';
+import { LEVELS, type SoundNode } from '../data/types';
 
 const fmtDur = (s: number) => s < 60 ? `${s}s` : s < 3600 ? `${Math.round(s / 60)} min` : `${Math.floor(s / 3600)} h ${Math.round((s % 3600) / 60)} min`;
 function streak(act: Record<string, number>): number {
@@ -32,13 +32,14 @@ export default function Progress() {
     const recent = prod.slice(-60);
     const avg = recent.length ? Math.round(recent.reduce((a, p) => a + p.score, 0) / recent.length) : null;
     const full = st.reading.filter(r => r.scope === 'all');
-    const texts = new Set(st.reading.map(r => r.story)).size;
+    const readIds = new Set(st.reading.map(r => r.story));
+    const texts = readIds.size;
     const readAvg = st.reading.length ? Math.round(st.reading.reduce((a, r) => a + r.overall, 0) / st.reading.length) : null;
     // daily averages, last 30 days with data
     const days: Record<string, number[]> = {};
     for (const p of prod) { const d = new Date(p.t); const k = `${d.getMonth() + 1}/${d.getDate()}`; (days[k] ||= []).push(p.score); }
     const series = Object.entries(days).slice(-30).map(([k, v]) => ({ k, v: Math.round(v.reduce((a, b) => a + b, 0) / v.length) }));
-    return { time, mastered, avg, full: full.length, texts, readAvg, attempts: st.reading.length, series };
+    return { time, readIds, mastered, avg, full: full.length, texts, readAvg, attempts: st.reading.length, series };
   }, [st, nodes]);
 
   // weakest sounds: measured phoneme scores when available, otherwise practice scores per lesson
@@ -92,8 +93,17 @@ export default function Progress() {
         <div className="stat"><div className="k">Sounds mastered</div><div className="v">{stats.mastered} <small>/ {nodes.length}</small></div></div>
         <div className="stat"><div className="k">Remaining</div><div className="v">{nodes.length - stats.mastered}</div></div>
         <div className="stat"><div className="k">Average score</div><div className="v">{stats.avg ?? '–'}{stats.avg !== null && <small> /100</small>}</div></div>
-        <div className="stat"><div className="k">Texts read aloud</div><div className="v">{stats.texts} <small>/ {lib?.length ?? 100}</small></div></div>
+        <div className="stat"><div className="k">Texts read aloud</div><div className="v">{stats.texts} <small>/ {lib?.length ?? 500}</small></div></div>
       </div>
+      {lib && stats.texts > 0 && (
+        <div className="level-progress" aria-label="Texts read by level">
+          {LEVELS.map(L => {
+            const ids = lib.filter(x => (x.level || 'C1') === L).map(x => x.id);
+            const read = ids.filter(id => stats.readIds.has(id)).length;
+            return <div key={L}><b>{L}</b><div className="bar"><i style={{ width: `${ids.length ? read / ids.length * 100 : 0}%` }} /></div><span>{read}/{ids.length}</span></div>;
+          })}
+        </div>
+      )}
 
       <h2 className="section-title">Score history</h2>
       <div className="card chart">

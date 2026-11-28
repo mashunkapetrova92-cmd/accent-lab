@@ -405,3 +405,17 @@ mark { background: none; color: inherit; }
 .para-dots::-webkit-scrollbar { display: none; }
 .para-dots button { min-width: 28px; height: 28px; padding: 0 6px; font-size: 13px; flex: none; }
 .reader .eyebrow { margin-bottom: 6px !important; }
+
+/* reading levels */
+.level-tabs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 8px; }
+.level-tabs button { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 0 6px; border-radius: 14px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); color: var(--ink-2); }
+.level-tabs button b { font-size: 16px; font-weight: 800; }
+.level-tabs button span { font-size: 11px; color: var(--muted); font-weight: 650; min-height: 13px; }
+.level-tabs button[aria-selected="true"] { background: var(--accent); color: #fff; box-shadow: none; }
+.level-tabs button[aria-selected="true"] span { color: rgba(255,255,255,.85); }
+.level-name { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 2px 0 10px; }
+.seg.small { grid-template-columns: repeat(6, 1fr); margin-bottom: 0; flex: 1 1 100%; }
+.seg.small button { height: 32px; font-size: 14px; }
+.level-progress { display: grid; gap: 8px; margin: 12px 0 4px; padding: 12px 14px; border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow-sm); }
+.level-progress > div { display: grid; grid-template-columns: 30px 1fr 56px; align-items: center; gap: 10px; font-size: 14px; }
+.level-progress span { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }

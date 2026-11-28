@@ -165,7 +165,7 @@ function ReaderInner({ story }: { story: Story }) {
         <button className="icon-btn" onClick={() => back('/reading')} aria-label="Back to the library"><Icon name="back" /></button>
         <div className="title-sm">{story.title}</div>
       </div>
-      <div className="eyebrow" style={{ marginBottom: 8 }}>{story.topic} · {story.minutes} min · {story.words} words</div>
+      <div className="eyebrow" style={{ marginBottom: 8 }}>{story.level || 'C1'} · {story.topic} · {story.minutes} min · {story.words} words</div>
 
       <div className="para-dots" role="group" aria-label="Paragraphs">
         {story.paragraphs.map((_, k) => (

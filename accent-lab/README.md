@@ -3,7 +3,7 @@
 A mobile-first Progressive Web App for training American English pronunciation.
 
 * **Sounds** — a learning journey of 51 modules: all General American vowels, diphthongs, r-colored vowels and consonants, plus aspiration, dark L, flap T, final voicing, syllabic consonants, weak forms and linking. Each module has six stages: Learn (articulation, animated mouth diagram, vowel chart), Words, Listen (minimal pairs in three voices), Say, Sentences and a Final test (90/100 required to unlock the next module).
-* **Reading** — 100 original passages with natural recorded audio, word-synchronized highlighting, sentence-by-sentence playback, a Study mode (stress, weak forms, linking, flap T, American R, intonation, IPA for every word) and recording with word-level feedback and attempt history.
+* **Reading** — 500 original texts on six levels (A1, A2, B1, B2: 100 each; C1 and C2: 50 each), read one paragraph at a time, with natural recorded audio, word-synchronized highlighting, sentence-by-sentence playback, a Study mode (stress, weak forms, linking, flap T, American R, intonation, IPA for every word) and recording with word-level feedback and attempt history.
 * **My progress** — learning time, streak, mastered sounds, score history, recurring problems and recommendations, all computed from your own data.
 
 ## Assessment engines

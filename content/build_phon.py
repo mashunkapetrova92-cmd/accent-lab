@@ -9,12 +9,14 @@ from plib import Model, phones, decode, AUDIO
 from align import align
 import numpy as np
 DATA = "/home/claude/accent-lab/public/data"
-m = Model("/home/claude/phon/wav2vec2-ljspeech-gruut-ONNX", threads=2)
+m = Model("/home/claude/phon/wav2vec2-ljspeech-gruut-ONNX", threads=int(os.environ.get("THREADS", "2")))
 SR = 16000
 def pieces(ipa):
     return [p for p in re.split(r"[\s‿|]+", ipa.strip().strip("/").strip()) if p]
+import functools
+_dec = functools.lru_cache(maxsize=4)(decode)
 def heard(path, a, b):
-    x = decode(path); return m.greedy(m.logp(x[max(0, int(a * SR)):int(b * SR)]))
+    x = _dec(path); return m.greedy(m.logp(x[max(0, int(a * SR)):int(b * SR)]))
 def mark(words, refs):
     flat = [p for w in words for p in w]
     bad = set()
@@ -47,6 +49,7 @@ if "stories" in which:
     for f in sorted(glob.glob(f"{DATA}/stories/*.json")):
         if f.endswith("index.json"): continue
         st = json.load(open(f)); T = st["times"]; ST = st.get("slowTimes")
+        if os.environ.get("RESUME") and all("ph" in x for pa in st["paragraphs"] for x in pa["sents"]): continue
         for para in st["paragraphs"]:
             for s in para["sents"]:
                 ps = pieces(s["ipa"]); n = s["b"] - s["a"]

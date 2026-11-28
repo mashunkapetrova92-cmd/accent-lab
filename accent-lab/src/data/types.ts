@@ -39,11 +39,15 @@ export interface Tok { d: string; pre?: string; post?: string; n: string[]; i: n
 export interface Sent { toks: Tok[]; tune: 'fall' | 'rise' | 'none'; a: number; b: number; ipa: string; ph?: string[] }
 export interface Para { sents: Sent[] }
 export interface Story {
+  level?: Level;
   id: string; title: string; topic: string; words: number; minutes: number;
   paragraphs: Para[]; keys: string[]; ipa: Record<string, string>; audio: string; times: [number, number][];
   /** the same text recorded at a slower, natural pace */
   slowAudio?: string; slowTimes?: [number, number][];
 }
-export interface StoryMeta { id: string; title: string; topic: string; words: number; minutes: number; paras?: number; excerpt: string }
+export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
+export const LEVELS: Level[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+export const LEVEL_NAME: Record<Level, string> = { A1: 'Beginner', A2: 'Elementary', B1: 'Intermediate', B2: 'Upper intermediate', C1: 'Advanced', C2: 'Proficient' };
+export interface StoryMeta { id: string; title: string; topic: string; level?: Level; words: number; minutes: number; paras?: number; excerpt: string }
 /** word -> [sprite file, start, end] */
 export type WordMap = Record<string, Clip>;

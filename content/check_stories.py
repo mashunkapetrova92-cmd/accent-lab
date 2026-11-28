@@ -7,14 +7,19 @@ BRIT = re.compile(r"\b(\w*(?:colour|favour|honour|labour|neighbour|behaviour|hum
 OK_ISE = {"rise","wise","otherwise","promise","promised","promises","exercise","exercised","exercises","advertise","advertised","advertising","surprise","surprised","surprising","surprisingly","surprises","expertise","compromise","compromised","enterprise","enterprises","franchise","despise","despised","revise","revised","supervise","supervised","precise","concise","noise","praise","praised","raise","raised","raising","arise","arising","arisen","paradise","premise","premises","demise","merchandise","improvise","improvised","devise","devised","disguise","disguised","televised","comprise","comprised","excise","incise","chastise","cruise","bruise","bruised","poise","poised","treatise","sunrise","likewise","clockwise","worldwide","anise","denise","louise","promising","uprising","raisin","praising","exercising","surmise","apprise","franchises","guise","noises","praises","raises","rises","wisest","wisely","appraise","appraised","reprise","enterprising","merchandising","advise","advised","advising","revising","supervising","devising","comprising","analyse","rising","improvisation","mise","risings","cruising","devised","premises","praised","franchise","wise"}
 OK_ISE.discard("analyse")
 
+LEN = {"A1": (70, 135), "A2": (140, 215), "B1": (220, 310), "B2": (310, 440)}
+
 def parse(path):
     out = []
     txt = open(path, encoding="utf-8").read()
     for block in txt.split("=== ")[1:]:
         head, body = block.split("\n", 1)
-        slug, title, topic = [x.strip() for x in head.split("|")]
+        f = [x.strip() for x in head.split("|")]
+        slug, title, topic = f[:3]
         paras = [re.sub(r"\s+", " ", p).strip() for p in body.strip().split("\n\n") if p.strip()]
-        out.append({"id": slug, "title": title, "topic": topic, "paragraphs": paras})
+        d = {"id": slug, "title": title, "topic": topic, "paragraphs": paras}
+        if len(f) > 3: d["level"] = f[3]
+        out.append(d)
     return out
 
 def norm_tokens(text):
@@ -34,7 +39,7 @@ def known(w):
 
 if __name__ == "__main__":
     stories = []
-    for p in sorted(glob.glob("/home/claude/content/batches/b*.txt")):
+    for p in sorted(glob.glob("/home/claude/content/batches/*.txt")):
         stories += parse(p)
     ids = [s["id"] for s in stories]
     dup = {i for i in ids if ids.count(i) > 1}
@@ -48,11 +53,14 @@ if __name__ == "__main__":
         digits = re.findall(r"\d+", text)
         imp = re.findall(r"\b(miles?|feet|foot|inch(?:es)?|pounds?|ounces?|yards?|gallons?|fahrenheit|acres?)\b", text, re.I)
         if imp: print("    IMPERIAL:", imp)
-        flag = "" if 380 <= n <= 900 else "  <-- LENGTH"
+        lo, hi = LEN.get(s.get("level"), (380, 900))
+        flag = "" if lo <= n <= hi else "  <-- LENGTH"
         print(f"{s['id']:34s} {s['topic']:14s} {n:4d}{flag}")
         if miss: print("    missing:", " ".join(miss))
         if brit: print("    BRITISH?:", " ".join(brit))
         if digits: print("    DIGITS:", digits)
         for w in miss: allmiss.setdefault(w, []).append(s["id"])
     print("stories:", len(stories))
+    lv = json.load(open("/home/claude/content/levels_c.json")) if __import__("os").path.exists("/home/claude/content/levels_c.json") else {}
+    for s in stories: s.setdefault("level", lv.get(s["id"], "C1"))
     json.dump(stories, open("/home/claude/content/stories.json", "w"), indent=1, ensure_ascii=False)

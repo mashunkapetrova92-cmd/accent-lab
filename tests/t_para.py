@@ -17,7 +17,7 @@ async def run(p, name, base):
     idx = await pg.evaluate("fetch('data/stories/index.json').then(r => r.json())") if False else None
     await pg.goto(base + "#/reading"); await pg.wait_for_timeout(1200)
     idx = await pg.evaluate("fetch('data/stories/index.json').then(r => r.json())")
-    sid = idx[0]["id"]
+    sid = [s for s in idx if s.get("level", "A1") == "A1"][0]["id"]
     await pg.goto(base + f"#/reading/{sid}"); await pg.wait_for_timeout(1500)
     out = {"paras_in_dom": await pg.locator("article.passage p").count(), "dots": await pg.locator(".para-dots button").count()}
     st = await pg.evaluate(f"fetch('data/stories/{sid}.json').then(r => r.json())")

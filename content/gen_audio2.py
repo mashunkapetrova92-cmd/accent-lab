@@ -94,7 +94,7 @@ def module_items():
 async def main(which):
     jobs = []; manifest = {"words": {}, "clips": {}, "stories": {}}
     if which in ("all", "stories"):
-        sem = asyncio.Semaphore(3)
+        sem = asyncio.Semaphore(int(os.environ.get("CONC", "3")))
         for s in json.load(open("/home/claude/content/stories.json")):
             text = "\n\n".join(s["paragraphs"])
             for rate, tag in (("+0%", ""), (SLOW_STORY, ".slow")):

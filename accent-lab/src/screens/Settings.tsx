@@ -6,10 +6,11 @@ import { browserSupported, IOS_STANDALONE } from '../assess/browser';
 import { loadModel, MODEL_MB, useModel } from '../assess/asr';
 import { loadPhon, PHON_MB, usePhonModel } from '../assess/phon';
 import { engineLabel } from '../assess';
-import { url } from '../data/load';
+import { loadLibrary, url } from '../data/load';
+import { LEVELS, type Level } from '../data/types';
 import { back } from '../router';
 
-type Files = { files: [string, number][] };
+type Files = { files: [string, number][]; levels?: Record<string, string[]> };
 type Dl = { done: number; total: number; bytes: number; err?: string; group?: string };
 
 const ENGINES: { id: EnginePref; title: string; tag: string; text: string }[] = [
@@ -27,11 +28,14 @@ export default function Settings() {
   const [confirm, setConfirm] = useState(false);
   const [dl, setDl] = useState<Dl | null>(null);
   const [files, setFiles] = useState<Files | null>(null);
+  const [levelOf, setLevelOf] = useState<Record<string, Level>>({});
+  const [dlLevel, setDlLevel] = useState<Level>(() => { try { const v = localStorage.getItem('accentlab.level') as Level; return LEVELS.includes(v) ? v : 'A1'; } catch { return 'A1'; } });
   const model = useModel();
   const ph = usePhonModel();
   const standalone = matchMedia('(display-mode: standalone)').matches || (navigator as unknown as { standalone?: boolean }).standalone;
 
   useEffect(() => { fetch(url('data/files.json')).then(r => r.json()).then(setFiles).catch(() => {}); }, []);
+  useEffect(() => { loadLibrary().then(l => setLevelOf(Object.fromEntries(l.map(s => [s.id, s.level || 'C1'])))).catch(() => {}); }, []);
   useEffect(() => {
     const h = (e: MessageEvent) => { if (e.data?.type === 'cache-progress') setDl(d => ({ ...e.data, group: d?.group })); };
     navigator.serviceWorker?.addEventListener('message', h);
@@ -39,7 +43,16 @@ export default function Settings() {
   }, []);
   // the sound course: its recordings and data; the texts: their recordings, the word recordings and the text data
   const isText = (f: string) => f.startsWith('audio/p/') || f.startsWith('audio/w/') || f.startsWith('data/stories/') || f === 'data/words.json' || f === 'data/checks.json';
-  const group = (g: 'sounds' | 'texts') => (files?.files || []).filter(f => g === 'texts' ? isText(f[0]) : !isText(f[0]));
+  // a text's own files: audio/p/<id>-hash.mp3, audio/p/<id>.slow-hash.mp3, data/stories/<id>.json; the word recordings are shared by all levels
+  const storyOf = (f: string) => { const m = f.match(/^audio\/p\/(.+?)(?:\.slow)?-[0-9a-f]{8}\.mp3$/) || f.match(/^data\/stories\/(.+)\.json$/); return m && m[1] !== 'index' ? m[1] : null; };
+  const group = (g: 'sounds' | 'texts') => {
+    const all = files?.files || [];
+    if (g === 'sounds') return all.filter(f => !isText(f[0]));
+    // the build lists each level's files, including only the word recordings its texts use
+    const lv = files?.levels?.[dlLevel];
+    if (lv) { const want = new Set([...lv, 'data/stories/index.json', 'data/words.json', 'data/checks.json']); return all.filter(f => want.has(f[0])); }
+    return all.filter(f => { if (!isText(f[0])) return false; const id = storyOf(f[0]); return !id || levelOf[id] === dlLevel; });
+  };
   const mb = (g: 'sounds' | 'texts') => Math.max(1, Math.round(group(g).reduce((a, f) => a + f[1], 0) / 1e6));
 
   const download = async (g: 'sounds' | 'texts') => {
@@ -125,7 +138,10 @@ export default function Settings() {
         <p className="small">Lessons you open are saved automatically. You can also save recordings in advance.</p>
         <div className="row" style={{ flexWrap: 'wrap' }}>
           <button className="btn" onClick={() => download('sounds')} disabled={!!dl && !dl.err && dl.done < dl.total}><Icon name="download" /> Sounds course{files ? ` · ${mb('sounds')} MB` : ''}</button>
-          <button className="btn" onClick={() => download('texts')} disabled={!!dl && !dl.err && dl.done < dl.total}><Icon name="download" /> All 100 texts{files ? ` · ${mb('texts')} MB` : ''}</button>
+        </div>
+        <div className="row" style={{ flexWrap: 'wrap', gap: 8 }}>
+          <div className="seg small" role="group" aria-label="Level to save">{LEVELS.map(L => <button key={L} aria-pressed={L === dlLevel} onClick={() => setDlLevel(L)}>{L}</button>)}</div>
+          <button className="btn" onClick={() => download('texts')} disabled={!Object.keys(levelOf).length || (!!dl && !dl.err && dl.done < dl.total)}><Icon name="download" /> {dlLevel} texts{files && Object.keys(levelOf).length ? ` · ${mb('texts')} MB` : ''}</button>
         </div>
         {dl && (dl.err ? <div className="notice bad">{dl.err}</div> : <div><div className="bar"><i style={{ width: `${dl.total ? dl.done / dl.total * 100 : 0}%` }} /></div><div className="small muted" style={{ marginTop: 6 }}>{dl.done} of {dl.total} files{dl.done >= dl.total ? ' — saved' : ''}</div></div>)}
       </div>

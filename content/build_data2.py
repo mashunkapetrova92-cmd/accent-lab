@@ -328,7 +328,7 @@ def align_times(tokens, bounds):
 
 def story_audio(src, prefix):
     tmp = f"{PUB}/audio/{prefix}.tmp.mp3"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-ac", "1", "-ar", "24000", "-codec:a", "libmp3lame", "-b:a", "48k", tmp], check=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-ac", "1", "-ar", "24000", "-codec:a", "libmp3lame", "-b:a", "32k", tmp], check=True)
     rel = publish(tmp, prefix)
     # exact length of the decoded source in seconds (the published file has the same samples)
     x = decode(src); DURATIONS[rel] = round(len(x) / SR, 4)
@@ -381,7 +381,7 @@ def build_stories():
                     if f: t["f"] = f
         times, unmatched = align_times(flat, json.load(open(bp)))
         if unmatched > len(flat) * 0.03: print("WARN alignment", s["id"], unmatched, "of", len(flat))
-        d = {"id": s["id"], "title": s["title"], "topic": s["topic"], "words": len(flat), "minutes": max(1, round(times[-1][1] / 60)),
+        d = {"id": s["id"], "title": s["title"], "topic": s["topic"], "level": s.get("level", "C1"), "words": len(flat), "minutes": max(1, round(times[-1][1] / 60)),
              "paragraphs": paras, "ipa": ipa, "audio": story_audio(ap, f"p/{s['id']}"), "times": times}
         if os.path.exists(sap) and os.path.exists(sbp):
             st_, um2 = align_times(flat, json.load(open(sbp)))
@@ -390,7 +390,7 @@ def build_stories():
         json.dump(d, open(f"{PUB}/data/stories/{s['id']}.json", "w"), ensure_ascii=False, separators=(",", ":"))
         first = s["paragraphs"][0]
         excerpt = first[:150].rsplit(" ", 1)[0] + "…" if len(first) > 150 else first
-        index.append({"id": s["id"], "title": s["title"], "topic": s["topic"], "words": d["words"], "minutes": d["minutes"], "paras": len(paras), "excerpt": excerpt})
+        index.append({"id": s["id"], "title": s["title"], "topic": s["topic"], "level": d["level"], "words": d["words"], "minutes": d["minutes"], "paras": len(paras), "excerpt": excerpt})
         print("story", s["id"], d["words"], "words", round(times[-1][1]), "s", "slow" if "slowAudio" in d else "", flush=True)
     json.dump(index, open(f"{PUB}/data/stories/index.json", "w"), ensure_ascii=False, separators=(",", ":"))
 
@@ -400,7 +400,23 @@ def files_list():
         for f in fs:
             p = os.path.join(root, f); r = os.path.relpath(p, PUB)
             if r.startswith(("audio/", "data/")) and r != "data/files.json" and not r.endswith(".tmp.mp3"): out.append([r, os.path.getsize(p)])
-    json.dump({"files": sorted(out)}, open(f"{PUB}/data/files.json", "w"))
+    # per level: each text's audio and data, plus only the word recordings its words use
+    levels = {}
+    wm = json.load(open(f"{PUB}/data/words.json")) if os.path.exists(f"{PUB}/data/words.json") else {}
+    for e in json.load(open(f"{PUB}/data/stories/index.json")):
+        d = json.load(open(f"{PUB}/data/stories/{e['id']}.json"))
+        L = levels.setdefault(d.get("level", "C1"), set())
+        L.add(f"data/stories/{e['id']}.json"); L.add("audio/" + d["audio"])
+        if d.get("slowAudio"): L.add("audio/" + d["slowAudio"])
+        for p in d["paragraphs"]:
+            for st in p["sents"]:
+                for t in st["toks"]:
+                    for n in t["n"]:
+                        L.update("audio/" + x for x in wm.get(n, []) if isinstance(x, str))
+    sizes = dict((r, n) for r, n in out)
+    levels = {k: sorted(x for x in v if x in sizes) for k, v in sorted(levels.items())}
+    json.dump({"files": sorted(out), "levels": levels}, open(f"{PUB}/data/files.json", "w"))
+    for k, v in levels.items(): print("level", k, len(v), "files", round(sum(sizes[x] for x in v) / 1e6, 1), "MB")
     print("files", len(out), round(sum(x[1] for x in out) / 1e6, 1), "MB")
 
 if __name__ == "__main__":
