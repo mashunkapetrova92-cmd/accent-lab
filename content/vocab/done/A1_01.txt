@@ -1,0 +1,200 @@
+climb | noun | the act of going up something high | It was a long climb to the top of the hill.
+clock | noun | a thing on a wall or table that shows the time | The clock in the kitchen is slow.
+close | adjective | near | The school is close to my house.
+close | verb | to shut | Please close the door.
+closed | adjective | not open | The store is closed on Sundays.
+cloth | noun | material made from cotton, wool, or other threads | Clean the table with a wet cloth.
+clothes | noun | things you wear, like shirts and pants | I need new clothes for school.
+cloud | noun | a white or gray shape in the sky made of water drops | There isn't a cloud in the sky.
+cloudy | adjective | with a lot of clouds | It's cloudy today, so take an umbrella.
+club | noun | a group of people who meet to do something they like | I joined the chess club.
+coach | noun | a person who trains a sports team | Our coach is very strict.
+coat | noun | a warm piece of clothing you wear over other clothes | Wear your coat. It's cold outside.
+code | noun | a group of numbers or letters, like a password | Enter the code to open the door.
+coffee | noun | a hot brown drink made from roasted beans | I drink coffee every morning.
+coke | noun | a cola drink | Can I have a Coke, please?
+cold | adjective | having a low temperature | The water is very cold.
+cold | noun | a common illness that makes you sneeze and cough | I have a cold.
+collect | verb | to bring things together and keep them | My son collects stamps.
+collection | noun | a group of things that someone has collected | She has a big collection of shells.
+college | noun | a school you go to after high school | My sister is in college.
+color | noun | red, blue, green, and so on | What color is your car?
+color | verb | to put color on a picture | The kids colored the pictures.
+come | verb | to move toward the speaker or a place | Come here, please.
+computer | noun | an electronic machine for working, writing, and using the internet | I do my homework on the computer.
+concert | noun | a show where people play music | We went to a rock concert.
+contest | noun | a competition that people try to win | She won a singing contest.
+conversation | noun | a talk between two or more people | We had a long conversation.
+cook | noun | a person who makes food | My grandma is a great cook.
+cook | verb | to make food hot and ready to eat | Dad cooks dinner on Fridays.
+cookie | noun | a small, flat, sweet food that is baked | Do you want a chocolate chip cookie?
+cool | adjective | a little cold; also very good | It's a cool evening.
+cop | noun | a police officer | A cop helped us find the way.
+copy | noun | a thing that is the same as another | Can I have a copy of the letter?
+corn | noun | a tall plant with yellow seeds that people eat | We had corn and chicken for dinner.
+corner | noun | the place where two streets or two sides meet | The bank is on the corner.
+correct | adjective | right; with no mistakes | Your answer is correct.
+couch | noun | a long soft seat for two or more people | The dog is sleeping on the couch.
+could | modal auxiliary | the past of "can"; also used to ask politely | Could you help me, please?
+course | noun | a set of lessons about a subject | I'm taking an English course.
+cousin | noun | the child of your aunt or uncle | My cousin lives in Florida.
+cover | noun | the outside part of a book or magazine | I like the cover of this book.
+cow | noun | a large farm animal that gives milk | The cow is eating grass.
+cream | noun | the thick part of milk | Do you want cream in your coffee?
+credit card | noun | a plastic card you use to pay for things | Can I pay by credit card?
+cry | noun | a loud sound you make when you are hurt or afraid | We heard a cry for help.
+culture | noun | the ideas, art, and way of life of a group of people | I love learning about Japanese culture.
+cup | noun | a small container you drink from | Would you like a cup of tea?
+cut | verb | to divide something with a knife or scissors | Cut the cake into eight pieces.
+cute | adjective | pretty and sweet | What a cute puppy!
+dad | noun | father | My dad works at a hospital.
+daddy | noun | a word children use for father | Daddy, can you read me a story?
+dance | noun | a set of movements you do to music | Let me show you a new dance.
+dance | verb | to move your body to music | Do you like to dance?
+dancing | noun | the activity of moving to music | We went dancing on Saturday.
+dark | adjective | with little or no light | It gets dark early in winter.
+date | noun | a day of the month or year | What's the date today?
+daughter | noun | a person's female child | They have two daughters.
+day | noun | a period of twenty-four hours | There are seven days in a week.
+dear | adjective | used at the start of a letter | Dear Mr. Smith,
+December | noun | the twelfth month of the year | Christmas is in December.
+delicious | adjective | tasting very good | This soup is delicious.
+describe | verb | to say what someone or something is like | Can you describe the man?
+design | noun | a drawing or plan of how something will look | I like the design of your T-shirt.
+desk | noun | a table you use for writing or working | My books are on my desk.
+dictionary | noun | a book or website that tells you what words mean | Look up the word in a dictionary.
+did | do-verb | the past of "do" | Did you see the movie?
+difference | noun | the way that two things are not the same | What's the difference between these two cars?
+different | adjective | not the same | My brother and I are very different.
+difficult | adjective | not easy | This test is difficult.
+dig | noun | a place where people dig to find old things | They found old coins at the dig.
+dining room | noun | a room where people eat meals | We eat in the dining room on holidays.
+dinner | noun | the main meal of the day, usually in the evening | What's for dinner?
+dirty | adjective | not clean | Your hands are dirty.
+discuss | verb | to talk about something with other people | Let's discuss your plan.
+dish | noun | a plate or bowl; also food cooked in a special way | Pasta is my favorite dish.
+do | do-verb | to perform an action; also used to make questions | What do you do on weekends?
+doctor | noun | a person whose job is to help sick people get better | You should see a doctor.
+does | do-verb | the form of "do" used with "he," "she," and "it" | Does she like pizza?
+dog | noun | an animal that people keep as a pet or to guard a house | Our dog loves to run.
+doing | do-verb | the "-ing" form of "do" | What are you doing?
+doll | noun | a toy that looks like a small person | My daughter has a new doll.
+dollar | noun | the money used in the United States | This book costs ten dollars.
+door | noun | the thing you open to go into a room or building | Someone is at the door.
+down | adverb | to a lower place | Please sit down.
+drama | noun | a play for the theater, TV, or radio; acting as a subject | I'm in the school drama club.
+draw | verb | to make a picture with a pencil or pen | Can you draw a horse?
+dream | noun | pictures and stories in your mind when you sleep; also a wish | I had a strange dream last night.
+dress | noun | a piece of clothing for a woman or girl that covers the body and legs | She wore a red dress to the party.
+drink | noun | a liquid that you drink | Can I get you a drink?
+drink | verb | to take liquid into your mouth and swallow it | Drink a lot of water.
+drive | noun | a trip in a car | Let's go for a drive.
+driver | noun | a person who drives a car, bus, or truck | The bus driver said hello.
+drop | verb | to let something fall | Don't drop the eggs!
+drum | noun | a musical instrument that you hit with sticks | He plays the drums.
+dry | adjective | not wet | Are the clothes dry yet?
+due | adjective | expected to happen or arrive at a certain time | The homework is due on Monday.
+DVD | noun | a disc with a movie or other video on it | We watched a DVD at home.
+each | determiner | every one, thought of separately | Each student has a book.
+each | pronoun | every one of a group | The apples cost fifty cents each.
+each other | pronoun | used to show that two people do the same thing to the other | The two friends hugged each other.
+ear | noun | one of the two parts of your head that you hear with | My ear hurts.
+early | adverb | before the usual or expected time | I got up early today.
+easy | adjective | not difficult | The test was easy.
+eat | verb | to put food in your mouth and swallow it | We eat lunch at noon.
+egg | noun | a round thing that a bird lays, which people often eat | I had two eggs for breakfast.
+eight | number | the number 8 | I go to bed at eight.
+eighteen | number | the number 18 | She is eighteen years old.
+eighty | number | the number 80 | My grandpa is eighty.
+either | adverb | used in negative sentences to mean "also" | I don't like it either.
+elementary | adjective | simple; for beginners | This is an elementary English class.
+eleven | number | the number 11 | There are eleven players on a soccer team.
+else | adverb | other; different | Do you want anything else?
+email | noun | a message you send over the internet | I'll send you an email.
+end | noun | the last part of something | Wait until the end of the movie.
+engineer | noun | a person who designs machines, roads, or buildings | My mom is an engineer.
+enjoy | verb | to like doing something | I enjoy reading.
+evening | noun | the time between afternoon and night | What are you doing this evening?
+event | noun | something important that happens | The concert was a big event.
+every | determiner | each one of a group | I walk my dog every day.
+everybody | pronoun | every person | Everybody likes her.
+everyday | adjective | normal; happening every day | Cooking is an everyday activity.
+everyone | pronoun | every person | Everyone is here.
+everything | pronoun | all things | Thanks for everything.
+everywhere | adverb | in all places | I looked everywhere for my keys.
+example | noun | something that shows what other things of the same kind are like | Can you give me an example?
+excellent | adjective | very, very good | Your work is excellent.
+excited | adjective | very happy and full of energy about something | The kids are excited about the trip.
+exciting | adjective | making you feel excited | It was an exciting game.
+excuse | noun | a reason you give for doing something wrong | What's your excuse for being late?
+exercise | verb | to move your body to stay healthy | I exercise three times a week.
+expensive | adjective | costing a lot of money | This watch is very expensive.
+eye | noun | one of the two parts of your face that you see with | She has green eyes.
+face | noun | the front part of your head | Wash your face.
+factory | noun | a building where things are made by machines | My uncle works in a car factory.
+fair | adjective | treating everyone in the same way | That's not fair!
+fairy | noun | a small imaginary person with wings and magic powers | The story is about a fairy.
+false | adjective | not true | Is the answer true or false?
+family | noun | a group of people like parents and their children | I have a big family.
+famous | adjective | known by many people | She is a famous singer.
+fan | noun | a person who loves a sport, team, or star | I'm a big fan of this band.
+farm | noun | land where people grow food and keep animals | My grandparents live on a farm.
+farmer | noun | a person who owns or works on a farm | The farmer has fifty cows.
+fast | adjective | quick | He has a fast car.
+fast | adverb | quickly | Don't drive so fast!
+fat | adjective | having too much weight on the body | Our cat is getting fat.
+father | noun | a male parent | My father is a doctor.
+favorite | adjective | liked more than all others | What's your favorite color?
+favorite | noun | a person or thing you like best | This song is my favorite.
+February | noun | the second month of the year | February is the shortest month.
+feed | noun | food for animals | The farmer bought chicken feed.
+feel | verb | to have a feeling in your body or mind | I feel happy today.
+feeling | noun | something you feel, like happiness or anger | I have a feeling she's right.
+festival | noun | a special time when people celebrate with music, food, or art | We went to a music festival.
+fever | noun | a high body temperature when you are sick | The baby has a fever.
+field | noun | an open area of land with grass, often for sports or farming | The cows are in the field.
+fifteen | number | the number 15 | The bus comes every fifteen minutes.
+fifty | number | the number 50 | There are fifty states in the USA.
+fight | noun | when people hit each other or argue angrily | Two boys had a fight at school.
+file | noun | a collection of information on a computer | Save the file before you close it.
+fill | verb | to make something full | Fill the glass with water.
+find | verb | to see or get something you were looking for | I can't find my phone.
+fine | adjective | good, well, or OK | I'm fine, thank you.
+finish | noun | the end of a race | She was first at the finish.
+finish | verb | to come to the end of something | Did you finish your homework?
+fire | noun | the heat, light, and flames when something burns | We sat around the fire.
+first | adjective | coming before all others | January is the first month of the year.
+first | adverb | before anything else | First, wash your hands.
+fish | noun | an animal that lives in water and swims | We saw many fish in the lake.
+fishing | noun | the sport or job of catching fish | My dad loves fishing.
+five | number | the number 5 | I have five fingers on each hand.
+flag | noun | a piece of cloth with colors and a design that stands for a country | The American flag is red, white, and blue.
+floor | noun | the part of a room you walk on; also a level of a building | My office is on the third floor.
+flower | noun | the colorful part of a plant | She gave me some flowers.
+fly | noun | a small insect with wings | There's a fly in my soup!
+fly | verb | to move through the air | Birds fly south in the winter.
+focus | verb | to give all your attention to something | Focus on your work.
+foggy | adjective | with a thick cloud near the ground, so it is hard to see | It's very foggy this morning.
+following | adjective | next; coming after | We left the following day.
+food | noun | what people and animals eat | I love Italian food.
+for | preposition | used to show who gets something or why | This present is for you.
+foreign | adjective | from another country | Do you speak a foreign language?
+foreigner | noun | a person from another country | Many foreigners visit this city.
+forget | verb | to not remember | Don't forget your keys.
+form | noun | a paper with spaces where you write information | Please fill out this form.
+forty | number | the number 40 | My mom is forty years old.
+four | number | the number 4 | A car has four wheels.
+fourteen | number | the number 14 | My son is fourteen.
+free | adjective | costing no money; also not busy | The museum is free on Mondays.
+Friday | noun | the day after Thursday | We have a party on Friday.
+friend | noun | a person you know and like | She is my best friend.
+frog | noun | a small green animal that jumps and lives near water | A frog jumped into the pond.
+from | preposition | used to show where something starts | I'm from Canada.
+front | adjective | at the front | I sat in the front seat.
+fruit | noun | the sweet part of a plant that you can eat, like an apple | Eat more fruit.
+full | adjective | with no space left | The bus is full.
+fun | adjective | enjoyable | The party was really fun.
+fun | noun | a good time | Have fun at the beach!
+funny | adjective | making you laugh | He told a funny story.
+future | noun | the time that will come | What do you want to do in the future?
+game | noun | an activity with rules that people play for fun | Let's play a game.

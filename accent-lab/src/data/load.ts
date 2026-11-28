@@ -1,4 +1,4 @@
-import type { SoundsData, Story, StoryMeta, WordMap } from './types';
+import type { Level, SoundsData, Story, StoryMeta, VocabItem, WordMap } from './types';
 import { key } from '../lib/text';
 
 const base = import.meta.env.BASE_URL;
@@ -27,3 +27,5 @@ export const loadWordMap = () => getJSON<WordMap>('data/words.json');
 /** words of the texts: [check, ref, ...confusable words] (see WordCheck) */
 export const loadCheckMap = () => getJSON<Record<string, (string | number)[]>>('data/checks.json');
 export const loadDurations = () => getJSON<Record<string, number>>('data/audio.json');
+export const loadVocabIndex = () => getJSON<Record<Level, number>>('data/vocab/index.json');
+export const loadVocab = (l: Level) => getJSON<VocabItem[]>(`data/vocab/${l}.json`);

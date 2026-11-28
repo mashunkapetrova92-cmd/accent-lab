@@ -51,3 +51,6 @@ export const LEVEL_NAME: Record<Level, string> = { A1: 'Beginner', A2: 'Elementa
 export interface StoryMeta { id: string; title: string; topic: string; level?: Level; words: number; minutes: number; paras?: number; excerpt: string }
 /** word -> [sprite file, start, end] */
 export type WordMap = Record<string, Clip>;
+
+/** one vocabulary entry: word, part of speech, IPA, simple definition, example sentence, word clip */
+export interface VocabItem { w: string; p: string; i: string; d: string; e: string; c?: Clip }

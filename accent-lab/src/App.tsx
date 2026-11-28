@@ -9,6 +9,7 @@ import Reader from './screens/Reader';
 import Progress from './screens/Progress';
 import Settings from './screens/Settings';
 import Home from './screens/Home';
+import Words from './screens/Words';
 import { setDurations, stop } from './lib/audio';
 import { loadDurations } from './data/load';
 import { AudioToast } from './components/ui';
@@ -29,8 +30,9 @@ export default function App() {
   else if (top === 'progress') screen = <Progress />;
   else if (top === 'settings') screen = <Settings />;
   else if (top === 'sounds') screen = <SoundMap />;
+  else if (top === 'words') screen = <Words />;
   else screen = <Home />;
-  const tab = top === 'reading' ? 'reading' : top === 'progress' ? 'progress' : top === 'sounds' ? 'sounds' : top === 'settings' ? '' : 'home';
+  const tab = top === 'reading' ? 'reading' : top === 'progress' ? 'progress' : top === 'sounds' ? 'sounds' : top === 'settings' || top === 'words' ? '' : 'home';
   return (
     <div className={`app${(top === 'sounds' || top === 'reading') && id ? ' lesson' : ''}`}>
       <main><ErrorBoundary resetKey={route.join('/')}>{screen}</ErrorBoundary></main>

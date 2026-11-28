@@ -1,0 +1,174 @@
+unlock | verb | to open a lock with a key | Unlock the door, please.
+unmistakable | adjective | impossible to confuse with anything else | Her voice is unmistakable.
+unmistakably | adverb | in a way that is easy to recognize | It was unmistakably his handwriting.
+unnatural | adjective | not natural | The colors look unnatural.
+unofficial | adjective | not official | It's an unofficial report.
+unpopular | adjective | not liked by many people | The new rule is unpopular.
+unrealistic | adjective | not sensible or possible | Your plan is unrealistic.
+unreasonable | adjective | not fair or sensible | The price is unreasonable.
+unreliable | adjective | not able to be trusted | The old car is unreliable.
+unrest | noun | angry protests and fighting in a country | There was political unrest.
+unsafe | adjective | dangerous | The bridge is unsafe.
+unsatisfactory | adjective | not good enough | The results were unsatisfactory.
+unselfish | adjective | caring about others | It was an unselfish act.
+unstoppable | adjective | impossible to stop | The team seemed unstoppable.
+unsuccessful | adjective | not successful | The attempt was unsuccessful.
+unsuitable | adjective | not right for a purpose | The movie is unsuitable for children.
+unsure | adjective | not certain | I'm unsure what to do.
+untalented | adjective | having no special skill | He's an untalented singer.
+unthinkably | adverb | in a way that is too shocking to imagine | The house was unthinkably expensive.
+untie | verb | to open a knot | Untie your shoes.
+unto | preposition | to, in old or religious language | Do unto others as you would have them do unto you.
+untreated | adjective | not given medical care; also not chemically treated | The disease can be dangerous if untreated.
+untrimmed | adjective | not cut to make neat | He had an untrimmed beard.
+unusualness | noun | the quality of being unusual | The unusualness of the design surprised us.
+unwilling | adjective | not wanting to do something | He was unwilling to help.
+unwise | adjective | not sensible | It was an unwise decision.
+unworldly | adjective | not interested in money and possessions; also not experienced | He's a gentle, unworldly man.
+upbringing | noun | the way you were taught and cared for as a child | She had a strict upbringing.
+update | noun | new information; also a new version of software | Here's an update on the weather.
+upgrade | noun | an improvement; also a better version | The phone needs an upgrade.
+upgrade | verb | to improve; also to get a better version | We upgraded to first class.
+upright | adjective | standing straight; also honest | Put your seat in the upright position.
+upright | adverb | in a straight position | Sit upright.
+upset | verb | to make someone worried or unhappy | The news upset her.
+upside down | adjective | with the top at the bottom | The picture is upside down.
+upside down | adverb | in a position with the top at the bottom | He hung upside down from the tree.
+urban | adjective | relating to cities | Most people live in urban areas.
+urge | verb | to strongly advise | I urge you to see a doctor.
+urgently | adverb | in an urgent way | We urgently need help.
+user | noun | a person who uses something | The app has millions of users.
+usher | verb | to show someone where to go | She ushered us to our seats.
+utility | noun | a service like water, gas, or electricity; also usefulness | The rent includes utilities.
+utilize | verb | to use | We utilize solar energy.
+utter | verb | to say something | She didn't utter a word.
+utterly | adverb | completely | I'm utterly exhausted.
+vacant | adjective | empty; not used | Is this seat vacant?
+vaccine | noun | a substance that protects you from a disease | The vaccine protects against flu.
+valentine | noun | a card or gift you give someone you love on February fourteenth | He sent her a valentine.
+valid | adjective | legally acceptable; also reasonable | Your passport is no longer valid.
+value | verb | to think something is important | I value your opinion.
+vanish | verb | to disappear suddenly | The magician made the coin vanish.
+vanity | noun | too much pride in your looks | Her vanity is annoying.
+variation | noun | a change; also a different form | There's little variation in price.
+varied | adjective | different; of many types | We have a varied menu.
+venture | noun | a new business or risky project | It's a new business venture.
+venue | noun | the place where an event happens | The venue for the concert has changed.
+verbal | adjective | spoken; also relating to words | They had a verbal agreement.
+verbally | adverb | in spoken words | He was verbally abused.
+verse | noun | poetry; also a part of a song or poem | Sing the first verse.
+verse | verb | to make someone familiar with a subject, as in "well versed" | She is well versed in history.
+version | noun | a form of something that is different from others | This is the new version of the app.
+versus | preposition | against, used in sports and law | It's Boston versus New York tonight.
+very | adjective | exact; also used for emphasis | That's the very thing I need.
+veteran | noun | a person who served in the military; also a person with a lot of experience | My grandfather is a war veteran.
+vibrate | verb | to shake quickly | My phone vibrated.
+vibration | noun | a continuous shaking movement | I felt the vibration of the train.
+viewer | noun | a person who watches TV | The show has millions of viewers.
+vigor | noun | energy and strength | He works with great vigor.
+vigorous | adjective | strong and active | Do vigorous exercise.
+vigorously | adverb | with energy | She shook her head vigorously.
+villa | noun | a large house, often in the country or by the sea | They rented a villa in Italy.
+villager | noun | a person who lives in a village | The villagers welcomed us.
+vinegar | noun | a sour liquid used in cooking | Add oil and vinegar to the salad.
+violate | verb | to break a law or agreement | He violated the rules.
+virtual reality | noun | images created by a computer that seem real | The game uses virtual reality.
+virtually | adverb | almost | It's virtually impossible.
+virtue | noun | a good quality | Patience is a virtue.
+visibly | adverb | in a way that people can see | She was visibly upset.
+vital | adjective | very important | It's vital that you come.
+vitamin | noun | a natural substance in food that you need to be healthy | Oranges have vitamin C.
+vocalist | noun | a singer | She's the vocalist in a jazz band.
+volunteer | noun | a person who works without pay | We need volunteers.
+vomit | noun | food that comes back up from the stomach | There was vomit on the floor.
+voter | noun | a person who votes | Voters chose a new mayor.
+vow | noun | a serious promise | They exchanged wedding vows.
+wage | noun | money paid for work, usually by the hour or week | The minimum wage went up.
+waist | noun | the middle part of your body above your hips | She wore a belt around her waist.
+vest | noun | a piece of clothing without sleeves worn over a shirt | He wore a suit with a vest.
+wait | noun | a period of waiting | There's a long wait at the doctor's.
+walkabout | noun | - | -
+walker | noun | a person who walks; also a frame that helps people walk | My grandmother uses a walker.
+wallboard | noun | boards used to make inside walls | They put up wallboard in the new room.
+walnut | noun | a nut with a hard round shell | I put walnuts in the cake.
+want | noun | a lack of something | The plants died for want of water.
+warship | noun | a ship used for war | The navy sent a warship.
+wartime | noun | a period when there is a war | Food was scarce in wartime.
+wasp | noun | a flying insect that can sting | A wasp stung me.
+water | verb | to give water to plants | Water the plants every day.
+waterproof | adjective | not letting water through | I need a waterproof jacket.
+weaken | verb | to make or become weaker | The illness weakened him.
+weakly | adverb | in a weak way | She smiled weakly.
+wealthy | adjective | rich | They're a wealthy family.
+wearisome | adjective | making you tired or bored | It was a wearisome journey.
+weary | adjective | very tired | He felt weary after the long day.
+weave | noun | the way threads are woven | The cloth has a tight weave.
+wed | verb | to marry | They wed in June.
+weed | noun | a wild plant growing where you don't want it | Pull the weeds out of the garden.
+welcome | noun | a friendly greeting | They gave us a warm welcome.
+welfare | noun | health and happiness; also government money for people in need | We care about animal welfare.
+well-balanced | adjective | having the right amounts of everything | Eat a well-balanced diet.
+well-built | adjective | strong and solid | He's tall and well-built.
+well-organized | adjective | planned carefully | The event was well-organized.
+well-paid | adjective | earning a lot of money | She has a well-paid job.
+western | adjective | in or from the west | They live in western Canada.
+wheat | noun | a grain used to make flour | Bread is made from wheat.
+whereas | conjunction | while; but | She likes tea, whereas I like coffee.
+whichever | pronoun | any one that | Choose whichever you like.
+whip | verb | to hit with a whip; also to beat cream until it is thick | Whip the cream.
+whiskey | noun | a strong alcoholic drink made from grain | He drinks whiskey.
+whisper | verb | to speak very quietly | She whispered in my ear.
+whistle | verb | to make a high sound by blowing through your lips | He whistled a tune.
+widen | verb | to make wider | They widened the road.
+widow | noun | a woman whose husband has died | She's been a widow for ten years.
+width | noun | how wide something is | What's the width of the room?
+wilderness | noun | a wild area with no people | They got lost in the wilderness.
+will | noun | the determination to do something; also a legal document about who gets your things after death | She has a strong will.
+willing | adjective | ready to do something | Are you willing to help?
+willingly | adverb | in a willing way | She willingly agreed.
+win | noun | a victory | It was a big win for the team.
+wind | verb | to turn; also to follow a curving path | The road winds through the mountains.
+winding | adjective | having many curves | We drove along a winding road.
+windshield | noun | - | -
+wink | noun | the act of closing one eye quickly | He gave me a wink.
+wipe | verb | to clean with a cloth | Wipe the table.
+wire | verb | to connect with wires | They wired the house for electricity.
+wit | noun | the ability to say clever, funny things | She has a sharp wit.
+withdraw | verb | to take out money from a bank; also to move back | I withdrew some cash.
+withdrawal | noun | taking money from a bank; also moving back | I made a withdrawal from the ATM.
+witness | noun | a person who sees something happen, like a crime | The police are looking for witnesses.
+witty | adjective | clever and funny | He's very witty.
+wolf | noun | a wild animal like a large dog | The wolves howled at the moon.
+wondrous | adjective | wonderful | It was a wondrous sight.
+woodcarving | noun | the art of carving wood; also a carved object | He sells woodcarvings at the market.
+wordlessly | adverb | without speaking | She wordlessly handed me the letter.
+workaholic | adjective | working too much | He's very workaholic.
+workbench | noun | a strong table for working with tools | His tools are on the workbench.
+workman | noun | a man who does physical work | The workmen fixed the road.
+worktable | noun | a table for working on | The sewing machine is on the worktable.
+worldly | adjective | relating to the physical world; also having a lot of experience | She's very worldly for her age.
+worldview | noun | a way of thinking about the world | Travel changed her worldview.
+worldwide | adjective | across the whole world | The song was a worldwide hit.
+worm | noun | a small long animal with no legs that lives in soil | The bird is eating a worm.
+wornout | adjective | very tired; also too old to use | I'm worn-out after work.
+worrying | adjective | making you worry | The news is worrying.
+worse | noun | something worse | Things changed for the worse.
+worsen | verb | to become worse | The weather worsened.
+worship | noun | the act of praying to God | The church is a place of worship.
+worst | adverb | in the worst way | He played worst of all.
+worthless | adjective | having no value | The old coins are worthless.
+wound | verb | to injure | Two soldiers were wounded.
+wreck | noun | a badly damaged ship, car, or plane | They found the wreck of the ship.
+wrongly | adverb | in a wrong way | He was wrongly accused.
+X-ray | noun | a photo of the inside of the body | The X-ray showed a broken bone.
+yacht | noun | a boat used for racing or pleasure | They sailed on a yacht.
+yawn | noun | opening your mouth wide because you are tired | She couldn't hide a yawn.
+yawn | verb | to open your mouth wide because you are tired | He yawned during the lecture.
+yearn | verb | to want something very much | She yearned to go home.
+yell | verb | to shout loudly | Don't yell at me.
+yield | verb | to produce; also to give way to traffic | The farm yields good crops.
+youthful | adjective | young or seeming young | She has a youthful face.
+yummy | adjective | tasting very good, in informal speech | This cake is yummy!
+zebra | noun | an African animal like a horse with black and white stripes | We saw zebras on the safari.
+zip | noun | - | -
+zoom | noun | a lens that makes things look closer | Use the zoom to see the bird.

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import Icon from '../components/Icon';
-import { loadLibrary, loadSounds } from '../data/load';
+import { loadLibrary, loadSounds, loadVocabIndex } from '../data/load';
 import { useAsync, useStore } from '../lib/store';
 import { go } from '../router';
 import { nodeState } from './SoundMap';
@@ -19,6 +19,9 @@ export default function Home() {
   const points = useStore(s => s.points);
   const sd = useAsync(loadSounds, []).data;
   const lib = useAsync(loadLibrary, []).data;
+  const vi = useAsync(loadVocabIndex, []).data;
+  const known = useStore(s => s.known);
+  const vTotal = vi ? Object.values(vi).reduce((a, b) => a + b, 0) : 0;
 
   const nodes = sd?.nodes || [];
   const mastered = nodes.filter(n => sounds[n.id]?.mastered).length;
@@ -41,7 +44,8 @@ export default function Home() {
       meta: nodes.length ? `${mastered} of ${nodes.length} sounds` : undefined, href: '/sounds' },
     { id: 'reading', title: 'Reading', glyph: 'Aa', tone: 'violet', text: 'Listen, read aloud, get feedback.',
       meta: lib ? `${read} of ${lib.length} texts · A1–C2` : undefined, href: '/reading' },
-    { id: 'words', title: 'New words', glyph: 'abc', tone: 'gold', text: 'Vocabulary by level, with sound.' },
+    { id: 'words', title: 'New words', glyph: 'abc', tone: 'gold', text: 'Words by level, with meanings and examples.',
+      meta: vTotal ? `${Object.keys(known).length} of ${vTotal.toLocaleString('en-US')} words` : undefined, href: '/words' },
     { id: 'grammar', title: 'Grammar', glyph: 'a/an', tone: 'green', text: 'Short, clear rules and practice.' },
   ];
 

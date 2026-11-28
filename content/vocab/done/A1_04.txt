@@ -1,0 +1,200 @@
+red | adjective | having the color of blood | She has a red car.
+remember | verb | to keep something in your mind; not forget | I remember her name.
+repeat | verb | to say or do something again | Please repeat after me.
+reporter | noun | a person who finds and tells the news | The reporter asked a lot of questions.
+restaurant | noun | a place where you buy and eat meals | Let's eat at a Mexican restaurant.
+result | noun | what happens because of something; also a score | The test results are good.
+review | noun | an article that says what someone thinks of a book, movie, or product | The movie got great reviews.
+ribbon | noun | a long thin piece of cloth for tying things | She has a red ribbon in her hair.
+rice | noun | small white or brown grains that you cook and eat | We had chicken and rice.
+rich | adjective | having a lot of money | He is very rich.
+ride | noun | a trip in a car, on a bike, or on a horse | Can you give me a ride home?
+ride | verb | to sit on a bike or horse and make it move | I ride my bike to school.
+right | adjective | correct; also on the side opposite to left | That's the right answer.
+right | adverb | exactly; also to the right side | Turn right at the light.
+ring | verb | to make the sound of a bell | The phone is ringing.
+river | noun | a long line of water that flows to the sea | The Mississippi is a long river.
+role | noun | a part in a play or movie; also a job or position | She played the main role.
+room | noun | a part of a building with walls, a floor, and a ceiling | My room is upstairs.
+rose | noun | a flower with a sweet smell that often has thorns | He gave her a red rose.
+row | noun | a line of people or things | We sat in the front row.
+rude | adjective | not polite | Don't be rude to your sister.
+rule | noun | something that tells you what you must or must not do | Follow the rules.
+ruler | noun | a long flat tool for measuring and drawing lines | Use a ruler to draw a straight line.
+run | noun | the act of running | I go for a run every morning.
+run | verb | to move very quickly on your legs | Don't run in the hall.
+sad | adjective | unhappy | The movie made me sad.
+sailor | noun | a person who works on a ship | My grandpa was a sailor.
+salad | noun | a mix of raw vegetables like lettuce and tomatoes | I'll have a green salad.
+sale | noun | the act of selling; also a time when things cost less | The shoes are on sale.
+same | adjective | not different | We are in the same class.
+same | adverb | in the same way | I feel the same about it.
+same | pronoun | the same thing | I'll have the same, please.
+sandwich | noun | two pieces of bread with food between them | I made a cheese sandwich.
+Saturday | noun | the day after Friday | We go shopping on Saturday.
+save | verb | to keep someone from danger; also to keep money for later | I'm saving money for a new bike.
+saw | noun | a tool with sharp teeth for cutting wood | He cut the board with a saw.
+say | verb | to speak words | What did you say?
+school | noun | a place where children go to learn | I walk to school.
+science | noun | the study of the natural world | We did a fun experiment in science class.
+scientist | noun | a person who works in science | She wants to be a scientist.
+sea | noun | the large area of salt water that covers much of the earth | We swam in the sea.
+seat | noun | a place where you can sit | Please take a seat.
+second | adjective | coming after the first | February is the second month.
+section | noun | one part of something | Read the first section of the book.
+see | verb | to notice with your eyes | I can see the ocean from my window.
+self | noun | who a person is | She is feeling like her old self again.
+sell | verb | to give something to someone for money | They sell fresh bread here.
+sentence | noun | a group of words that has a subject and verb | Write a sentence with this word.
+September | noun | the ninth month of the year | School starts in September.
+set | verb | to put something somewhere; also to get ready | Can you set the table for dinner?
+seven | number | the number 7 | There are seven days in a week.
+seventeen | number | the number 17 | She is seventeen years old.
+seventy | number | the number 70 | My grandmother is seventy.
+shake | noun | a cold drink made with milk and ice cream | I'll have a chocolate shake.
+share | verb | to have or use something with other people | Let's share the pizza.
+she | pronoun | a woman, girl, or female animal that was already mentioned | She is my teacher.
+sheep | noun | a farm animal with thick wool | The sheep are in the field.
+shelf | noun | a flat board on a wall for putting things on | Put the book on the shelf.
+ship | noun | a large boat | The ship crossed the ocean.
+shirt | noun | a piece of clothing for the top part of your body | He's wearing a blue shirt.
+shoe | noun | a thing you wear on your foot | I need new shoes.
+shopping | noun | the activity of buying things in stores | Let's go shopping.
+short | adjective | not long or not tall | He has short hair.
+short | adverb | suddenly; before the end | She stopped short.
+should | modal auxiliary | used to give advice | You should see a doctor.
+shoulder | noun | the part of your body between your neck and your arm | My shoulder hurts.
+show | verb | to let someone see something | Show me your new shoes.
+shower | noun | a place where water falls on you to wash your body | I take a shower every morning.
+shy | adjective | nervous about meeting or talking to people | She is a shy girl.
+sick | adjective | not well; ill | I feel sick.
+side | noun | the left or right part of something | Write on one side of the paper.
+sight | noun | the ability to see; also a thing to see | The Grand Canyon is an amazing sight.
+sign | noun | a board or notice with words or pictures that tells you something | The sign says "No parking."
+sing | verb | to make music with your voice | She sings in a choir.
+singer | noun | a person who sings | He is a famous singer.
+sir | noun | a polite way to speak to a man | Can I help you, sir?
+sister | noun | a girl or woman who has the same parents as you | My sister is older than me.
+sit | verb | to rest your bottom on a chair or the floor | Please sit down.
+site | noun | a place where something is or happens; also a website | This is the site of the new school.
+six | number | the number 6 | I get up at six.
+sixteen | number | the number 16 | You can drive at sixteen in many states.
+sixty | number | the number 60 | There are sixty minutes in an hour.
+size | noun | how big or small something is | What size shoes do you wear?
+skill | noun | the ability to do something well | Reading is an important skill.
+skirt | noun | a piece of clothing for women that hangs from the waist | She is wearing a long skirt.
+sky | noun | the space above the earth where you see clouds and the sun | The sky is blue today.
+sleep | verb | to rest with your eyes closed | I sleep eight hours a night.
+slow | adjective | not fast | The bus is very slow.
+small | adjective | little; not big | They live in a small town.
+smart | adjective | intelligent; quick to learn | She is a very smart girl.
+smell | noun | something you notice with your nose | I love the smell of fresh bread.
+smile | noun | a happy look on your face with the corners of your mouth up | She has a beautiful smile.
+smith | noun | a person who makes things from metal | The smith made a new gate.
+smoke | noun | the gray or black gas that comes from a fire | There's smoke coming from the kitchen.
+smoking | noun | the habit of breathing in smoke from cigarettes | Smoking is bad for your health.
+snake | noun | a long animal with no legs | There's a snake in the grass!
+snow | noun | soft white pieces of frozen water that fall from the sky | The kids are playing in the snow.
+snowy | adjective | with a lot of snow | It was a cold, snowy day.
+so | conjunction | for that reason | I was tired, so I went to bed.
+soccer | noun | a game where two teams kick a ball and try to score goals | My son plays soccer.
+social | adjective | about people and society; also about meeting people | She is very social and has many friends.
+sofa | noun | a long soft seat for two or more people | We sat on the sofa.
+solve | verb | to find the answer to a problem | Can you solve this puzzle?
+some | determiner | a number or amount of something | I need some eggs.
+some | pronoun | a number or amount of people or things | Some of the students are late.
+someone | pronoun | a person, but you don't know who | Someone is at the door.
+something | pronoun | a thing, but you don't know what | I want something to eat.
+son | noun | a person's male child | They have one son.
+song | noun | a short piece of music with words | This is my favorite song.
+soon | adverb | in a short time | See you soon!
+sorry | adjective | feeling bad about something you did | I'm sorry I'm late.
+soup | noun | a hot liquid food made with vegetables or meat | I'd like a bowl of soup.
+speak | verb | to say words; to talk | Do you speak English?
+special | adjective | different and better than usual | Today is a special day.
+speech | noun | a talk you give to a group of people | He gave a speech at the wedding.
+spell | noun | magic words that make something happen | The witch cast a spell.
+spend | verb | to use money or time | I spend a lot of time reading.
+sport | noun | a game like soccer, tennis, or basketball | What's your favorite sport?
+spot | noun | a small round mark; also a place | This is a nice spot for a picnic.
+spring | noun | the season after winter | Flowers bloom in the spring.
+spy | noun | a person who secretly gets information | The movie is about a spy.
+stage | noun | the raised area in a theater where people perform | The band came onto the stage.
+stand | noun | a small table or stall where things are sold | We bought fruit at a stand.
+star | noun | a bright point of light in the night sky; also a famous person | Look at all the stars!
+start | noun | the beginning | We were late for the start of the movie.
+start | verb | to begin | The class starts at nine.
+station | noun | a place where trains or buses stop | I'll meet you at the station.
+stay | verb | to not leave a place | Stay here. I'll be back.
+step | verb | to move your foot forward or back | Please step back.
+still | adjective | not moving | Sit still!
+stone | noun | a small piece of rock | He threw a stone into the river.
+stop | noun | a place where a bus or train stops | Get off at the next stop.
+stop | verb | to not move or do something anymore | Stop the car!
+store | noun | a place where you buy things | I'm going to the store.
+story | noun | a description of events, real or imagined | Tell me a story.
+straight | adverb | in a line that doesn't bend | Go straight ahead.
+strange | adjective | unusual or surprising | That's a strange noise.
+street | noun | a road in a city or town | I live on Main Street.
+strict | adjective | expecting people to follow rules | My teacher is very strict.
+strong | adjective | having a lot of power | He is very strong.
+student | noun | a person who is studying at a school or college | She is a good student.
+study | verb | to learn about a subject | I study English every day.
+subject | noun | something you learn at school, like math or history | My favorite subject is art.
+subway | noun | a train that runs under a city | I take the subway to work.
+successful | adjective | getting the result you wanted | She has a very successful business.
+sugar | noun | a sweet white or brown food you put in drinks and cakes | Do you take sugar in your coffee?
+suggestion | noun | an idea or plan that you offer | Do you have any suggestions?
+sum | noun | an amount of money; also the total of numbers added together | That's a large sum of money.
+summer | noun | the hottest season of the year | We go to the beach in the summer.
+sun | noun | the star that gives the earth light and heat | The sun is shining.
+Sunday | noun | the day after Saturday | We visit Grandma on Sunday.
+sunny | adjective | bright with sunshine | It's a sunny day.
+sunshine | noun | the light and heat of the sun | We sat in the sunshine.
+super | adjective | very good | That's a super idea!
+supermarket | noun | a large store that sells food and things for the home | I buy food at the supermarket.
+sure | adjective | certain; knowing something is true | Are you sure?
+surf | noun | the waves of the ocean as they break on the beach | The surf is high today.
+surprise | noun | something you didn't expect | What a nice surprise!
+survey | noun | a set of questions you ask many people | We did a survey about sports.
+sweet | adjective | tasting of sugar | This cake is too sweet.
+swim | noun | a time when you swim | Let's go for a swim.
+swim | verb | to move through water using your arms and legs | Can you swim?
+swimming | noun | the sport of moving through water | Swimming is good exercise.
+swimming pool | noun | a place filled with water for swimming | The hotel has a swimming pool.
+T-shirt | noun | a cotton shirt with short sleeves and no collar | He's wearing a white T-shirt.
+table | noun | a piece of furniture with a flat top and legs | Put the plates on the table.
+take | verb | to carry or bring something; also to use a bus or train | Take your umbrella.
+talk | verb | to speak with someone | We talked for hours.
+tall | adjective | high; bigger than usual from top to bottom | My brother is very tall.
+taxi | noun | a car with a driver that you pay to take you somewhere | Let's take a taxi.
+tea | noun | a hot drink made from dried leaves | Would you like a cup of tea?
+teach | verb | to help someone learn something | She teaches English.
+teacher | noun | a person whose job is to teach | My teacher is very kind.
+team | noun | a group of people who play a sport or work together | Our team won the game.
+technology | noun | machines, computers, and new ways of doing things | Technology changes very fast.
+telephone | noun | a phone | The telephone is ringing.
+television | noun | a TV | We don't watch much television.
+tell | verb | to say something to someone | Tell me about your trip.
+temple | noun | a building where some people pray | We visited an old temple.
+ten | number | the number 10 | I have ten fingers.
+tennis | noun | a game where two or four players hit a ball over a net | Do you play tennis?
+terrible | adjective | very bad | The weather is terrible.
+test | noun | a set of questions to check what you know | I have a math test tomorrow.
+than | conjunction | used to compare two things | She is older than I am.
+than | preposition | used to compare two things | My car is faster than yours.
+thank | verb | to tell someone you are happy about what they did | I want to thank you for your help.
+thanks | noun | words you say to show you are grateful | Thanks for coming!
+that | conjunction | used to start a part of a sentence | I think that he's right.
+that | determiner | used for a person or thing farther away | Who is that man?
+that | pronoun | a thing that was already mentioned or is farther away | What's that?
+the | determiner | used before a noun when you know which one | Close the door, please.
+theater | noun | a building where people go to see plays | We went to the theater last night.
+their | determiner | belonging to them | This is their house.
+them | pronoun | people or things, used after a verb or preposition | I gave them a present.
+then | adverb | at that time; also next | First, wash your hands. Then eat.
+there | adverb | in or to that place | Put the box over there.
+these | determiner | used for people or things near you | These shoes are new.
+these | pronoun | the people or things near you | Are these yours?
+they | pronoun | the people or things that were already mentioned | They are my friends.
+thick | adjective | wide from one side to the other | This book is very thick.

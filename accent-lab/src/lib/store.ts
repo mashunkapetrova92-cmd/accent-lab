@@ -35,14 +35,15 @@ interface State {
   phonemes: Record<string, PhonemeStat>;
   patterns: Record<string, number>;
   activity: Record<string, number>; // yyyy-mm-dd -> seconds
+  known: Record<string, number>; // vocabulary 'LEVEL|word|pos' -> time marked as known
   settings: Settings;
 }
 
 const DEFAULT_SETTINGS: Settings = { engine: 'auto', azureEndpoint: '', slowReading: false, hvpt: true };
-let state: State = { ready: false, sounds: {}, reading: [], points: [], phonemes: {}, patterns: {}, activity: {}, settings: DEFAULT_SETTINGS };
+let state: State = { ready: false, sounds: {}, reading: [], points: [], phonemes: {}, patterns: {}, activity: {}, known: {}, settings: DEFAULT_SETTINGS };
 const subs = new Set<() => void>();
 const emit = () => subs.forEach(f => f());
-const KEYS = ['sounds', 'reading', 'points', 'phonemes', 'patterns', 'activity', 'settings'] as const;
+const KEYS = ['sounds', 'reading', 'points', 'phonemes', 'patterns', 'activity', 'known', 'settings'] as const;
 
 export async function init() {
   const vals = await Promise.all(KEYS.map(k => db.get<unknown>(k)));
@@ -174,11 +175,16 @@ export function useActivityClock() {
 export function touch() { if (Date.now() - lastTick > 90_000) lastTick = Date.now(); }
 
 // ---------- settings ----------
+export function setKnown(k: string, on: boolean) {
+  const next = { ...state.known };
+  if (on) next[k] = Date.now(); else delete next[k];
+  update('known', next);
+}
 export function setSettings(p: Partial<Settings>) { update('settings', { ...state.settings, ...p }); }
 
 export async function resetAll() {
   await db.clearAll();
-  state = { ...state, sounds: {}, reading: [], points: [], phonemes: {}, patterns: {}, activity: {}, settings: state.settings };
+  state = { ...state, sounds: {}, reading: [], points: [], phonemes: {}, patterns: {}, activity: {}, known: {}, settings: state.settings };
   emit();
   db.set('settings', state.settings);
 }
