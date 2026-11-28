@@ -2,7 +2,7 @@
   "name": "Accent Lab \u2014 American Pronunciation",
   "short_name": "Accent Lab",
   "description": "General American pronunciation training: sounds, reading practice and progress.",
-  "start_url": "./#/sounds",
+  "start_url": "./#/home",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
