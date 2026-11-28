@@ -83,7 +83,7 @@ p { margin: 0; }
   border-top: 1px solid var(--line);
   padding-bottom: var(--safe-b);
 }
-.nav-inner { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); height: var(--nav-h); }
+.nav-inner { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); height: var(--nav-h); }
 .nav a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 650; letter-spacing: .02em; }
 .nav a svg { width: 25px; height: 25px; transition: transform .2s; }
 .nav a[aria-current="page"] { color: var(--accent); }
@@ -419,3 +419,34 @@ mark { background: none; color: inherit; }
 .level-progress { display: grid; gap: 8px; margin: 12px 0 4px; padding: 12px 14px; border-radius: var(--r); background: var(--surface); box-shadow: var(--shadow-sm); }
 .level-progress > div { display: grid; grid-template-columns: 30px 1fr 56px; align-items: center; gap: 10px; font-size: 14px; }
 .level-progress span { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- home hub ---------- */
+.home .topbar { min-height: 52px; }
+.home-brand { flex: 1; display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 750; letter-spacing: -.005em; }
+.home-dot { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; background: linear-gradient(160deg, #107C86, #14345B); color: #fff; font-size: 22px; font-weight: 750; line-height: 1; padding-bottom: 3px; }
+.home-title { font-size: 27px; font-weight: 750; letter-spacing: -.015em; line-height: 1.15; margin: 6px 0 18px; }
+.home-resume { width: 100%; display: flex; align-items: center; gap: 14px; text-align: left; padding: 16px 16px 16px 18px; margin-bottom: 14px; border-radius: var(--r-lg); color: #fff; background: linear-gradient(135deg, #0F6377 0%, #14345B 100%); box-shadow: 0 10px 28px rgba(20, 52, 91, .25); transition: transform .12s; }
+.home-resume:active { transform: scale(.985); }
+.home-resume .grow { display: flex; flex-direction: column; min-width: 0; }
+.home-resume-label { font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #FFD27A; }
+.home-resume-name { font-size: 19px; font-weight: 700; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-resume-sub { font-size: 14.5px; opacity: .8; }
+.home-resume-go { width: 46px; height: 46px; border-radius: 50%; flex: none; display: grid; place-items: center; background: #FFD27A; color: #14345B; }
+.home-resume-go svg { width: 22px; height: 22px; margin-left: 2px; }
+.home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.home-card { --t: var(--accent); --ts: var(--accent-soft); position: relative; display: flex; flex-direction: column; gap: 18px; min-height: 212px; padding: 16px 16px 15px; text-align: left; border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; transition: transform .12s, box-shadow .2s; }
+.home-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 92px; background: var(--ts); }
+.home-card > * { position: relative; }
+.home-card:not(.soon):active { transform: scale(.975); }
+.home-card.tone-violet { --t: var(--violet); --ts: var(--violet-soft); }
+.home-card.tone-gold { --t: var(--gold); --ts: var(--gold-soft); }
+.home-card.tone-green { --t: var(--good); --ts: var(--good-soft); }
+.home-glyph { align-self: flex-start; min-width: 64px; height: 64px; padding: 0 12px; border-radius: 18px; display: grid; place-items: center; background: var(--surface); color: var(--t); font-size: 36px; font-weight: 750; line-height: 1; letter-spacing: -.02em; box-shadow: 0 6px 16px rgba(20, 33, 61, .08); padding-bottom: 4px; }
+.home-card-body { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.home-card-title { font-size: 20px; font-weight: 750; letter-spacing: -.005em; color: var(--ink); }
+.home-card-text { font-size: 14.5px; line-height: 1.35; color: var(--muted); }
+.home-card-meta { margin-top: auto; padding-top: 8px; font-size: 13.5px; font-weight: 700; color: var(--t); }
+.home-soon { display: inline-block; padding: 3px 10px; border-radius: 999px; background: var(--ts); color: var(--t); font-size: 12.5px; letter-spacing: .02em; }
+.home-card.soon { cursor: default; box-shadow: var(--shadow-sm); }
+.home-card.soon .home-glyph { box-shadow: none; }
+@media (min-width: 520px) { .home-card { min-height: 230px; } .home-title { font-size: 30px; } }

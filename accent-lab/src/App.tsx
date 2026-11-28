@@ -8,6 +8,7 @@ import Library from './screens/Library';
 import Reader from './screens/Reader';
 import Progress from './screens/Progress';
 import Settings from './screens/Settings';
+import Home from './screens/Home';
 import { setDurations, stop } from './lib/audio';
 import { loadDurations } from './data/load';
 import { AudioToast } from './components/ui';
@@ -27,17 +28,19 @@ export default function App() {
   else if (top === 'reading') screen = <Library />;
   else if (top === 'progress') screen = <Progress />;
   else if (top === 'settings') screen = <Settings />;
-  else screen = <SoundMap />;
-  const tab = top === 'reading' ? 'reading' : top === 'progress' ? 'progress' : 'sounds';
+  else if (top === 'sounds') screen = <SoundMap />;
+  else screen = <Home />;
+  const tab = top === 'reading' ? 'reading' : top === 'progress' ? 'progress' : top === 'sounds' ? 'sounds' : top === 'settings' ? '' : 'home';
   return (
     <div className={`app${(top === 'sounds' || top === 'reading') && id ? ' lesson' : ''}`}>
       <main><ErrorBoundary resetKey={route.join('/')}>{screen}</ErrorBoundary></main>
       <AudioToast />
       <nav className="nav" aria-label="Main">
         <div className="nav-inner">
-          <a href="#/sounds" aria-current={tab === 'sounds' ? 'page' : undefined}><Icon name="map" />Sounds</a>
+          <a href="#/home" aria-current={tab === 'home' ? 'page' : undefined}><Icon name="home" />Home</a>
+          <a href="#/sounds" aria-current={tab === 'sounds' ? 'page' : undefined}><Icon name="map" />Phonetics</a>
           <a href="#/reading" aria-current={tab === 'reading' ? 'page' : undefined}><Icon name="book" />Reading</a>
-          <a href="#/progress" aria-current={tab === 'progress' ? 'page' : undefined}><Icon name="chart" />My progress</a>
+          <a href="#/progress" aria-current={tab === 'progress' ? 'page' : undefined}><Icon name="chart" />Progress</a>
         </div>
       </nav>
     </div>

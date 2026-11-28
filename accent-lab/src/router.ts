@@ -3,7 +3,7 @@ import { useSyncExternalStore } from 'react';
 const subs = new Set<() => void>();
 let depth = 0;
 window.addEventListener('hashchange', () => subs.forEach(f => f()));
-const read = () => (location.hash.replace(/^#/, '') || '/sounds');
+const read = () => (location.hash.replace(/^#/, '') || '/home');
 
 export function useRoute(): string[] {
   const h = useSyncExternalStore(cb => { subs.add(cb); return () => subs.delete(cb); }, read);

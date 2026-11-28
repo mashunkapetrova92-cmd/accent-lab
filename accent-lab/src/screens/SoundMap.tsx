@@ -42,11 +42,11 @@ export default function SoundMap() {
   }, [data]);
 
   if (error) return <div className="screen"><ErrorBox text={error} onRetry={() => location.reload()} /></div>;
-  if (!data) return <div className="screen"><div className="topbar"><h1>Sounds</h1></div><Loading /></div>;
+  if (!data) return <div className="screen"><div className="topbar"><h1>Phonetics</h1></div><Loading /></div>;
 
   return (
     <div className="screen">
-      <div className="topbar"><h1>Sounds</h1><button className="icon-btn" aria-label="Settings" onClick={() => go('/settings')}><Icon name="gear" /></button></div>
+      <div className="topbar"><h1>Phonetics</h1><button className="icon-btn" aria-label="Settings" onClick={() => go('/settings')}><Icon name="gear" /></button></div>
       <div className="card">
         <div className="map-hero">
           <div><div className="big">{mastered}<span className="muted" style={{ fontSize: 20, fontWeight: 650 }}> / {flat.length}</span></div><div className="small muted">sounds mastered</div></div>
